@@ -1,0 +1,13 @@
+name: New event
+
+on:
+    issues:
+        types: [opened]
+    workflow_dispatch: # Manual trigger
+
+jobs:
+    new-event:
+        runs-on: ubuntu-latest
+
+        steps:
+            - run: echo TODO
