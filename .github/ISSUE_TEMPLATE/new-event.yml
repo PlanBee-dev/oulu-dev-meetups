@@ -1,0 +1,42 @@
+name: Uusi tapahtuma
+description: Lisää uusi tapahtuma
+body:
+    - type: input
+      id: date
+      validations:
+          required: true
+      attributes:
+          label: Ajankohta
+          placeholder: "Päivämäärä muodossa: (?)"
+
+    - type: input
+      id: location
+      validations:
+          required: true
+      attributes:
+          label: Paikka
+          placeholder: "Osoite tai paikan nimi (?)"
+
+    - type: input
+      id: organisator
+      validations:
+          required: true
+      attributes:
+          label: Järjestäjä
+          placeholder: Järjestäjä
+
+    - type: textarea
+      id: description
+      validations:
+          required: true
+      attributes:
+          label: Kuvaus
+          placeholder: Kuvaus
+
+    - type: input
+      id: joinLink
+      validations:
+          required: true
+      attributes:
+          label: Ilmottautumislinkki
+          placeholder: Ilmottautumislinkki
