@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "deploy": "gh-pages --dist dist",
+    "deploy": "touch dist/.nojekyll && gh-pages --dist dist --dotfiles true",
     "preview": "astro preview",
     "astro": "astro"
   },
