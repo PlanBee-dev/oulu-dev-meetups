@@ -16,41 +16,42 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: Issue Forms Body Parser
-              id: parse
-              uses: zentered/issue-forms-body-parser@v2.0.0
+            - name: Parse issue body
+              uses: stefanbuck/github-issue-parser@v3
+              id: issue-parser
+              with:
+                  template-path: .github/ISSUE_TEMPLATE/new-event.yml
 
-            - run: echo ${{ toJSON(steps.parse.outputs.data) }}
+            - name: Parse issue body description
+              id: issue-body-desc
+              run: |
+                  echo "::set-output name=ISSUE_BODY_DESC::$(
+                    echo "$GITHUB_CONTEXT" | perl -0777 -nE 'while (/(?<=### Description\n\n)(.*)/gs) { print $1; }'
+                  )"
 
-            # - name: Parse issue body
-            #   uses: stefanbuck/github-issue-parser@v3
-            #   id: issue-parser
-            #   with:
-            #       template-path: .github/ISSUE_TEMPLATE/new-event.yml
+            - name: Create new event file
+              env:
+                  DATE: ${{ steps.issue-parser.outputs.issueparser_date }}
+                  LOCATION: ${{ steps.issue-parser.outputs.issueparser_location }}
+                  LOCATION_GOOGLE_MAPS: ${{ steps.issue-parser.outputs.issueparser_location_google_maps }}
+                  ORGANISER: ${{ steps.issue-parser.outputs.issueparser_organiser }}
+                  ORGANISER_LINK: ${{ steps.issue-parser.outputs.issueparser_organiser_link }}
+                  JOINING_LINK: ${{ steps.issue-parser.outputs.issueparser_joining_link }}
+                  DESCRIPTION: ${{ steps.issue-body-desc.ISSUE_BODY_DESC }}
+              run: |
+                  cat <<EOF > new_event.md
 
-            # - name: Create new event file
-            #   env:
-            #       DATE: ${{ steps.issue-parser.outputs.issueparser_date }}
-            #       LOCATION: ${{ steps.issue-parser.outputs.issueparser_location }}
-            #       LOCATION_GOOGLE_MAPS: ${{ steps.issue-parser.outputs.issueparser_location_google_maps }}
-            #       ORGANISER: ${{ steps.issue-parser.outputs.issueparser_organiser }}
-            #       ORGANISER_LINK: ${{ steps.issue-parser.outputs.issueparser_organiser_link }}
-            #       JOINING_LINK: ${{ steps.issue-parser.outputs.issueparser_joining_link }}
-            #       DESCRIPTION: ${{ steps.issue-parser.outputs.issueparser_description }}
-            #   run: |
-            #       cat <<EOF > new_event.md
+                  ---
+                  date: "$DATE"
+                  location: "$LOCATION"
+                  location_google_maps: "$LOCATION_GOOGLE_MAPS"
+                  organiser: "$ORGANISER"
+                  organiser_link: "$ORGANISER_LINK"
+                  joining_link: "$JOINING_LINK"
+                  ---
 
-            #       ---
-            #       date: "$DATE"
-            #       location: "$LOCATION"
-            #       location_google_maps: "$LOCATION_GOOGLE_MAPS"
-            #       organiser: "$ORGANISER"
-            #       organiser_link: "$ORGANISER_LINK"
-            #       joining_link: "$JOINING_LINK"
-            #       ---
+                  $DESCRIPTION
+                  EOF
 
-            #       $DESCRIPTION
-            #       EOF
-
-            # - name: Create pull request
-            #   uses: peter-evans/create-pull-request@v5
+            - name: Create pull request
+              uses: peter-evans/create-pull-request@v5
