@@ -26,7 +26,7 @@ jobs:
               id: issue-body-desc
               run: |
                   echo $(echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;') &&
-                  echo ISSUE_BODY_DESC=$(echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;') >> $GITHUB_OUTPUT
+                  echo "ISSUE_BODY_DESC=$(echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;')" >> $GITHUB_OUTPUT
 
             - name: Create new event file
               env:
