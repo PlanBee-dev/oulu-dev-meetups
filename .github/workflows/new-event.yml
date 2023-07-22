@@ -43,7 +43,7 @@ jobs:
                   joining_link: "$JOINING_LINK"
                   ---
 
-                  "$DESCRIPTION"
+                  $DESCRIPTION
                   EOF
 
             - name: Create pull request
