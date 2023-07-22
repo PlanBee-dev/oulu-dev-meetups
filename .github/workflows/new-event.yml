@@ -25,9 +25,10 @@ jobs:
             - name: Parse issue body description
               id: issue-body-desc
               run: |
-                  echo 'ISSUE_BODY_DESC<<EOF' >> $GITHUB_OUTPUT
-                  $(echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;') >> $GITHUB_OUTPUT
-                  echo 'EOF' >> $GITHUB_OUTPUT
+                  EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+                  echo "ISSUE_BODY_DESC<<$EOF" >> "$GITHUB_OUTPUT"
+                  echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;' >> "$GITHUB_OUTPUT"
+                  echo "$EOF" >> "$GITHUB_OUTPUT"
 
             - name: Create new event file
               env:
