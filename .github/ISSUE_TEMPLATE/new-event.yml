@@ -34,7 +34,7 @@ body:
           placeholder: Description
 
     - type: input
-      id: joinLink
+      id: joining_link
       validations:
           required: true
       attributes:

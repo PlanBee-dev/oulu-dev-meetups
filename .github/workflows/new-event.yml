@@ -21,3 +21,25 @@ jobs:
                   template-path: .github/ISSUE_TEMPLATE/new-event.yml
 
             - run: cat ${HOME}/issue-parser-result.json
+
+            - name: Create new event file
+              env:
+                  DATE: ${{ steps.issue-parser.outputs.issueparser_date }}
+                  LOCATION: ${{ steps.issue-parser.outputs.issueparser_location }}
+                  JOINING_LINK: ${{ steps.issue-parser.outputs.issueparser_joining_link }}
+                  DESCRIPTION: ${{ steps.issue-parser.outputs.issueparser_description }}
+              run: |
+                  cat <<EOF > new_event.md
+
+                  ---
+                  date: $DATE
+                  location: $LOCATION
+                  organizer: $ORGANISER
+                  joining_link: $JOINING_LINK
+                  ---
+
+                  $DESCRIPTION
+                  EOF
+
+            - name: Echo new event file
+              run: echo new_event.md
