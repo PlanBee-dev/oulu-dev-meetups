@@ -23,19 +23,27 @@ jobs:
                   template-path: .github/ISSUE_TEMPLATE/new-event.yml
 
             - name: Create new event file
+              env:
+                  DATE: ${{ steps.issue-parser.outputs.issueparser_date }}
+                  LOCATION: ${{ steps.issue-parser.outputs.issueparser_location }}
+                  LOCATION_GOOGLE_MAPS: ${{ steps.issue-parser.outputs.issueparser_location_google_maps }}
+                  ORGANISER: ${{ steps.issue-parser.outputs.issueparser_organiser }}
+                  ORGANISER_LINK: ${{ steps.issue-parser.outputs.issueparser_organiser_link }}
+                  JOINING_LINK: ${{ steps.issue-parser.outputs.issueparser_joining_link }}
+                  DESCRIPTION: ${{ steps.issue-parser.outputs.issueparser_description }}
               run: |
                   cat <<EOF > new_event.md
 
                   ---
-                  date: ${{ steps.issue-parser.outputs.issueparser_date }}
-                  location: ${{ steps.issue-parser.outputs.issueparser_location }}
-                  location_google_maps: ${{ steps.issue-parser.outputs.issueparser_location_google_maps }}
-                  organiser: ${{ steps.issue-parser.outputs.issueparser_organiser }}
-                  organiser_link: ${{ steps.issue-parser.outputs.issueparser_organiser_link }} 
-                  joining_link: ${{ steps.issue-parser.outputs.issueparser_joining_link }}
+                  date: "$DATE"
+                  location: "$LOCATION"
+                  location_google_maps: "$LOCATION_GOOGLE_MAPS"
+                  organiser: "$ORGANISER"
+                  organiser_link: "$ORGANISER_LINK"
+                  joining_link: "$JOINING_LINK"
                   ---
 
-                  ${{ steps.issue-parser.outputs.issueparser_description }}
+                  "$DESCRIPTION"
                   EOF
 
             - name: Create pull request
