@@ -24,10 +24,7 @@ jobs:
 
             - name: Parse issue body description
               id: issue-body-desc
-              run: |
-                  echo "::set-output name=ISSUE_BODY_DESC::$(
-                    echo "$GITHUB_CONTEXT" | perl -0777 -nE 'while (/(?<=### Description\n\n)(.*)/gs) { print $1; }'
-                  )"
+              run: echo ISSUE_BODY_DESC=$(echo "$GITHUB_CONTEXT" | perl -0777 -nE 'while (/(?<=### Description\n\n)(.*)/gs) { print $1; }') >> $GITHUB_OUTPUT
 
             - name: Create new event file
               env:
