@@ -22,14 +22,6 @@ jobs:
               with:
                   template-path: .github/ISSUE_TEMPLATE/new-event.yml
 
-            - name: Parse issue body description
-              id: issue-body-desc
-              run: |
-                  EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-                  echo "ISSUE_BODY_DESC<<$EOF" >> "$GITHUB_OUTPUT"
-                  echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;' >> "$GITHUB_OUTPUT"
-                  echo "$EOF" >> "$GITHUB_OUTPUT"
-
             - name: Create new event file
               env:
                   DATE: ${{ steps.issue-parser.outputs.issueparser_date }}
@@ -38,8 +30,8 @@ jobs:
                   ORGANISER: ${{ steps.issue-parser.outputs.issueparser_organiser }}
                   ORGANISER_LINK: ${{ steps.issue-parser.outputs.issueparser_organiser_link }}
                   JOINING_LINK: ${{ steps.issue-parser.outputs.issueparser_joining_link }}
-                  DESCRIPTION: ${{ steps.issue-body-desc.ISSUE_BODY_DESC }}
               run: |
+                  DESCRIPTION=$(echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;')
                   cat <<EOF > new_event.md
 
                   ---
