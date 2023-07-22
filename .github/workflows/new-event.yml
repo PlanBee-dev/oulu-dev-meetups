@@ -1,5 +1,9 @@
 name: New event
 
+permissions:
+    contents: write
+    pull-requests: write
+
 on:
     issues:
         types: [opened]
