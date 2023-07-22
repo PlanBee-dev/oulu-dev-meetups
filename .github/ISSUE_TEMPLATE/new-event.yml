@@ -42,14 +42,6 @@ body:
           label: Link to organiser
           placeholder: Link to organiser
 
-    - type: textarea
-      id: description
-      validations:
-          required: true
-      attributes:
-          label: Description
-          placeholder: Description
-
     - type: input
       id: joining_link
       validations:
@@ -57,3 +49,11 @@ body:
       attributes:
           label: Joining link
           placeholder: Joining link
+
+    - type: textarea
+      id: description
+      validations:
+          required: true
+      attributes:
+          label: Description
+          placeholder: Description
