@@ -13,3 +13,11 @@ jobs:
               run: echo "$GITHUB_CONTEXT"
               env:
                   GITHUB_CONTEXT: ${{ toJson(github) }}
+
+            - name: wip
+              uses: stefanbuck/github-issue-parser@v3
+              id: issue-parser
+              with:
+                  template-path: .github/ISSUE_TEMPLATE/new-event.yml
+
+            - run: cat ${HOME}/issue-parser-result.json
