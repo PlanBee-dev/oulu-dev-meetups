@@ -25,8 +25,11 @@ jobs:
             - name: Parse issue body description
               id: issue-body-desc
               run: |
-                  echo $(echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;') &&
-                  echo "ISSUE_BODY_DESC=$(echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;')" >> $GITHUB_OUTPUT
+                  ISSUE_BODY_DESC="$(echo "${{ github.event.issue.body }}" | perl -0777 -nE 'print $1 if /### Description\s*(.*)/s;')"
+                  ISSUE_BODY_DESC="${ISSUE_BODY_DESC//'%'/'%25'}"
+                  ISSUE_BODY_DESC="${ISSUE_BODY_DESC//$'\n'/'%0A'}"
+                  ISSUE_BODY_DESC="${ISSUE_BODY_DESC//$'\r'/'%0D'}"
+                  echo ISSUE_BODY_DESC="$ISSUE_BODY_DESC" >> $GITHUB_OUTPUT
 
             - name: Create new event file
               env:
