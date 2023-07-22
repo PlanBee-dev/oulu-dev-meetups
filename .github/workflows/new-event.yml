@@ -16,37 +16,27 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: View the github context
-              run: echo "$GITHUB_CONTEXT"
-              env:
-                  GITHUB_CONTEXT: ${{ toJson(github) }}
-
-            - name: wip
+            - name: Parse issue body
               uses: stefanbuck/github-issue-parser@v3
               id: issue-parser
               with:
                   template-path: .github/ISSUE_TEMPLATE/new-event.yml
 
-            - run: cat ${HOME}/issue-parser-result.json
-
             - name: Create new event file
-              env:
-                  DATE: ${{ steps.issue-parser.outputs.issueparser_date }}
-                  LOCATION: ${{ steps.issue-parser.outputs.issueparser_location }}
-                  JOINING_LINK: ${{ steps.issue-parser.outputs.issueparser_joining_link }}
-                  DESCRIPTION: ${{ steps.issue-parser.outputs.issueparser_description }}
               run: |
                   cat <<EOF > new_event.md
 
                   ---
-                  date: $DATE
-                  location: $LOCATION
-                  organizer: $ORGANISER
-                  joining_link: $JOINING_LINK
+                  date: ${{ steps.issue-parser.outputs.issueparser_date }}
+                  location: ${{ steps.issue-parser.outputs.issueparser_location }}
+                  location_google_maps: ${{ steps.issue-parser.outputs.issueparser_location_google_maps }}
+                  organiser: ${{ steps.issue-parser.outputs.issueparser_organiser }}
+                  organiser_link: ${{ steps.issue-parser.outputs.issueparser_organiser_link }} 
+                  joining_link: ${{ steps.issue-parser.outputs.issueparser_joining_link }}
                   ---
 
-                  $DESCRIPTION
+                  ${{ steps.issue-parser.outputs.issueparser_description }}
                   EOF
 
-            - name: Create Pull Request
+            - name: Create pull request
               uses: peter-evans/create-pull-request@v5

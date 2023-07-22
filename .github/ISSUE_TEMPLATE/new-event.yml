@@ -1,5 +1,6 @@
 name: New event
 description: Add an event
+labels: [new-event]
 body:
     - type: input
       id: date
@@ -15,15 +16,31 @@ body:
           required: true
       attributes:
           label: Location
-          placeholder: "Address or name of the place (?)"
+          placeholder: "Name of the place"
 
     - type: input
-      id: organisator
+      id: location_google_maps
       validations:
           required: true
       attributes:
-          label: Organisator
-          placeholder: Organisator
+          label: Location as a Google Maps link
+          placeholder: "Location as a Google Maps link"
+
+    - type: input
+      id: organiser
+      validations:
+          required: true
+      attributes:
+          label: Organiser
+          placeholder: Organiser
+
+    - type: input
+      id: organiser_link
+      validations:
+          required: true
+      attributes:
+          label: Link to organiser
+          placeholder: Link to organiser
 
     - type: textarea
       id: description
