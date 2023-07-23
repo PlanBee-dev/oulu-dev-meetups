@@ -71,7 +71,7 @@ async function main() {
 	await fs.writeFile("new-meetup.md", newMeetupFile);
 
 	const newBranchName = "new-meetup" + "-" + isoDate + "-" + meetupTitle;
-	const pullRequestTitle = "New meetup: " + issueTitle;
+	const pullRequestTitle = `New meetup: ${issueTitle}`;
 	const pullRequestBody =
 		`New meetup: ${issueTitle}` +
 		"\n\n" +
@@ -87,6 +87,30 @@ async function main() {
 	core.setOutput("branch_name", newBranchName);
 	core.setOutput("pull_request_title", pullRequestTitle);
 	core.setOutput("pull_request_body", pullRequestBody);
+
+	core.debug(
+		JSON.stringify(
+			{
+				branch_name: newBranchName,
+				pull_request_title: pullRequestTitle,
+				pull_request_body: pullRequestBody,
+				issueTitle,
+				issueBody,
+				issueNumber,
+				date,
+				isoDate,
+				location,
+				locationLinkGoogleMaps,
+				organiser,
+				organiserLink,
+				joinLink,
+				description,
+				newMeetupFile,
+			},
+			null,
+			4
+		)
+	);
 
 	core.info("Done");
 }
