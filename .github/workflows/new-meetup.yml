@@ -17,7 +17,7 @@ jobs:
               uses: actions/checkout@v3
 
             - name: Run new meetup action
-              uses: ./new-meetup
+              uses: ./.github/workflows/new-meetup
               with:
                   issue_body: ${{ github.event.issue.body }}
 
