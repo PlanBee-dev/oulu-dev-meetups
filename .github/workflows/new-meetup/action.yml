@@ -2,9 +2,13 @@ name: "new-meetup-action"
 description: "New meetup action"
 author: "oulu-dev-meetups"
 inputs:
+    issue_title:
+        required: true
+        description: "Issue title"
     issue_body:
         required: true
-        description: "Github event issue body"
+        description: "Issue body"
+
 runs:
     using: "node16"
     main: "lib/index.js"

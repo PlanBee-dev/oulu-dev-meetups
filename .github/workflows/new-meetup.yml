@@ -18,8 +18,11 @@ jobs:
 
             - name: Run new meetup action
               uses: ./.github/workflows/new-meetup
+              id: new-meetup-action
               with:
+                  issue_title: ${{ github.event.issue.title }}
                   issue_body: ${{ github.event.issue.body }}
+                  issue_number: ${{ github.event.issue.number }}
 
             # - name: Parse issue body
             #   uses: stefanbuck/github-issue-parser@v3
@@ -55,7 +58,9 @@ jobs:
             #   run: |
             #       echo "BRANCH_NAME=new-meetup-" >> $GITHUB_OUTPUT
 
-            # - name: Create pull request
-            #   uses: peter-evans/create-pull-request@v5
-            #   with:
-            #       branch: new-meetup-
+            - name: Create pull request
+              uses: peter-evans/create-pull-request@v5
+              with:
+                  branch: ${{ steps.new-meetup-action.branch_name }}
+                  title: ${{ steps.new-meetup-action.pull_request_title }}
+                  body: ${{ steps.new-meetup-action.pull_request_body }}
