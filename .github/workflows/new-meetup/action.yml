@@ -1,0 +1,10 @@
+name: "new-meetup-action"
+description: "New meetup action"
+author: "oulu-dev-meetups"
+inputs:
+    issue_body:
+        required: true
+        description: "Github event issue body"
+runs:
+    using: "node16"
+    main: "lin/index.js"
