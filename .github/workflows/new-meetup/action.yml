@@ -7,4 +7,4 @@ inputs:
         description: "Github event issue body"
 runs:
     using: "node16"
-    main: "lin/index.js"
+    main: "lib/index.js"
