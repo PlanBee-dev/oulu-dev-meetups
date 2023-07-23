@@ -1,4 +1,5 @@
 import * as core from "@actions/core";
+import format from "date-fns/format";
 import isValid from "date-fns/isValid";
 import parse from "date-fns/parse";
 import fs from "fs/promises";
@@ -70,7 +71,8 @@ async function main() {
 
 	await fs.writeFile("new-meetup.md", newMeetupFile);
 
-	const newBranchName = "new-meetup" + "-" + isoDate + "-" + meetupTitle;
+	const newBranchName =
+		"new-meetup" + "-" + format(parsedDate, "dd-MM-yyyy-HH-mm") + "-" + meetupTitle;
 	const pullRequestTitle = `New meetup: ${issueTitle}`;
 	const pullRequestBody =
 		`New meetup: ${issueTitle}` +
@@ -118,5 +120,5 @@ async function main() {
 main();
 
 function sanitizeString(str: string) {
-	return str.replace(/[^a-z0-9]/gi, "_").toLowerCase();
+	return str.replace(/[^a-z0-9]/gi, "-").toLowerCase();
 }
