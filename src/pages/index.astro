@@ -1,6 +1,7 @@
 ---
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import Intro from '../components/Intro.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import BaseHead from '../components/BaseHead.astro';
 ---
@@ -24,21 +25,8 @@ import BaseHead from '../components/BaseHead.astro';
 						</div>
 						</div>
 					</div>
-					<div class="container m-4 text-center">
-						<h1 class="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-						  Developer meetings in Oulu area
-						</h1>
-						<div class="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
-						  <p>
-							Here are list of future meetups for all aspiring developers and tinkerers in Oulu area. Meet new people and share knowledge!
-						  </p>
-						  <p>
-							Here you can also submit your own meetup. Either do the pull request yourself or just fill in in the form. 
-						  </p>
-						  <p>
-							See you there!
-						  </p>
-						</div>
+					<div class="m-4 text-center">
+						<Intro/>
 					</div>
 				</div>
 			</main>
