@@ -8,6 +8,9 @@ inputs:
     issue_body:
         required: true
         description: "Issue body"
+    issue_number:
+        required: true
+        description: "Issue number"
 
 runs:
     using: "node16"
