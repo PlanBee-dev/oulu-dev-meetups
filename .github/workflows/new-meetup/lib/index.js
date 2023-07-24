@@ -6268,6 +6268,7 @@ async function main() {
   const issueTitle = core.getInput("issue_title");
   const issueBody = core.getInput("issue_body");
   const issueNumber = core.getInput("issue_number");
+  const meetupFolder = core.getInput("meetup_folder");
   if (!issueTitle || !issueBody) {
     core.setFailed("Invalid inputs");
     return;
@@ -6322,8 +6323,8 @@ async function main() {
     description,
     joinLink
   });
-  await import_promises.default.writeFile(`${sanitizedMeetupTitle}-`, newMeetupFile);
-  const newBranchName = "new-meetup-" + sanitizedMeetupTitle + "-" + sanitizedDate;
+  await import_promises.default.writeFile(`./${meetupFolder}/${sanitizedMeetupTitle}-${sanitizedDate}`, newMeetupFile);
+  const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;
   const pullRequestTitle = `New meetup: ${issueTitle}`;
   const pullRequestBody = getPullRequestBody({
     isoDate,
