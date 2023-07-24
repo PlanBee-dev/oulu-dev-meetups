@@ -9,7 +9,8 @@
     "build": "astro build",
     "deploy": "touch dist/.nojekyll && gh-pages --dist dist --dotfiles true",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint . --max-warnings 0 --ext .astro,.ts,.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.19.7",
@@ -21,6 +22,13 @@
     "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "@typescript-eslint/parser": "^6.1.0",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-astro": "^0.27.2",
+    "eslint-plugin-prettier": "^5.0.0",
+    "gh-pages": "^5.0.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-astro": "^0.11.0"
   }
 }

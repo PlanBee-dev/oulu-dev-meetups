@@ -7,48 +7,55 @@ import BaseHead from '../components/BaseHead.astro';
 import MeetupCard from '../components/MeetupCard.astro';
 
 const meetup = {
-	name: "Great AI Meetup",
-	location: "Oulu, Elektroniikkatie",
-	locationLink: "https://goo.gl/maps/GvuboievRSW5VfZf6",
-	time: "23.8.2023 17:00",
-	organizer: "Cloudamite",
-	organizerLink: "https://cloudamite.com",
-	description: "Join us for an evening of AI talks and discussions.",
-	meetupLink: "https://meetup.com/great-ai-meetup",
-}
-
+  name: 'Great AI Meetup',
+  location: 'Oulu, Elektroniikkatie',
+  locationLink: 'https://goo.gl/maps/GvuboievRSW5VfZf6',
+  time: '23.8.2023 17:00',
+  organizer: 'Cloudamite',
+  organizerLink: 'https://cloudamite.com',
+  description: 'Join us for an evening of AI talks and discussions.',
+  meetupLink: 'https://meetup.com/great-ai-meetup',
+};
 ---
 
 <html class="h-full">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body class="h-full">
-		<div class="min-h-full">
-			<Header/>
-			<div class="py-10">
-				<main>
-					<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col">
-						<div class="container">
-							<div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-							<div class="relative shadow-xl sm:rounded-2xl">
-								<div class="">
-									<img class="sm:rounded-2xl" width={1200} height={600} src={`${import.meta.env.BASE_URL}images/oulu-devmeetups-hero.jpg`} alt="artistic picture of Oulu castle" />
-								</div>
-							</div>
-							</div>
-						</div>
-						<div class="m-4 text-center">
-							<Intro/>
-						</div>
-						<div class="m-4 text-2xl text-center">
-							<h2>What is coming next?</h2>
-						</div>
-						<MeetupCard {...meetup}/>
-					</div>
-				</main>
-				<Footer />
-			</div>
-		</div>
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="h-full">
+    <div class="min-h-full">
+      <Header />
+      <div class="py-10">
+        <main>
+          <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col">
+            <div class="container">
+              <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="relative shadow-xl sm:rounded-2xl">
+                  <div class="">
+                    <img
+                      class="sm:rounded-2xl"
+                      width={1200}
+                      height={600}
+                      src={`${
+                        import.meta.env.BASE_URL
+                      }images/oulu-devmeetups-hero.jpg`}
+                      alt="artistic picture of Oulu castle"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="m-4 text-center">
+              <Intro />
+            </div>
+            <div class="m-4 text-2xl text-center">
+              <h2>What is coming next?</h2>
+            </div>
+            <MeetupCard {...meetup} />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </div>
+  </body>
 </html>
