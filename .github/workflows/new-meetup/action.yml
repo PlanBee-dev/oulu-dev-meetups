@@ -11,6 +11,9 @@ inputs:
     issue_number:
         required: true
         description: "Issue number"
+    meetup_folder:
+        required: true
+        description: "New meetup files are added here"
 
 runs:
     using: "node16"
