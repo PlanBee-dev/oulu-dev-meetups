@@ -6323,7 +6323,10 @@ async function main() {
     description,
     joinLink
   });
-  await import_promises.default.writeFile(`./${meetupFolder}/${sanitizedMeetupTitle}-${sanitizedDate}`, newMeetupFile);
+  await import_promises.default.writeFile(
+    `./${meetupFolder}/${sanitizedMeetupTitle}-${sanitizedDate}.md`,
+    newMeetupFile
+  );
   const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;
   const pullRequestTitle = `New meetup: ${issueTitle}`;
   const pullRequestBody = getPullRequestBody({

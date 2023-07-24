@@ -80,7 +80,10 @@ async function main() {
 		joinLink,
 	});
 
-	await fs.writeFile(`./${meetupFolder}/${sanitizedMeetupTitle}-${sanitizedDate}`, newMeetupFile);
+	await fs.writeFile(
+		`./${meetupFolder}/${sanitizedMeetupTitle}-${sanitizedDate}.md`,
+		newMeetupFile
+	);
 
 	const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;
 
