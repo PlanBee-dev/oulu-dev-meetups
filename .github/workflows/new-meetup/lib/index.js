@@ -6272,7 +6272,7 @@ async function main() {
     core.setFailed("Invalid inputs");
     return;
   }
-  const meetupTitle = sanitizeString(issueTitle);
+  const sanitizedMeetupTitle = sanitizeString(issueTitle);
   const date = issueBody.match(/### Time and date\n\n(.*)/)?.[1];
   const location = issueBody.match(/### Location\n\n(.*)/)?.[1];
   const locationLinkGoogleMaps = issueBody.match(
@@ -6283,6 +6283,24 @@ async function main() {
   const joinLink = issueBody.match(/### Joining link\n\n(.*)/)?.[1];
   const description = issueBody.match(/### Description\n\n(.*)/)?.[1];
   if (!date || !location || !locationLinkGoogleMaps || !organiser || !organiserLink || !joinLink || !description) {
+    core.debug(
+      JSON.stringify(
+        {
+          issueTitle,
+          issueBody,
+          issueNumber,
+          date,
+          location,
+          locationLinkGoogleMaps,
+          organiser,
+          organiserLink,
+          joinLink,
+          description
+        },
+        null,
+        4
+      )
+    );
     core.setFailed("Invalid issue body");
     return;
   }
@@ -6292,60 +6310,65 @@ async function main() {
     return;
   }
   const isoDate = parsedDate.toISOString();
-  const newMeetupFile = `---
-date: ${isoDate}
-location: ${location}
-locationGoogleMaps: ${locationLinkGoogleMaps}
-organiser: ${organiser}
-organiserLink: ${organiserLink}
-joinLink: ${joinLink}
----
-
-# ${issueTitle}
-` + description;
-  await import_promises.default.writeFile("new-meetup.md", newMeetupFile);
-  const newBranchName = "new-meetup-" + format(parsedDate, "dd-MM-yyyy-HH-mm") + "-" + meetupTitle;
+  const sanitizedDate = format(parsedDate, "dd-MM-yyyy-HH-mm");
+  const newMeetupFile = getMeetupFileContent({
+    isoDate,
+    organiser,
+    organiserLink,
+    location,
+    locationLinkGoogleMaps,
+    issueNumber,
+    issueTitle,
+    description,
+    joinLink
+  });
+  await import_promises.default.writeFile(`${sanitizedMeetupTitle}-`, newMeetupFile);
+  const newBranchName = "new-meetup-" + sanitizedMeetupTitle + "-" + sanitizedDate;
   const pullRequestTitle = `New meetup: ${issueTitle}`;
-  const pullRequestBody = `New meetup: ${issueTitle}
-
-Date: ${date}
-
-Organiser: [${organiser}](${organiserLink})
-
-Location: [${location}](${locationLinkGoogleMaps})
-
-
-
-Closes #${issueNumber}`;
+  const pullRequestBody = getPullRequestBody({
+    isoDate,
+    organiser,
+    organiserLink,
+    location,
+    locationLinkGoogleMaps,
+    issueNumber
+  });
   core.setOutput("branch_name", newBranchName);
   core.setOutput("pull_request_title", pullRequestTitle);
   core.setOutput("pull_request_body", pullRequestBody);
-  core.debug(
-    JSON.stringify(
-      {
-        branch_name: newBranchName,
-        pull_request_title: pullRequestTitle,
-        pull_request_body: pullRequestBody,
-        issueTitle,
-        issueBody,
-        issueNumber,
-        date,
-        isoDate,
-        location,
-        locationLinkGoogleMaps,
-        organiser,
-        organiserLink,
-        joinLink,
-        description,
-        newMeetupFile
-      },
-      null,
-      4
-    )
-  );
   core.info("Done");
 }
 main();
 function sanitizeString(str) {
   return str.replace(/[^a-z0-9]/gi, "-").toLowerCase();
+}
+function getPullRequestBody(props) {
+  return `
+New meetup
+
+Date:
+${props.isoDate}
+
+Organiser:
+[${props.organiser}](${props.organiserLink})
+
+Location:
+[${props.location}](${props.locationLinkGoogleMaps})
+
+Closes #${props.issueNumber}`;
+}
+function getMeetupFileContent(props) {
+  return `
+---
+date: "${props.isoDate}"
+location: "${props.location}"
+locationGoogleMaps: "${props.locationLinkGoogleMaps}"
+organiser: "${props.organiser}"
+organiserLink: "${props.organiserLink}"
+joinLink: "${props.joinLink}"
+---
+
+# ${props.issueTitle}
+
+${props.description}`;
 }
