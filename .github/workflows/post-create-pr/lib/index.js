@@ -7775,13 +7775,13 @@ async function main() {
     owner: import_github.context.repo.owner,
     repo: import_github.context.repo.repo,
     body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
+Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
 
 1. Validating meetup details... Done! \u2705
 2. Creating meetup file... Done! \u2705
 3. Create new branch and pull request... Done! \u2705 
 
-PR: #${pullRequestNumber}`
+New pull request: #${pullRequestNumber}`
   });
 }
 main();

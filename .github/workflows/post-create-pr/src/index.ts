@@ -14,13 +14,13 @@ async function main() {
 		owner: context.repo.owner,
 		repo: context.repo.repo,
 		body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
+Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
 
 1. Validating meetup details... Done! ✅
 2. Creating meetup file... Done! ✅
 3. Create new branch and pull request... Done! ✅ 
 
-PR: #${pullRequestNumber}`,
+New pull request: #${pullRequestNumber}`,
 	});
 }
 
