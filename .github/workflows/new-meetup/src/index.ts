@@ -245,7 +245,7 @@ ${props.description}`;
 }
 
 function getRegex(title: string) {
-	return new RegExp(`### ${title}\\n\\s*([\\s\\S]*?)\\n\\s*###`);
+	return new RegExp(`### ${title}\\s*\\n\\s*([\\s\\S]*?)\\s*\\n\\s*###`);
 }
 
 function getDescription(issueBody: string) {
