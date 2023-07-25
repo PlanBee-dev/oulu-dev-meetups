@@ -32,7 +32,7 @@ jobs:
                   body: ${{ steps.new_meetup_action.outputs.pull_request_body }}
 
             - name: Update comment
-              uses: ./.github/workflows/post-create-branch
+              uses: ./.github/workflows/post-create-pr
               with:
                   pull_request_number: ${{ steps.create_pr.outputs.pull-request-number }}
                   comment_id: ${{ steps.new_meetup_action.outputs.comment_id }}
