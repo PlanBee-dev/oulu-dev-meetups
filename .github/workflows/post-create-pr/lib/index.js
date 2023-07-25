@@ -7777,9 +7777,9 @@ async function main() {
     body: `
 Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
 
-1. Validating meetup details...Done! \u2705
-2. Creating meetup file...Done! \u2705
-3. Create new branch and pull request...Done! \u2705 
+1. Validating meetup details... Done! \u2705
+2. Creating meetup file... Done! \u2705
+3. Create new branch and pull request... Done! \u2705 
 
 PR: #${pullRequestNumber}`
   });

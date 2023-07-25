@@ -16,9 +16,9 @@ async function main() {
 		body: `
 Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
 
-1. Validating meetup details...Done! ✅
-2. Creating meetup file...Done! ✅
-3. Create new branch and pull request...Done! ✅ 
+1. Validating meetup details... Done! ✅
+2. Creating meetup file... Done! ✅
+3. Create new branch and pull request... Done! ✅ 
 
 PR: #${pullRequestNumber}`,
 	});
