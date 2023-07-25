@@ -11997,9 +11997,7 @@ joinLink: "${props.joinLink}"
 ${props.description}`;
 }
 function getRegex(title) {
-  return new RegExp(`### ${title}
-s*([sS]*?)
-s*###`);
+  return new RegExp(`### ${title}\\n\\s*([\\s\\S]*?)\\n\\s*###`);
 }
 function getDescription(issueBody) {
   const targetPhrase = "### Description";
