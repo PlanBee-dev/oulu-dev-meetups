@@ -1,24 +1,26 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
+const activeNavClass = 'border-indigo-500 text-gray-900';
+const defaultNavClass =
+  'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700';
+const activeMobileNavClass = 'border-indigo-500 bg-indigo-50 text-indigo-700';
+const defaultMobileNavClass =
+  'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800';
 
-type Props = HTMLAttributes<'a'>;
+const { href, linkDescription, isMobile = false } = Astro.props;
 
-const { href, class: className, ...props } = Astro.props;
+const pathname = Astro.url.pathname;
 
-const { pathname } = Astro.url;
 const isActive = href === pathname || href === pathname.replace(/\/$/, '');
+
+const className = isMobile
+  ? (isActive ? activeMobileNavClass : defaultMobileNavClass).concat(
+      ' block border-l-4 py-2 pl-3 pr-4 text-base font-medium',
+    )
+  : (isActive ? activeNavClass : defaultNavClass).concat(
+      ' inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium',
+    );
 ---
 
-<a href={href} class:list={[className, { active: isActive }]} {...props}>
-  <slot />
+<a href={href} class:list={className}>
+  {linkDescription}
 </a>
-<style>
-  a {
-    display: inline-block;
-    text-decoration: none;
-  }
-  a.active {
-    font-weight: bolder;
-    text-decoration: underline;
-  }
-</style>
