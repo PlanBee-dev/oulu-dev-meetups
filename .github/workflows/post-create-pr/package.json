@@ -1,6 +1,6 @@
 {
-	"name": "new-meetup-action",
-	"description": "New meetup action",
+	"name": "post-create-pr-action",
+	"description": "Post create pull request action",
 	"version": "0.0.0",
 	"private": true,
 	"main": "lib/index.js",
@@ -10,8 +10,7 @@
 	},
 	"dependencies": {
 		"@actions/core": "^1.10.0",
-		"@actions/github": "^5.1.1",
-		"date-fns": "^2.30.0"
+		"@actions/github": "^5.1.1"
 	},
 	"devDependencies": {
 		"@types/node": "^20.4.4",
