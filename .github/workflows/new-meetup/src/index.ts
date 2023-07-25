@@ -58,24 +58,13 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
 		!joinLink ||
 		!description
 	) {
-		core.debug(
-			JSON.stringify(
-				{
-					issueTitle,
-					issueBody,
-					issueNumber,
-					date,
-					location,
-					locationLinkGoogleMaps,
-					organiser,
-					organiserLink,
-					joinLink,
-					description,
-				},
-				null,
-				4
-			)
-		);
+		core.debug(`Date: ${date}`);
+		core.debug(`Location: ${location}`);
+		core.debug(`Location link: ${locationLinkGoogleMaps}`);
+		core.debug(`Organiser: ${organiser}`);
+		core.debug(`Organiser link: ${organiserLink}`);
+		core.debug(`Join link: ${joinLink}`);
+		core.debug(`Description: ${description}`);
 
 		await octokit.rest.issues.updateComment({
 			comment_id: createCommentResponse.data.id,
