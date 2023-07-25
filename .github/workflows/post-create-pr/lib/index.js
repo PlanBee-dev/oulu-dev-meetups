@@ -7767,7 +7767,7 @@ var core = __toESM(require_core());
 var import_github = __toESM(require_github());
 async function main() {
   const githubToken = core.getInput("github_token", { required: true });
-  const commentId = core.getInput("comment_id", { required: true });
+  const commentId = Number(core.getInput("comment_id", { required: true }));
   const pullRequestNumber = Number(core.getInput("pull_request_number", { required: true }));
   const octokit = (0, import_github.getOctokit)(githubToken);
   await octokit.rest.issues.updateComment({
@@ -7779,8 +7779,9 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
 
 1. Validating meetup details...Done! \u2705
 2. Creating meetup file...Done! \u2705
-3. Create new branch and pull request...Done! \u2705 #${pullRequestNumber}
-`
+3. Create new branch and pull request...Done! \u2705 
+
+PR: #${pullRequestNumber}`
   });
 }
 main();

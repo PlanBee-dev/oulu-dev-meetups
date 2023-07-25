@@ -11836,13 +11836,7 @@ async function main() {
     repo: import_github.context.repo.repo,
     title: `New meetup: ${issueTitle}`,
     issue_number: issueNumber,
-    body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
-
-1. Validating meetup details...
-2. Create new meetup file
-3. Create new branch and pull request
-`
+    body: getStatusMessage(["loading", "idle", "idle"])
   });
   core.setOutput("comment_id", createCommentResponse.data.id);
   const sanitizedMeetupTitle = sanitizeString(issueTitle);
@@ -11875,13 +11869,7 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
       comment_id: createCommentResponse.data.id,
       owner: import_github.context.repo.owner,
       repo: import_github.context.repo.repo,
-      body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
-
-1. Validating meetup details...Failed! \u274C
-2. Creating meetup file...
-3. Create new branch and pull request
-`
+      body: getStatusMessage(["error", "idle", "idle"])
     });
     core.setFailed("Invalid issue body");
     return;
@@ -11892,13 +11880,7 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
       comment_id: createCommentResponse.data.id,
       owner: import_github.context.repo.owner,
       repo: import_github.context.repo.repo,
-      body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
-
-1. Validating meetup details...Failed! \u274C
-2. Creating meetup file...
-3. Create new branch and pull request
-`
+      body: getStatusMessage(["error", "idle", "idle"])
     });
     core.setFailed("Invalid date");
     return;
@@ -11907,13 +11889,7 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
     comment_id: createCommentResponse.data.id,
     owner: import_github.context.repo.owner,
     repo: import_github.context.repo.repo,
-    body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
-
-1. Validating meetup details...Done! \u2705
-2. Creating meetup file...
-3. Create new branch and pull request
-`
+    body: getStatusMessage(["success", "loading", "idle"])
   });
   const isoDate = parsedDate.toISOString();
   const sanitizedDate = format(parsedDate, "dd-MM-yyyy-HH-mm");
@@ -11928,18 +11904,6 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
     description,
     joinLink
   });
-  await octokit.rest.issues.updateComment({
-    comment_id: createCommentResponse.data.id,
-    owner: import_github.context.repo.owner,
-    repo: import_github.context.repo.repo,
-    body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
-
-1. Validating meetup details...Done! \u2705
-2. Creating meetup file...
-3. Create new branch and pull request
-`
-  });
   await import_promises.default.writeFile(
     `./${meetupFolder}/${sanitizedMeetupTitle}-${sanitizedDate}.md`,
     newMeetupFile
@@ -11948,13 +11912,7 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
     comment_id: createCommentResponse.data.id,
     owner: import_github.context.repo.owner,
     repo: import_github.context.repo.repo,
-    body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request with the new meetup.
-
-1. Validating meetup details...Done! \u2705
-2. Creating meetup file...Done! \u2705
-3. Create new branch and pull request
-`
+    body: getStatusMessage(["success", "success", "loading"])
   });
   const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;
   const pullRequestTitle = `New meetup: ${issueTitle}`;
@@ -12016,6 +11974,17 @@ function getDescription(issueBody) {
   }
   const resultString = issueBody.slice(descriptionIndex + targetPhrase.length);
   return resultString.trim();
+}
+function getStatusMessage(status) {
+  const firstMessage = status[0] === "idle" ? "Validating meetup details..." : status[0] === "loading" ? "Validating meetup details..." : status[0] === "success" ? "Validating meetup details... Done! \u2705" : "Validating meetup details... Failed! \u274C";
+  const secondMessage = status[1] === "idle" ? "Creating meetup file..." : status[1] === "loading" ? "Creating meetup file..." : status[1] === "success" ? "Creating meetup file... Done! \u2705" : "Creating meetup file... Failed! \u274C";
+  const thirdMessage = status[2] === "idle" ? "Create new branch and pull request" : status[2] === "loading" ? "Creating new branch and pull request..." : null;
+  return `
+Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
+
+1. ${firstMessage}
+2. ${secondMessage}
+3. ${thirdMessage}`;
 }
 /*! Bundled license information:
 
