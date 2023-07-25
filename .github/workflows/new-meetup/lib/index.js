@@ -11863,6 +11863,7 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
     core.debug(`Organiser link: ${organiserLink}`);
     core.debug(`Join link: ${joinLink}`);
     core.debug(`Description: ${description}`);
+    core.debug(`Issue body: ${issueBody}`);
     await octokit.rest.issues.updateComment({
       comment_id: createCommentResponse.data.id,
       owner: import_github.context.repo.owner,
