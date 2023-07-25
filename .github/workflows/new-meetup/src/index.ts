@@ -45,6 +45,15 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
 	const organiserLink = issueBody.match(getRegex("Link to organiser"))?.[1];
 	const joinLink = issueBody.match(getRegex("Joining link"))?.[1];
 
+	core.info(`date: ${issueBody.match(getRegex("Time and date"))}`);
+	core.info(`location: ${issueBody.match(getRegex("Location"))}`);
+	core.info(
+		`locationLinkGoogleMaps: ${issueBody.match(getRegex("Location as a Google Maps link"))}`
+	);
+	core.info(`organiser: ${issueBody.match(getRegex("Organiser"))}`);
+	core.info(`organiserLink: ${issueBody.match(getRegex("Link to organiser"))}`);
+	core.info(`joinLink: ${issueBody.match(getRegex("Joining link"))}`);
+
 	const description = getDescription(issueBody);
 
 	if (
