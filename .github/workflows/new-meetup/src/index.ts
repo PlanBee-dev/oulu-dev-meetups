@@ -38,16 +38,14 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
 
 	const sanitizedMeetupTitle = sanitizeString(issueTitle);
 
-	const date = issueBody.match(/### Time and date\n\n(.*)/)?.[1];
-	const location = issueBody.match(/### Location\n\n(.*)/)?.[1];
-	const locationLinkGoogleMaps = issueBody.match(
-		/### Location as a Google Maps link\n\n(.*)/
-	)?.[1];
-	const organiser = issueBody.match(/### Organiser\n\n(.*)/)?.[1];
-	const organiserLink = issueBody.match(/### Link to organiser\n\n(.*)/)?.[1];
-	const joinLink = issueBody.match(/### Joining link\n\n(.*)/)?.[1];
+	const date = issueBody.match(getRegex("Time and date"))?.[1];
+	const location = issueBody.match(getRegex("Location"))?.[1];
+	const locationLinkGoogleMaps = issueBody.match(getRegex("Location as a Google Maps link"))?.[1];
+	const organiser = issueBody.match(getRegex("Organiser"))?.[1];
+	const organiserLink = issueBody.match(getRegex("Link to organiser"))?.[1];
+	const joinLink = issueBody.match(getRegex("Joining link"))?.[1];
 
-	const description = issueBody.match(/### Description\n\n([\s\S]*)/)?.[1];
+	const description = getDescription(issueBody);
 
 	if (
 		!date ||
@@ -234,4 +232,20 @@ joinLink: "${props.joinLink}"
 # ${props.issueTitle}
 
 ${props.description}`;
+}
+
+function getRegex(title: string) {
+	return new RegExp(`### ${title}\n\s*([\s\S]*?)\n\s*###`);
+}
+
+function getDescription(issueBody: string) {
+	const targetPhrase = "### Description";
+
+	const descriptionIndex = issueBody.indexOf(targetPhrase);
+	if (descriptionIndex === -1) {
+		return null;
+	}
+
+	const resultString = issueBody.slice(descriptionIndex + targetPhrase.length);
+	return resultString.trim();
 }
