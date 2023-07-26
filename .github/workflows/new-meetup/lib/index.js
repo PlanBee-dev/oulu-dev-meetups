@@ -11840,21 +11840,14 @@ async function main() {
   });
   core.setOutput("comment_id", createCommentResponse.data.id);
   const sanitizedMeetupTitle = sanitizeString(issueTitle);
-  const date = issueBody.match(getRegex("Time and date"))?.[1];
-  const location = issueBody.match(getRegex("Location"))?.[1];
-  const locationLinkGoogleMaps = issueBody.match(getRegex("Location as a Google Maps link"))?.[1];
-  const organiser = issueBody.match(getRegex("Organiser"))?.[1];
-  const organiserLink = issueBody.match(getRegex("Link to organiser"))?.[1];
-  const joinLink = issueBody.match(getRegex("Joining link"))?.[1];
-  core.info(`issueBody: ${issueBody}`);
-  core.info(`date: ${issueBody.match(getRegex("Time and date"))}`);
-  core.info(`location: ${issueBody.match(getRegex("Location"))}`);
-  core.info(
-    `locationLinkGoogleMaps: ${issueBody.match(getRegex("Location as a Google Maps link"))}`
-  );
-  core.info(`organiser: ${issueBody.match(getRegex("Organiser"))}`);
-  core.info(`organiserLink: ${issueBody.match(getRegex("Link to organiser"))}`);
-  core.info(`joinLink: ${issueBody.match(getRegex("Joining link"))}`);
+  const date = issueBody.match(getTitleParsingRegex("Time and date"))?.[1];
+  const location = issueBody.match(getTitleParsingRegex("Location"))?.[1];
+  const locationLinkGoogleMaps = issueBody.match(
+    getTitleParsingRegex("Location as a Google Maps link")
+  )?.[1];
+  const organiser = issueBody.match(getTitleParsingRegex("Organiser"))?.[1];
+  const organiserLink = issueBody.match(getTitleParsingRegex("Link to organiser"))?.[1];
+  const joinLink = issueBody.match(getTitleParsingRegex("Joining link"))?.[1];
   const description = getDescription(issueBody);
   if (!date || !location || !locationLinkGoogleMaps || !organiser || !organiserLink || !joinLink || !description) {
     core.debug(`Date: ${date}`);
@@ -11963,7 +11956,7 @@ joinLink: "${props.joinLink}"
 
 ${props.description}`;
 }
-function getRegex(title) {
+function getTitleParsingRegex(title) {
   return new RegExp(`### ${title}\\s*\\n\\s*([\\s\\S]*?)\\s*\\n\\s*###`);
 }
 function getDescription(issueBody) {

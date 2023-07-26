@@ -7781,7 +7781,7 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
 2. Creating meetup file... Done! \u2705
 3. Create new branch and pull request... Done! \u2705 
 
-New pull request: #${pullRequestNumber}`
+Here's the new pull request: #${pullRequestNumber}`
   });
 }
 main();
