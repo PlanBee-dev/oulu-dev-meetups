@@ -1,4 +1,4 @@
-name: New meetup
+name: Create new meetup
 
 permissions:
     contents: write
@@ -10,7 +10,7 @@ on:
         types: [opened]
 
 jobs:
-    new-meetup:
+    create-new-meetup:
         runs-on: ubuntu-latest
         if: "contains( github.event.issue.labels.*.name, 'meetup' )"
 
