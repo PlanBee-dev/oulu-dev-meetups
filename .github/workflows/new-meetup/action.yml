@@ -25,11 +25,12 @@ inputs:
 runs:
     using: "composite"
     steps:
-        - run: npm i -g pnpm tsx
+        - run: npm i -g pnpm
           shell: bash
 
         - run: pnpm i
           shell: bash
 
-        - run: tsx src/index.ts
+        - run: pnpm run
           shell: bash
+          working-directory: .github/workflows/new-meetup

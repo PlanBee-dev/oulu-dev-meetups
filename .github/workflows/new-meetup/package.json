@@ -6,7 +6,8 @@
 	"main": "lib/index.js",
 	"scripts": {
 		"prebuild": "tsc",
-		"build": "node esbuild.config.js"
+		"build": "node esbuild.config.js",
+		"run": "tsx src/index.tsx"
 	},
 	"dependencies": {
 		"@actions/core": "^1.10.0",
