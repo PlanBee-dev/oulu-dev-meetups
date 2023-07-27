@@ -32,7 +32,7 @@ runs:
           shell: bash
           working-directory: .github/workflows/new-meetup
 
-        - run: MEETUP_FOLDER pnpm start
+        - run: pnpm start
           shell: bash
           working-directory: .github/workflows/new-meetup
           env:
