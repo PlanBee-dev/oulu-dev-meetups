@@ -18,7 +18,7 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
 
 1. Validating meetup details... Done! ✅
 2. Creating meetup file... Done! ✅
-3. Create new branch and pull request... Done! ✅ 
+3. Creating new branch and pull request... Done! ✅ 
 
 Here's the new pull request: #${pullRequestNumber}`,
 	});
