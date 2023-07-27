@@ -30,6 +30,7 @@ runs:
 
         - run: pnpm i
           shell: bash
+          working-directory: .github/workflows/new-meetup
 
         - run: pnpm start
           shell: bash
