@@ -35,3 +35,9 @@ runs:
         - run: pnpm start
           shell: bash
           working-directory: .github/workflows/new-meetup
+          with:
+              meetup_folder: ${{ inputs.meetup_folder }}
+              issue_title: ${{ inputs.issue_title }}
+              issue_body: ${{ inputs.issue_body }}
+              issue_number: ${{ inputs.issue_number }}
+              github_token: ${{ inputs.github_token }}
