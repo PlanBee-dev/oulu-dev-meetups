@@ -1,7 +1,9 @@
 {
 	"name": "post-create-pr-action",
 	"private": true,
-	"scripts": {},
+	"scripts": {
+		"start": "tsx src/index.ts"
+	},
 	"dependencies": {
 		"@actions/github": "^5.1.1",
 		"tsx": "^3.12.7",
