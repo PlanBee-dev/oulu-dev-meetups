@@ -17,6 +17,7 @@ jobs:
             - name: Check if should run
               id: should-run
               if: "contains( github.event.issue.labels.*.name, 'meetup' )"
+              run: echo "hi"
 
             - name: Checkout
               needs: [should-run]
