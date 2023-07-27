@@ -1,16 +1,19 @@
-import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
+import { z } from "zod";
+
+const envSchema = z.object({
+	PULL_REQUEST_NUMBER: z.string().transform(Number),
+	COMMENT_ID: z.string().transform(Number),
+	GITHUB_TOKEN: z.string(),
+});
 
 async function main() {
-	const githubToken = core.getInput("github_token", { required: true });
+	const env = envSchema.parse(process.env);
 
-	const commentId = Number(core.getInput("comment_id", { required: true }));
-	const pullRequestNumber = Number(core.getInput("pull_request_number", { required: true }));
-
-	const octokit = getOctokit(githubToken);
+	const octokit = getOctokit(env.GITHUB_TOKEN);
 
 	await octokit.rest.issues.updateComment({
-		comment_id: commentId,
+		comment_id: env.COMMENT_ID,
 		owner: context.repo.owner,
 		repo: context.repo.repo,
 		body: `
@@ -20,7 +23,7 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
 2. Creating meetup file... Done! ✅
 3. Creating new branch and pull request... Done! ✅ 
 
-Here's the new pull request: #${pullRequestNumber}`,
+Here's the new pull request: #${env.PULL_REQUEST_NUMBER}`,
 	});
 }
 
