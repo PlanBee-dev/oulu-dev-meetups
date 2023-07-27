@@ -12,6 +12,7 @@ on:
 jobs:
     new-meetup:
         runs-on: ubuntu-latest
+        if: "contains( github.event.issue.labels.*.name, 'meetup' )"
 
         steps:
             - name: Checkout
@@ -25,7 +26,7 @@ jobs:
                   pnpm i && \
                   pnpm start
               env:
-                  MEETUP_FOLDER: "../../../src/content/meetups"
+                  MEETUP_FOLDER: "../../src/content/meetups" # relative from action's root
                   ISSUE_TITLE: ${{ github.event.issue.title }}
                   ISSUE_BODY: ${{ github.event.issue.body }}
                   ISSUE_NUMBER: ${{ github.event.issue.number }}

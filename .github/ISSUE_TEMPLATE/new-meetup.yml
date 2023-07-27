@@ -1,6 +1,6 @@
-name: New event
-description: Add an event
-labels: [new-event]
+name: New meetup
+description: Add a meetup
+labels: [meetup]
 body:
   - type: input
     id: date
