@@ -14,10 +14,16 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Check if should run
+              id: should-run
+              if: "contains( github.event.issue.labels.*.name, 'meetup' )"
+
             - name: Checkout
+              needs: [should-run]
               uses: actions/checkout@v3
 
             - name: Create new meetup
+              needs: [should-run]
               id: new_meetup
               run: |
                   cd actions/new-meetup && \
@@ -32,6 +38,7 @@ jobs:
                   GITHUB_TOKEN: ${{ github.token }}
 
             - name: Create pull request
+              needs: [should-run]
               uses: peter-evans/create-pull-request@v5
               id: create_pr
               with:
@@ -40,6 +47,7 @@ jobs:
                   body: ${{ steps.new_meetup.outputs.pull_request_body }}
 
             - name: Update comment
+              needs: [should-run]
               run: |
                   cd actions/post-create-pr && \
                   npm i -g pnpm && \
