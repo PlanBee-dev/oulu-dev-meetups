@@ -17,22 +17,30 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: Run new meetup action
-              uses: ./.github/workflows/new-meetup
-              id: new_meetup_action
-              with:
-                  meetup_folder: "src/content/meetups"
+            - name: Create new meetup
+              id: new_meetup
+              run: |
+                  cd .github/workflows/new-meetup && \
+                  npm i -g pnpm && \
+                  pnpm i && \
+                  pnpm start
+              env:
+                  MEETUP_FOLDER: "src/content/meetups"
+                  ISSUE_TITLE: ${{ github.event.issue.title }}
+                  ISSUE_BODY: ${{ github.event.issue.body }}
+                  ISSUE_NUMBER: ${{ github.event.issue.number }}
+                  GITHUB_TOKEN: ${{ github.token }}
 
             - name: Create pull request
               uses: peter-evans/create-pull-request@v5
               id: create_pr
               with:
-                  branch: ${{ steps.new_meetup_action.outputs.branch_name }}
-                  title: ${{ steps.new_meetup_action.outputs.pull_request_title }}
-                  body: ${{ steps.new_meetup_action.outputs.pull_request_body }}
+                  branch: ${{ steps.new_meetup.outputs.branch_name }}
+                  title: ${{ steps.new_meetup.outputs.pull_request_title }}
+                  body: ${{ steps.new_meetup.outputs.pull_request_body }}
 
             - name: Update comment
               uses: ./.github/workflows/post-create-pr
               with:
                   pull_request_number: ${{ steps.create_pr.outputs.pull-request-number }}
-                  comment_id: ${{ steps.new_meetup_action.outputs.comment_id }}
+                  comment_id: ${{ steps.new_meetup.outputs.comment_id }}

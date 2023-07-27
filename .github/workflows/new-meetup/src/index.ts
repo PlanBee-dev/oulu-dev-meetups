@@ -4,44 +4,43 @@ import format from "date-fns/format";
 import isValid from "date-fns/isValid";
 import parse from "date-fns/parse";
 import fs from "fs/promises";
+import { z } from "zod";
+
+const envSchema = z.object({
+	MEETUP_FOLDER: z.string(),
+	ISSUE_TITLE: z.string(),
+	ISSUE_BODY: z.string(),
+	ISSUE_NUMBER: z.string().transform(Number),
+	GITHUB_TOKEN: z.string(),
+});
 
 async function main() {
-	const githubToken = core.getInput("github_token", { required: true });
+	const env = envSchema.parse(process.env);
 
-	const issueTitle = core.getInput("issue_title", { required: true });
-	const issueBody = core.getInput("issue_body", { required: true });
-	const issueNumber = Number(core.getInput("issue_number", { required: true }));
-	const meetupFolder = core.getInput("meetup_folder", { required: true });
-
-	if (isNaN(issueNumber)) {
-		core.setFailed("Invalid issue number");
-		return;
-	}
-
-	const octokit = getOctokit(githubToken);
+	const octokit = getOctokit(env.GITHUB_TOKEN);
 
 	const createCommentResponse = await octokit.rest.issues.createComment({
 		owner: context.repo.owner,
 		repo: context.repo.repo,
-		title: `New meetup: ${issueTitle}`,
-		issue_number: issueNumber,
+		title: `New meetup: ${env.ISSUE_TITLE}`,
+		issue_number: env.ISSUE_NUMBER,
 		body: getStatusMessage(["loading", "idle", "idle"]),
 	});
 
 	core.setOutput("comment_id", createCommentResponse.data.id);
 
-	const sanitizedMeetupTitle = sanitizeString(issueTitle);
+	const sanitizedMeetupTitle = sanitizeString(env.ISSUE_TITLE);
 
-	const date = issueBody.match(getTitleParsingRegex("Time and date"))?.[1];
-	const location = issueBody.match(getTitleParsingRegex("Location"))?.[1];
-	const locationLinkGoogleMaps = issueBody.match(
+	const date = env.ISSUE_BODY.match(getTitleParsingRegex("Time and date"))?.[1];
+	const location = env.ISSUE_BODY.match(getTitleParsingRegex("Location"))?.[1];
+	const locationLinkGoogleMaps = env.ISSUE_BODY.match(
 		getTitleParsingRegex("Location as a Google Maps link")
 	)?.[1];
-	const organiser = issueBody.match(getTitleParsingRegex("Organiser"))?.[1];
-	const organiserLink = issueBody.match(getTitleParsingRegex("Link to organiser"))?.[1];
-	const joinLink = issueBody.match(getTitleParsingRegex("Joining link"))?.[1];
+	const organiser = env.ISSUE_BODY.match(getTitleParsingRegex("Organiser"))?.[1];
+	const organiserLink = env.ISSUE_BODY.match(getTitleParsingRegex("Link to organiser"))?.[1];
+	const joinLink = env.ISSUE_BODY.match(getTitleParsingRegex("Joining link"))?.[1];
 
-	const description = getDescription(issueBody);
+	const description = getDescription(env.ISSUE_BODY);
 
 	if (
 		!date ||
@@ -59,7 +58,7 @@ async function main() {
 		core.debug(`Organiser link: ${organiserLink}`);
 		core.debug(`Join link: ${joinLink}`);
 		core.debug(`Description: ${description}`);
-		core.debug(`Issue body: ${issueBody}`);
+		core.debug(`Issue body: ${env.ISSUE_BODY}`);
 
 		await octokit.rest.issues.updateComment({
 			comment_id: createCommentResponse.data.id,
@@ -101,14 +100,14 @@ async function main() {
 		organiserLink,
 		location,
 		locationLinkGoogleMaps,
-		issueNumber,
-		issueTitle,
+		issueNumber: env.ISSUE_NUMBER,
+		issueTitle: env.ISSUE_TITLE,
 		description,
 		joinLink,
 	});
 
 	await fs.writeFile(
-		`./${meetupFolder}/${sanitizedMeetupTitle}-${sanitizedDate}.md`,
+		`./${env.MEETUP_FOLDER}/${sanitizedMeetupTitle}-${sanitizedDate}.md`,
 		newMeetupFile
 	);
 
@@ -121,14 +120,14 @@ async function main() {
 
 	const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;
 
-	const pullRequestTitle = `New meetup: ${issueTitle}`;
+	const pullRequestTitle = `New meetup: ${env.ISSUE_TITLE}`;
 	const pullRequestBody = getPullRequestBody({
 		isoDate,
 		organiser,
 		organiserLink,
 		location,
 		locationLinkGoogleMaps,
-		issueNumber,
+		issueNumber: env.ISSUE_NUMBER,
 	});
 
 	core.setOutput("branch_name", newBranchName);
