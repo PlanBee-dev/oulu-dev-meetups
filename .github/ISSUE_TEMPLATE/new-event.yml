@@ -2,58 +2,58 @@ name: New event
 description: Add an event
 labels: [new-event]
 body:
-    - type: input
-      id: date
-      validations:
-          required: true
-      attributes:
-          label: Time and date
-          placeholder: "Time and date as: (?)"
+  - type: input
+    id: date
+    validations:
+      required: true
+    attributes:
+      label: Time and date
+      placeholder: 'Time and date as: (?)'
 
-    - type: input
-      id: location
-      validations:
-          required: true
-      attributes:
-          label: Location
-          placeholder: "Name of the place"
+  - type: input
+    id: location
+    validations:
+      required: true
+    attributes:
+      label: Location
+      placeholder: 'Name of the place'
 
-    - type: input
-      id: location_google_maps
-      validations:
-          required: true
-      attributes:
-          label: Location as a Google Maps link
-          placeholder: "Location as a Google Maps link"
+  - type: input
+    id: location_google_maps
+    validations:
+      required: true
+    attributes:
+      label: Location as a Google Maps link
+      placeholder: 'Location as a Google Maps link'
 
-    - type: input
-      id: organiser
-      validations:
-          required: true
-      attributes:
-          label: Organiser
-          placeholder: Organiser
+  - type: input
+    id: organiser
+    validations:
+      required: true
+    attributes:
+      label: Organiser
+      placeholder: Organiser
 
-    - type: input
-      id: organiser_link
-      validations:
-          required: true
-      attributes:
-          label: Link to organiser
-          placeholder: Link to organiser
+  - type: input
+    id: organiser_link
+    validations:
+      required: true
+    attributes:
+      label: Link to organiser
+      placeholder: Link to organiser
 
-    - type: input
-      id: joining_link
-      validations:
-          required: true
-      attributes:
-          label: Joining link
-          placeholder: Joining link
+  - type: input
+    id: joining_link
+    validations:
+      required: true
+    attributes:
+      label: Joining link
+      placeholder: Joining link
 
-    - type: textarea
-      id: description
-      validations:
-          required: true
-      attributes:
-          label: Description
-          placeholder: Description
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: Description
+      placeholder: Description
