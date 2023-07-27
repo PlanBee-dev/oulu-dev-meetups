@@ -25,7 +25,7 @@ jobs:
                   pnpm i && \
                   pnpm start
               env:
-                  MEETUP_FOLDER: "src/content/meetups"
+                  MEETUP_FOLDER: "../../../src/content/meetups"
                   ISSUE_TITLE: ${{ github.event.issue.title }}
                   ISSUE_BODY: ${{ github.event.issue.body }}
                   ISSUE_NUMBER: ${{ github.event.issue.number }}
