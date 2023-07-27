@@ -51,7 +51,7 @@ jobs:
                   npm i -g pnpm && \
                   pnpm i && \
                   pnpm start
-              with:
+              env:
                   PULL_REQUEST_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
                   COMMENT_ID: ${{ steps.new_meetup.outputs.comment_id }}
                   GITHUB_TOKEN: ${{ github.token }}
