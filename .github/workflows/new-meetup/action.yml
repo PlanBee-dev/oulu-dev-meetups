@@ -32,12 +32,12 @@ runs:
           shell: bash
           working-directory: .github/workflows/new-meetup
 
-        - run: pnpm start
+        - run: MEETUP_FOLDER pnpm start
           shell: bash
           working-directory: .github/workflows/new-meetup
-          with:
-              meetup_folder: ${{ inputs.meetup_folder }}
-              issue_title: ${{ inputs.issue_title }}
-              issue_body: ${{ inputs.issue_body }}
-              issue_number: ${{ inputs.issue_number }}
-              github_token: ${{ inputs.github_token }}
+          env:
+              MEETUP_FOLDER: ${{ inputs.meetup_folder }}
+              ISSUE_TITLE: ${{ inputs.issue_title }}
+              ISSUE_BODY: ${{ inputs.issue_body }}
+              ISSUE_NUMBER: ${{ inputs.issue_number }}
+              GITHUB_TOKEN: ${{ inputs.github_token }}
