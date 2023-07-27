@@ -20,7 +20,7 @@ jobs:
             - name: Create new meetup
               id: new_meetup
               run: |
-                  cd .github/workflows/new-meetup && \
+                  cd src/actions/new-meetup && \
                   npm i -g pnpm && \
                   pnpm i && \
                   pnpm start
@@ -41,7 +41,7 @@ jobs:
 
             - name: Update comment
               run: |
-                  cd .github/workflows/post-create-pr && \
+                  cd src/actions/post-create-pr && \
                   npm i -g pnpm && \
                   pnpm i && \
                   pnpm start
