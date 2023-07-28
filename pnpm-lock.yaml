@@ -56,6 +56,9 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
+      meetup-shared:
+        specifier: workspace:*
+        version: link:../meetup-shared
       tsx:
         specifier: ^3.12.7
         version: 3.12.7
@@ -68,6 +71,9 @@ importers:
       '@actions/github':
         specifier: ^5.1.1
         version: 5.1.1
+      meetup-shared:
+        specifier: workspace:*
+        version: link:../meetup-shared
       tsx:
         specifier: ^3.12.7
         version: 3.12.7

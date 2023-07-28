@@ -8,6 +8,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "meetup-shared": "workspace:*",
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
     "date-fns": "^2.30.0",
