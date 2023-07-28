@@ -1,0 +1,44 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseHead from '../components/BaseHead.astro';
+import MeetupCard from '../components/MeetupCard.astro';
+
+const {
+  name,
+  description,
+  location,
+  locationLink,
+  time,
+  organizer,
+  organizerLink,
+  meetupLink,
+} = Astro.props;
+---
+
+<head>
+  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+</head>
+<body class="h-full">
+  <div class="min-h-full">
+    <Header />
+    <div class="py-10">
+      <main>
+        <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+          <MeetupCard
+            name={name}
+            description={description}
+            location={location}
+            locationLink={locationLink}
+            time={time}
+            organizer={organizer}
+            organizerLink={organizerLink}
+            meetupLink={meetupLink}
+          />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  </div>
+</body>
