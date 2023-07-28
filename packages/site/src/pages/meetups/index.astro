@@ -21,21 +21,22 @@ const meetups = await getCollection('meetups');
           <div
             class="mx-auto max-w-4xl border border-gray-400 p-8 sm:px-24 bg-gray-50"
           >
-            <h1 class="text-2xl text-center">Oulu developer meetups</h1>
+            <h1 class="text-2xl text-center mb-4">Oulu developer meetups</h1>
             <main>
               <section>
                 <ul>
                   {
                     meetups.map((meetup) => (
                       <li>
-                        <p>{meetup.data.time} /</p>
-                        <a
-                          href={`${import.meta.env.BASE_URL}meetups/${
-                            meetup.slug
-                          }`}
-                        >
-                          {meetup.data.name}
-                        </a>
+                        <p>
+                          <a
+                            href={`${import.meta.env.BASE_URL}meetups/${
+                              meetup.slug
+                            }`}
+                          >
+                            {meetup.data.time} / {meetup.data.name}
+                          </a>
+                        </p>
                       </li>
                     ))
                   }
