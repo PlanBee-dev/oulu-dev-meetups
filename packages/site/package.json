@@ -1,0 +1,37 @@
+{
+  "name": "oulu-dev-meetups",
+  "type": "module",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "deploy": "touch dist/.nojekyll && gh-pages --dist dist --dotfiles true",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint . --max-warnings 0 --ext .astro,.ts,.js",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^0.19.7",
+    "@astrojs/rss": "^2.4.3",
+    "@astrojs/sitemap": "^2.0.1",
+    "@astrojs/tailwind": "^4.0.0",
+    "@tailwindcss/forms": "^0.5.4",
+    "@tailwindcss/typography": "^0.5.9",
+    "astro": "^2.9.0",
+    "tailwindcss": "^3.3.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.36.1",
+    "@typescript-eslint/parser": "^6.1.0",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-astro": "^0.27.2",
+    "eslint-plugin-prettier": "^5.0.0",
+    "gh-pages": "^5.0.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-astro": "^0.11.0"
+  }
+}

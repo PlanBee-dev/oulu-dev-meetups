@@ -1,6 +1,7 @@
 {
 	"name": "post-create-pr-action",
 	"private": true,
+    "version": "0.0.1",
 	"scripts": {
 		"start": "tsx src/index.ts"
 	},

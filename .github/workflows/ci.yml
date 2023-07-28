@@ -26,5 +26,5 @@ jobs:
 
       - name: Test
         run: |
-          pnpm playwright install chromium
+          pnpm dlx playwright install chromium
           pnpm test
