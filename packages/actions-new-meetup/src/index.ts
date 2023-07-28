@@ -3,7 +3,7 @@ import { context, getOctokit } from '@actions/github';
 import format from 'date-fns/format';
 import isValid from 'date-fns/isValid';
 import parse from 'date-fns/parse';
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 import { z } from 'zod';
 
 const envSchema = z.object({
@@ -143,7 +143,7 @@ async function main() {
   core.info('Done');
 }
 
-main();
+void main();
 
 function sanitizeString(str: string) {
   return str.replace(/[^a-z0-9]/gi, '-').toLowerCase();
