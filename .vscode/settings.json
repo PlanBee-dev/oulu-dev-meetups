@@ -5,5 +5,9 @@
     "astro",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "[astro][typescript][javascript][json][yaml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
