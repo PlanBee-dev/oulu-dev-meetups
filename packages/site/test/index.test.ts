@@ -27,7 +27,10 @@ test('main heading is set', async () => {
 
   expect(
     await page
-      .getByRole('heading', { level: 1, name: 'Oulu developer meetups' })
+      .getByRole('heading', {
+        level: 1,
+        name: 'Developer meetups in Oulu area',
+      })
       .isVisible(),
   ).toBeTruthy();
 });
