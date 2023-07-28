@@ -2,6 +2,7 @@
   "name": "meetup-shared",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "exports": "./dist/index.js",
   "scripts": {
     "build": "tsc",
