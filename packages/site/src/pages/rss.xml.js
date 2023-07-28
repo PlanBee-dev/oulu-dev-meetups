@@ -7,7 +7,7 @@ export async function get(context) {
   const rssItems = meetups.map((meetup) => ({
     title: meetup.data.name,
     link: `${import.meta.env.BASE_URL}meetups/${meetup.slug}`,
-    pubDate: meetup.data.time
+    pubDate: meetup.data.time,
   }));
   return rss({
     title: SITE_TITLE,
