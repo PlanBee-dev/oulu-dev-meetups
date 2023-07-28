@@ -143,7 +143,7 @@ async function main() {
   core.info('Done');
 }
 
-main();
+void main();
 
 function sanitizeString(str: string) {
   return str.replace(/[^a-z0-9]/gi, '-').toLowerCase();

@@ -28,6 +28,16 @@ module.exports = {
         extraFileExtensions: ['.astro'],
       },
     },
+    {
+      files: ['./packages/**/*.ts'],
+      excludedFiles: ['**/*.d.ts'],
+      parserOptions: {
+        project: ['./packages/*/tsconfig.json'],
+      },
+      extends: [
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      ],
+    },
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
 };
