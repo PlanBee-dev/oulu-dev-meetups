@@ -17,6 +17,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-astro": "^0.27.2",
     "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-unicorn": "^48.0.1",
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.11.0",
     "typescript": "^5.1.6"

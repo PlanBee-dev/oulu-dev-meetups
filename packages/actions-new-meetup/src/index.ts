@@ -3,7 +3,7 @@ import { context, getOctokit } from '@actions/github';
 import format from 'date-fns/format';
 import isValid from 'date-fns/isValid';
 import parse from 'date-fns/parse';
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 import { z } from 'zod';
 
 const envSchema = z.object({

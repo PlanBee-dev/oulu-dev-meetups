@@ -10,11 +10,15 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
+  plugins: ['unicorn'],
   extends: [
     'eslint:recommended',
     'plugin:prettier/recommended',
     'plugin:astro/recommended',
   ],
+  rules: {
+    'unicorn/prefer-node-protocol': 'error',
+  },
   overrides: [
     {
       files: ['*.astro'],
