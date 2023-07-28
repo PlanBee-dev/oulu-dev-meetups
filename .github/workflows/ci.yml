@@ -25,7 +25,6 @@ jobs:
         run: pnpm lint
 
       - name: Test
-        working-directory: ./packages/site
         run: |
-          pnpm playwright install chromium
+          pnpm dlx playwright install chromium
           pnpm test
