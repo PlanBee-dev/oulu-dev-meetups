@@ -1,15 +1,7 @@
 ---
 const meetupProps = Astro.props;
-const {
-  name,
-  description,
-  location,
-  locationLink,
-  time,
-  organizer,
-  organizerLink,
-  meetupLink,
-} = meetupProps.meetup.data;
+const { location, locationLink, time, organizer, organizerLink, meetupLink } =
+  meetupProps.meetup.data;
 
 const { Content } = await meetupProps.meetup.render();
 ---
