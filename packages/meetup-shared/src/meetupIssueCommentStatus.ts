@@ -49,12 +49,13 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
 }
 
 function showError(error: Record<string, string[]>) {
-  return `<details>
+  return `\n<details>
+
 <summary>Click to see the error</summary>
 
 \`\`\`json
 ${JSON.stringify(error, null, 4)}
 \`\`\`
 
-</details>`;
+</details>\n`;
 }
