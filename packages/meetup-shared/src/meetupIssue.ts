@@ -34,7 +34,7 @@ export function parseMeetupIssueBody(body: string) {
 
   const length = Object.keys(meetupKeyMap).length;
 
-  Object.entries(meetupKeyMap).forEach(([title, key], i) => {
+  Object.entries(meetupKeyMap).forEach(([key, title], i) => {
     const isLast = i === length - 1;
 
     // The last prop is a free text field, needs to be handled differently
