@@ -20,13 +20,13 @@ jobs:
 
             - name: Create new meetup
               id: new_meetup
+              working-directory: ./packages/actions-new-meetup
               run: |
-                  cd actions/new-meetup && \
-                  npm i -g pnpm && \
-                  pnpm i && \
+                  npm i -g pnpm
+                  pnpm i
                   pnpm start
               env:
-                  MEETUP_FOLDER: "../../src/content/meetups" # relative from action's root
+                  MEETUP_FOLDER: "../site/content/meetups" # relative from action's root
                   ISSUE_TITLE: ${{ github.event.issue.title }}
                   ISSUE_BODY: ${{ github.event.issue.body }}
                   ISSUE_NUMBER: ${{ github.event.issue.number }}
@@ -41,10 +41,10 @@ jobs:
                   body: ${{ steps.new_meetup.outputs.pull_request_body }}
 
             - name: Update comment
+              working-directory: ./packages/actions-new-meetup
               run: |
-                  cd actions/post-create-pr && \
-                  npm i -g pnpm && \
-                  pnpm i && \
+                  npm i -g pnpm
+                  pnpm i
                   pnpm start
               env:
                   PULL_REQUEST_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
