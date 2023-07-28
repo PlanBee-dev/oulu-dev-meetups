@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import format from 'date-fns/format';
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 import { z } from 'zod';
 import {
   getMeetupDate,
@@ -95,7 +95,7 @@ async function main() {
   core.info('Done');
 }
 
-main();
+void main();
 
 function sanitizeString(str: string) {
   return str.replace(/[^a-z0-9]/gi, '-').toLowerCase();
