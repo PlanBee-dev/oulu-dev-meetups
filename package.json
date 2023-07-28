@@ -1,5 +1,6 @@
 {
     "name": "oulu-dev-meetups-monorepo",
+    "private": true,
     "packageManager": "pnpm@8.6.2",
     "scripts": {
         "test": "pnpm -r --parallel run test"
