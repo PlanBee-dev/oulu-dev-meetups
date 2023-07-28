@@ -3,52 +3,63 @@ description: Add a meetup
 labels: [meetup]
 body:
   - type: input
+    id: title
+    validations:
+      required: true
+    attributes:
+      label: Meetup title
+      placeholder: "Let's all learn javascript"
+
+  - type: input
+    id: signupLink
+    validations:
+      required: true
+    attributes:
+      label: Signup link for meetup
+
+  - type: input
+    id: organizer
+    validations:
+      required: true
+    attributes:
+      label: Organizer
+
+  - type: input
+    id: organizerLink
+    validations:
+      required: true
+    attributes:
+      label: Organizer link
+
+  - type: input
     id: date
     validations:
       required: true
     attributes:
-      label: Time and date
-      placeholder: 'Time and date as: (?)'
+      label: Date
+      placeholder: Date as yyyy-MM-dd
+
+  - type: input
+    id: time
+    validations:
+      required: true
+    attributes:
+      label: Time
+      placeholder: Time as HH:mm
 
   - type: input
     id: location
     validations:
       required: true
     attributes:
-      label: Location
-      placeholder: 'Name of the place'
+      label: Street address
 
   - type: input
-    id: location_google_maps
+    id: locationLink
     validations:
       required: true
     attributes:
-      label: Location as a Google Maps link
-      placeholder: 'Location as a Google Maps link'
-
-  - type: input
-    id: organiser
-    validations:
-      required: true
-    attributes:
-      label: Organiser
-      placeholder: Organiser
-
-  - type: input
-    id: organiser_link
-    validations:
-      required: true
-    attributes:
-      label: Link to organiser
-      placeholder: Link to organiser
-
-  - type: input
-    id: joining_link
-    validations:
-      required: true
-    attributes:
-      label: Joining link
-      placeholder: Joining link
+      label: Maps link for address
 
   - type: textarea
     id: description
@@ -56,4 +67,3 @@ body:
       required: true
     attributes:
       label: Description
-      placeholder: Description
