@@ -1,30 +1,42 @@
-type Status = 'loading' | 'success' | 'error' | 'idle';
+type Step =
+  | {
+      status: 'idle' | 'loading' | 'success';
+      error?: never;
+    }
+  | {
+      status: 'error';
+      error: Record<string, string[]>;
+    };
 
 export function getMeetupIssueCommentStatus(
-  status: readonly [Status, Status, Status],
+  steps: readonly [Step, Step, Step],
 ) {
   const firstMessage =
-    status[0] === 'idle'
+    steps[0].status === 'idle'
       ? 'Validating meetup details...'
-      : status[0] === 'loading'
+      : steps[0].status === 'loading'
       ? 'Validating meetup details...'
-      : status[0] === 'success'
+      : steps[0].status === 'success'
       ? 'Validating meetup details... Done! ✅'
-      : 'Validating meetup details... Failed! ❌';
+      : steps[0].status === 'error'
+      ? 'Validating meetup details... Failed! ❌' + showError(steps[0].error)
+      : null;
 
   const secondMessage =
-    status[1] === 'idle'
+    steps[1].status === 'idle'
+      ? 'Create meetup file'
+      : steps[1].status === 'loading'
       ? 'Creating meetup file...'
-      : status[1] === 'loading'
-      ? 'Creating meetup file...'
-      : status[1] === 'success'
+      : steps[1].status === 'success'
       ? 'Creating meetup file... Done! ✅'
-      : 'Creating meetup file... Failed! ❌';
+      : steps[1].status === 'error'
+      ? 'Creating meetup file... Failed! ❌' + showError(steps[1].error)
+      : null;
 
   const thirdMessage =
-    status[2] === 'idle'
+    steps[2].status === 'idle'
       ? 'Create new branch and pull request'
-      : status[2] === 'loading'
+      : steps[2].status === 'loading'
       ? 'Creating new branch and pull request...'
       : null;
 
@@ -34,4 +46,15 @@ Hi there! Thanks for creating a new meetup. I'm going to create a new branch and
 1. ${firstMessage}
 2. ${secondMessage}
 3. ${thirdMessage}`;
+}
+
+function showError(error: Record<string, string[]>) {
+  return `<details>
+<summary>Click to see the error</summary>
+
+\`\`\`json
+${JSON.stringify(error, null, 4)}
+\`\`\`
+
+</details>`;
 }

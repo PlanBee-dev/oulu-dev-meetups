@@ -28,7 +28,11 @@ async function main() {
     owner: context.repo.owner,
     repo: context.repo.repo,
     issue_number: env.ISSUE_NUMBER,
-    body: getMeetupIssueCommentStatus(['loading', 'idle', 'idle']),
+    body: getMeetupIssueCommentStatus([
+      { status: 'loading' },
+      { status: 'idle' },
+      { status: 'idle' },
+    ]),
   });
 
   core.setOutput('comment_id', createCommentResponse.data.id);
@@ -48,7 +52,14 @@ async function main() {
       comment_id: createCommentResponse.data.id,
       owner: context.repo.owner,
       repo: context.repo.repo,
-      body: getMeetupIssueCommentStatus(['error', 'idle', 'idle']),
+      body: getMeetupIssueCommentStatus([
+        {
+          status: 'error',
+          error: meetupIssueBodyResult.error.flatten().fieldErrors,
+        },
+        { status: 'idle' },
+        { status: 'idle' },
+      ]),
     });
 
     core.setFailed('Invalid issue body');
@@ -66,7 +77,11 @@ async function main() {
     comment_id: createCommentResponse.data.id,
     owner: context.repo.owner,
     repo: context.repo.repo,
-    body: getMeetupIssueCommentStatus(['success', 'loading', 'idle']),
+    body: getMeetupIssueCommentStatus([
+      { status: 'success' },
+      { status: 'loading' },
+      { status: 'idle' },
+    ]),
   });
 
   const newMeetupFile = getMeetupMarkdownFileContent(meetup);
@@ -80,7 +95,11 @@ async function main() {
     comment_id: createCommentResponse.data.id,
     owner: context.repo.owner,
     repo: context.repo.repo,
-    body: getMeetupIssueCommentStatus(['success', 'success', 'loading']),
+    body: getMeetupIssueCommentStatus([
+      { status: 'success' },
+      { status: 'success' },
+      { status: 'loading' },
+    ]),
   });
 
   const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;

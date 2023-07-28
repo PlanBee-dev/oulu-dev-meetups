@@ -1,5 +1,6 @@
 import { context, getOctokit } from '@actions/github';
 import { z } from 'zod';
+import { getMeetupIssueCommentStatus } from 'meetup-shared';
 
 const envSchema = z.object({
   PULL_REQUEST_NUMBER: z.string().transform(Number),
@@ -16,14 +17,11 @@ async function main() {
     comment_id: env.COMMENT_ID,
     owner: context.repo.owner,
     repo: context.repo.repo,
-    body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
-
-1. Validating meetup details... Done! ✅
-2. Creating meetup file... Done! ✅
-3. Creating new branch and pull request... Done! ✅
-
-Here's the new pull request: #${env.PULL_REQUEST_NUMBER}`,
+    body: getMeetupIssueCommentStatus([
+      { status: 'success' },
+      { status: 'success' },
+      { status: 'success' },
+    ]),
   });
 }
 
