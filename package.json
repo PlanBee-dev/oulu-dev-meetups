@@ -6,6 +6,7 @@
     "packageManager": "pnpm@8.6.2",
     "scripts": {
         "test": "pnpm -r --parallel run test",
-        "build": "pnpm -r --parallel run build"
+        "build": "pnpm -r --parallel run build",
+        "lint": "pnpm -r --parallel run lint"
     }
 }
