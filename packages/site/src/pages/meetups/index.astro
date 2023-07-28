@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import BaseHead from '../../components/BaseHead.astro';
 import { getCollection } from 'astro:content';
+import MeetupListItem from '../../components/MeetupListItem.astro';
 
 const meetups = await getCollection('meetups');
 ---
@@ -17,26 +18,22 @@ const meetups = await getCollection('meetups');
     <div class="py-10">
       <main>
         <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+          <h1 class="text-2xl text-center m-8">Oulu developer meetups</h1>
           <div
-            class="mx-auto max-w-4xl border border-gray-400 p-8 sm:px-24 bg-gray-50"
+            class="mx-auto max-w-4xl border border-gray-400 rounded-xl p-8 sm:px-24 bg-gray-50"
           >
-            <h1 class="text-2xl text-center mb-4">Oulu developer meetups</h1>
             <main>
               <section>
-                <ul>
+                <ul role="list" class="divide-y divide-gray-100">
                   {
                     meetups.map((meetup) => (
-                      <li>
-                        <p>
-                          <a
-                            href={`${import.meta.env.BASE_URL}meetups/${
-                              meetup.slug
-                            }`}
-                          >
-                            {meetup.data.time} / {meetup.data.name}
-                          </a>
-                        </p>
-                      </li>
+                      <MeetupListItem
+                        name={meetup.data.name}
+                        location={meetup.data.location}
+                        time={meetup.data.time}
+                        organizer={meetup.data.organizer}
+                        slug={meetup.slug}
+                      />
                     ))
                   }
                 </ul>
