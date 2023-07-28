@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@types/node':
+        specifier: ^20.4.4
+        version: 20.4.5
       '@typescript-eslint/parser':
         specifier: ^6.1.0
         version: 6.1.0(eslint@8.45.0)(typescript@5.1.6)
@@ -29,6 +32,9 @@ importers:
       prettier-plugin-astro:
         specifier: ^0.11.0
         version: 0.11.0
+      typescript:
+        specifier: ^5.1.6
+        version: 5.1.6
 
   packages/actions-new-meetup:
     dependencies:
@@ -47,13 +53,6 @@ importers:
       zod:
         specifier: ^3.21.4
         version: 3.21.4
-    devDependencies:
-      '@types/node':
-        specifier: ^20.4.4
-        version: 20.4.4
-      typescript:
-        specifier: ^5.1.6
-        version: 5.1.6
 
   packages/actions-post-create-pr:
     dependencies:
@@ -66,13 +65,6 @@ importers:
       zod:
         specifier: ^3.21.4
         version: 3.21.4
-    devDependencies:
-      '@types/node':
-        specifier: ^20.4.4
-        version: 20.4.4
-      typescript:
-        specifier: ^5.1.6
-        version: 5.1.6
 
   packages/site:
     dependencies:
@@ -96,7 +88,7 @@ importers:
         version: 0.5.9(tailwindcss@3.3.3)
       astro:
         specifier: ^2.9.0
-        version: 2.9.0
+        version: 2.9.0(@types/node@20.4.5)
       tailwindcss:
         specifier: ^3.3.3
         version: 3.3.3
@@ -184,7 +176,7 @@ packages:
       astro: ^2.5.0
     dependencies:
       '@astrojs/prism': 2.1.2
-      astro: 2.9.0
+      astro: 2.9.0(@types/node@20.4.5)
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.2
       rehype-raw: 6.1.1
@@ -255,7 +247,7 @@ packages:
       astro: ^2.6.5
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 2.9.0
+      astro: 2.9.0(@types/node@20.4.5)
       autoprefixer: 10.4.14(postcss@8.4.27)
       postcss: 8.4.27
       postcss-load-config: 4.0.1(postcss@8.4.27)
@@ -1307,10 +1299,6 @@ packages:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
     dev: false
 
-  /@types/node@20.4.4:
-    resolution: {integrity: sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==}
-    dev: true
-
   /@types/node@20.4.5:
     resolution: {integrity: sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==}
 
@@ -1559,7 +1547,7 @@ packages:
       - supports-color
     dev: true
 
-  /astro@2.9.0:
+  /astro@2.9.0(@types/node@20.4.5):
     resolution: {integrity: sha512-qD8hFvFrpLDA1/wGivP9YbKq7vfMfS1XPE9SyrrDaYFB/NXnZPqnwSXOxRD0AA4WSv9OAtUO3DV8dHFj9xWi/Q==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
@@ -1622,7 +1610,7 @@ packages:
       typescript: 5.1.6
       unist-util-visit: 4.1.2
       vfile: 5.3.7
-      vite: 4.4.7
+      vite: 4.4.7(@types/node@20.4.5)
       vitefu: 0.2.4(vite@4.4.7)
       which-pm: 2.0.0
       yargs-parser: 21.1.1
@@ -4928,7 +4916,7 @@ packages:
       vfile-message: 3.1.4
     dev: false
 
-  /vite@4.4.7:
+  /vite@4.4.7(@types/node@20.4.5):
     resolution: {integrity: sha512-6pYf9QJ1mHylfVh39HpuSfMPojPSKVxZvnclX1K1FyZ1PXDOcLBibdq5t1qxJSnL63ca8Wf4zts6mD8u8oc9Fw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -4956,6 +4944,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.4.5
       esbuild: 0.18.17
       postcss: 8.4.27
       rollup: 3.26.3
@@ -4971,7 +4960,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.4.7
+      vite: 4.4.7(@types/node@20.4.5)
     dev: false
 
   /vscode-css-languageservice@6.2.6:
