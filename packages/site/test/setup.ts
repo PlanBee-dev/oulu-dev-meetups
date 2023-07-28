@@ -32,9 +32,20 @@ export async function setup() {
   });
 }
 
-export function teardown() {
-  subprocess?.kill();
+export async function teardown() {
+  subprocess.kill();
   log('Stopping astro server');
+
+  await new Promise((resolve, reject) => {
+    const timer = setTimeout(
+      () => reject(new Error('Timeout waiting for "pnpm preview" to exit')),
+      10_000,
+    );
+    subprocess.on('exit', () => {
+      clearTimeout(timer);
+      resolve(null);
+    });
+  });
 }
 
 function log(...messages: Parameters<typeof console.log>) {

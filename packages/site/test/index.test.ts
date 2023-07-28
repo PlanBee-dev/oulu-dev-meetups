@@ -6,7 +6,7 @@ beforeAll(async () => {
   browser = await chromium.launch({ headless: true });
 });
 afterAll(async () => {
-  await browser?.close();
+  await browser.close();
 });
 
 test('meta is correct', async () => {
