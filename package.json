@@ -9,7 +9,10 @@
     "test": "vitest",
     "build": "pnpm -r run build",
     "lint": "eslint . --max-warnings 0 --ext .astro,.ts,.js",
-    "typecheck": "pnpm -r --parallel run typecheck"
+    "typecheck": "pnpm -r --parallel run typecheck",
+    "dev": "pnpm -r --parallel run dev",
+    "start-actions-new-meetup": "pnpm run start --filter=actions-new-meetup",
+    "start-actions-post-create-pr": "pnpm run start --filter=actions-post-create-pr"
   },
   "devDependencies": {
     "@types/node": "^20.4.4",

@@ -1,0 +1,7 @@
+name = "api"
+main = "src/worker.ts"
+compatibility_date = "2023-07-24"
+
+# [vars]
+# GITHUB_APP_ID = ""
+# GITHUB_APP_INSTALLATION_ID = ""

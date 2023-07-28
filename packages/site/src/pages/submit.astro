@@ -17,7 +17,7 @@ import BaseHead from '../components/BaseHead.astro';
           <div
             class="mx-auto max-w-3xl border border-gray-400 rounded-xl p-8 sm:px-24 bg-gray-50"
           >
-            <form>
+            <form id="submit-form">
               <div class="space-y-12">
                 <div>
                   <h2 class="text-base font-semibold leading-7 text-gray-900">
@@ -32,7 +32,7 @@ import BaseHead from '../components/BaseHead.astro';
                   >
                     <div class="sm:col-span-3">
                       <label
-                        for="meetup_title"
+                        for="title"
                         class="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Meetup title
@@ -43,9 +43,9 @@ import BaseHead from '../components/BaseHead.astro';
                         >
                           <input
                             type="text"
-                            name="meetup_title"
-                            id="meetup_title"
-                            autocomplete="meetup_title"
+                            name="title"
+                            id="title"
+                            autocomplete="title"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder="Let's all learn javascript"
                           />
@@ -55,7 +55,7 @@ import BaseHead from '../components/BaseHead.astro';
 
                     <div class="sm:col-span-3">
                       <label
-                        for="meetupLink"
+                        for="signupLink"
                         class="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Signup link for meetup
@@ -63,8 +63,8 @@ import BaseHead from '../components/BaseHead.astro';
                       <div class="mt-2">
                         <input
                           type="text"
-                          name="meetupLink"
-                          id="meetupLink"
+                          name="signupLink"
+                          id="signupLink"
                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -132,7 +132,7 @@ import BaseHead from '../components/BaseHead.astro';
 
                     <div class="sm:col-span-3">
                       <label
-                        for="meetupDate"
+                        for="date"
                         class="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Date
@@ -140,8 +140,8 @@ import BaseHead from '../components/BaseHead.astro';
                       <div class="mt-2">
                         <input
                           type="date"
-                          name="meetupDate"
-                          id="meetupDate"
+                          name="date"
+                          id="date"
                           autocomplete="given-name"
                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -150,7 +150,7 @@ import BaseHead from '../components/BaseHead.astro';
 
                     <div class="sm:col-span-3">
                       <label
-                        for="meetupTime"
+                        for="time"
                         class="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Time
@@ -158,8 +158,8 @@ import BaseHead from '../components/BaseHead.astro';
                       <div class="mt-2">
                         <input
                           type="time"
-                          name="meetupTime"
-                          id="meetupTime"
+                          name="time"
+                          id="time"
                           autocomplete="family-name"
                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -224,3 +224,75 @@ import BaseHead from '../components/BaseHead.astro';
     </div>
   </div>
 </body>
+
+<script>
+  const form = document.getElementById('submit-form') as HTMLFormElement;
+
+  const locationInput = document.getElementById('location') as HTMLInputElement;
+  const locationLinkInput = document.getElementById(
+    'locationLink',
+  ) as HTMLInputElement;
+  const organizerInput = document.getElementById(
+    'organizer',
+  ) as HTMLInputElement;
+  const organizerLinkInput = document.getElementById(
+    'organizerLink',
+  ) as HTMLInputElement;
+  const signupLinkInput = document.getElementById(
+    'signupLink',
+  ) as HTMLInputElement;
+  const titleInput = document.getElementById('title') as HTMLInputElement;
+  const descriptionInput = document.getElementById(
+    'description',
+  ) as HTMLInputElement;
+  const dateInput = document.getElementById('date') as HTMLInputElement;
+  const timeInput = document.getElementById('time') as HTMLInputElement;
+
+  locationInput.value = 'Oulu';
+  locationLinkInput.value = 'https://goo.gl/maps/oLqThzCH1XmyKcx87';
+
+  organizerInput.value = 'Org';
+  organizerLinkInput.value = 'https://google.com';
+
+  signupLinkInput.value = 'https://google.com';
+  titleInput.value = 'Title';
+
+  descriptionInput.value = 'Description';
+
+  dateInput.value = '2023-07-23';
+  timeInput.value = '18:00';
+
+  function onSubmit(event: Event) {
+    event.preventDefault();
+
+    if (!form) {
+      console.log("no form element (can't happen btw)");
+      return;
+    }
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    console.log(data);
+
+    fetch('http://127.0.0.1:8787', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(async (res) => {
+        if (!res) {
+          console.log('no response');
+          return;
+        }
+
+        const json = await res.json();
+
+        console.log(json);
+      });
+  }
+
+  form.addEventListener('submit', onSubmit, false);
+</script>

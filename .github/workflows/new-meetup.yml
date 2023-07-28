@@ -25,9 +25,10 @@ jobs:
         working-directory: ./packages/actions-new-meetup
         run: |
           pnpm i
-          pnpm start
+          pnpm build
+          pnpm run start-actions-new-meetup
         env:
-          MEETUP_FOLDER: '../site/src/content/meetups' # relative from action's root
+          MEETUP_FOLDER: './packages/site/src/content/meetups'
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
@@ -45,7 +46,8 @@ jobs:
         working-directory: ./packages/actions-post-create-pr
         run: |
           pnpm i
-          pnpm start
+          pnpm build
+          pnpm run start-actions-post-create-pr
         env:
           PULL_REQUEST_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
           COMMENT_ID: ${{ steps.new_meetup.outputs.comment_id }}

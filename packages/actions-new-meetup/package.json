@@ -1,5 +1,5 @@
 {
-  "name": "new-meetup-action",
+  "name": "actions-new-meetup",
   "private": true,
   "type": "module",
   "version": "0.0.1",

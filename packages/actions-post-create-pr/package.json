@@ -1,5 +1,5 @@
 {
-  "name": "post-create-pr-action",
+  "name": "actions-post-create-pr",
   "private": true,
   "type": "module",
   "version": "0.0.1",

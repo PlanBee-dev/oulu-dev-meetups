@@ -1,0 +1,14 @@
+{
+  "name": "meetup-shared",
+  "version": "0.0.1",
+  "private": true,
+  "exports": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch --preserveWatchOutput"
+  },
+  "dependencies": {
+    "date-fns": "^2.30.0",
+    "zod": "^3.21.4"
+  }
+}
