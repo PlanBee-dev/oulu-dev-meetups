@@ -1,0 +1,51 @@
+---
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import BaseHead from '../../components/BaseHead.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+const meetups = await getCollection('meetups');
+---
+
+<head>
+  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+</head>
+<body class="h-full">
+  <div class="min-h-full">
+    <Header />
+    <div class="py-10">
+      <main>
+        <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+          <div
+            class="mx-auto max-w-4xl border border-gray-400 p-8 sm:px-24 bg-gray-50"
+          >
+            <h1 class="text-2xl text-center">Oulu developer meetups</h1>
+            <main>
+              <section>
+                <ul>
+                  {
+                    meetups.map((meetup) => (
+                      <li>
+                        <p>{meetup.data.time} /</p>
+                        <a
+                          href={`${import.meta.env.BASE_URL}meetups/${
+                            meetup.slug
+                          }`}
+                        >
+                          {meetup.data.name}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </section>
+            </main>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  </div>
+</body>
