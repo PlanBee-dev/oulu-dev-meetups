@@ -1,6 +1,7 @@
 {
   "name": "new-meetup-action",
   "private": true,
+  "type": "module",
   "version": "0.0.1",
   "scripts": {
     "start": "tsx src/index.ts",

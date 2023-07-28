@@ -1,9 +1,11 @@
 {
   "name": "post-create-pr-action",
   "private": true,
+  "type": "module",
   "version": "0.0.1",
   "scripts": {
     "start": "tsx src/index.ts",
+    "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

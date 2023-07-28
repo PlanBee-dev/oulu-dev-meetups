@@ -1,11 +1,12 @@
 {
   "name": "oulu-dev-meetups-monorepo",
   "private": true,
+  "type": "module",
   "version": "0.0.1",
   "description": "TODO",
   "packageManager": "pnpm@8.6.2",
   "scripts": {
-    "test": "pnpm -r --parallel run test",
+    "test": "vitest",
     "build": "pnpm -r run build",
     "lint": "eslint . --max-warnings 0 --ext .astro,.ts,.js",
     "typecheck": "pnpm -r --parallel run typecheck"
@@ -21,6 +22,7 @@
     "eslint-plugin-unicorn": "^48.0.1",
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.11.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vitest": "^0.33.0"
   }
 }
