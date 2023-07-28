@@ -25,5 +25,9 @@ test('main heading is set', async () => {
 
   await page.goto('http://localhost:3000/oulu-dev-meetups/');
 
-  page.getByRole('heading', { level: 1, name: 'Oulu developer meetups' });
+  expect(
+    await page
+      .getByRole('heading', { level: 1, name: 'Oulu developer meetups' })
+      .isVisible(),
+  ).toBeTruthy();
 });
