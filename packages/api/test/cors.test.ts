@@ -7,7 +7,7 @@ void describe('cors test', () => {
   let worker: UnstableDevWorker;
 
   beforeAll(async () => {
-    worker = await unstable_dev('src/worker.ts', {
+    worker = await unstable_dev('./packages/api/src/worker.ts', {
       experimental: {
         disableExperimentalWarning: true,
       },

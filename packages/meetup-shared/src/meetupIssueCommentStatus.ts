@@ -38,14 +38,22 @@ export function getMeetupIssueCommentStatus(
       ? 'Create new branch and pull request'
       : steps[2].status === 'loading'
       ? 'Creating new branch and pull request...'
+      : steps[2].status === 'success'
+      ? 'Creating new branch and pull request... Done! ✅'
+      : steps[2].status === 'error'
+      ? 'Creating new branch and pull request... Failed! ❌' +
+        showError(steps[2].error)
       : null;
 
-  return `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
-
-1. ${firstMessage}
-2. ${secondMessage}
-3. ${thirdMessage}`;
+  return (
+    "Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you." +
+    '\n\n' +
+    `1. ${firstMessage}` +
+    '\n' +
+    `2. ${secondMessage}` +
+    '\n' +
+    `3. ${thirdMessage}`
+  );
 }
 
 function showError(error: Record<string, string[]>) {
