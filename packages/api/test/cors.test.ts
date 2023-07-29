@@ -1,9 +1,8 @@
-import { describe } from 'node:test';
-import { afterAll, beforeAll, expect, test } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { UnstableDevWorker, unstable_dev } from 'wrangler';
 import { testEnvVars } from './_test.env-vars';
 
-void describe('cors test', () => {
+describe('cors test', () => {
   let worker: UnstableDevWorker;
 
   beforeAll(async () => {
