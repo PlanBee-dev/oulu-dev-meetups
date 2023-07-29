@@ -8,7 +8,7 @@ let subprocess: ChildProcess;
 
 export async function setup() {
   log('Starting worker');
-  subprocess = exec('pnpm dev', { cwd: root });
+  subprocess = exec('pnpm dev --env test', { cwd: root });
 
   await new Promise((resolve, reject) => {
     const timer = setTimeout(
