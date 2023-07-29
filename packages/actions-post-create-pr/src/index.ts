@@ -17,11 +17,14 @@ async function main() {
     comment_id: env.COMMENT_ID,
     owner: context.repo.owner,
     repo: context.repo.repo,
-    body: getMeetupIssueCommentStatus([
-      { status: 'success' },
-      { status: 'success' },
-      { status: 'success' },
-    ]),
+    body:
+      getMeetupIssueCommentStatus([
+        { status: 'success' },
+        { status: 'success' },
+        { status: 'success' },
+      ]) +
+      '\n\n' +
+      `Here's the new pull request: #${env.PULL_REQUEST_NUMBER}`,
   });
 }
 
