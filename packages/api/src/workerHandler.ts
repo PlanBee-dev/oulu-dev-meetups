@@ -1,8 +1,7 @@
-import { Request } from '@cloudflare/workers-types';
 import { parseCreateIssueReqBody, createIssue } from './workerCreateIssue';
 import { Env } from './workerEnv';
 
-export async function handleRequest(req: Request, env: Env) {
+export async function handleRequest(req: Request, env: Env): Promise<Response> {
   const meetupParseResult = await parseCreateIssueReqBody(req);
 
   if (meetupParseResult.errorResponse) {

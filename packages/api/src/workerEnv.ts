@@ -12,10 +12,10 @@ export type Env = z.infer<typeof envSchema>;
 export async function parseEnv(env: unknown): Promise<
   | {
       env?: never;
-      errorResponse: Response;
+      errorResponse: globalThis.Response;
     }
   | {
-      env: z.infer<typeof envSchema>;
+      env: Env;
       errorResponse?: never;
     }
 > {
@@ -24,11 +24,11 @@ export async function parseEnv(env: unknown): Promise<
   if (!envSchemaResult.success) {
     console.log(
       'Invalid environment variables',
-      envSchemaResult.error.flatten().fieldErrors,
+      JSON.stringify(envSchemaResult.error.flatten().fieldErrors, null, 2),
     );
 
     return {
-      errorResponse: new Response(undefined, { status: 500 }),
+      errorResponse: new global.Response(undefined, { status: 500 }),
     };
   }
 

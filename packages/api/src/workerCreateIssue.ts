@@ -1,4 +1,3 @@
-import { Request } from '@cloudflare/workers-types';
 import { Meetup, getMeetupIssueBody, meetupSchema } from 'meetup-shared';
 import { Env } from './workerEnv';
 import { App } from 'octokit';
@@ -13,8 +12,6 @@ export async function parseCreateIssueReqBody(req: Request): Promise<
       parsedMeetup: Meetup;
     }
 > {
-  let body: Meetup | null = null;
-
   try {
     const json = await req.json();
 
@@ -41,7 +38,7 @@ export async function parseCreateIssueReqBody(req: Request): Promise<
       };
     }
 
-    body = jsonParseResult.data;
+    return { parsedMeetup: jsonParseResult.data };
   } catch (e) {
     console.error('Invalid JSON - catched an error', e);
 
@@ -60,8 +57,6 @@ export async function parseCreateIssueReqBody(req: Request): Promise<
       ),
     };
   }
-
-  return { parsedMeetup: body };
 }
 
 export async function createIssue(props: { meetup: Meetup; env: Env }): Promise<

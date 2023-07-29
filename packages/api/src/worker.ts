@@ -1,10 +1,9 @@
-import { ExportedHandler } from '@cloudflare/workers-types';
 import { parseEnv } from './workerEnv';
 import { handleRequest } from './workerHandler';
 import { getCorsHeaders, isPreflight } from './workerCors';
 
-const handler: ExportedHandler = {
-  async fetch(req, unsafeEnv) {
+const handler = {
+  async fetch(req: Request, unsafeEnv: unknown): Promise<Response> {
     const envResult = await parseEnv(unsafeEnv);
 
     if (envResult.errorResponse) {
