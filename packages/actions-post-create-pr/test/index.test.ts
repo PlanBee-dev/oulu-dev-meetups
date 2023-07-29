@@ -52,8 +52,7 @@ describe('post-create-pr', () => {
 
     const { body } = JSON.parse(onCommentUpdated.mock.calls[0][0].body);
     expect(body).toMatchInlineSnapshot(`
-      "
-      Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
+      "Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
 
       1. Validating meetup details... Done! ✅
       2. Creating meetup file... Done! ✅
