@@ -1,6 +1,11 @@
-import { Meetup, getMeetupIssueBody, meetupSchema } from 'meetup-shared';
+import {
+  MeetupFormValues,
+  getMeetupIssueBody,
+  meetupFormValuesSchema,
+} from 'meetup-shared';
 import { Env } from './workerEnv';
 import { App } from 'octokit';
+import { safeParseAsync } from 'valibot';
 
 export async function parseCreateIssueReqBody(req: Request): Promise<
   | {
@@ -9,25 +14,25 @@ export async function parseCreateIssueReqBody(req: Request): Promise<
     }
   | {
       errorResponse?: never;
-      parsedMeetup: Meetup;
+      parsedMeetup: MeetupFormValues;
     }
 > {
   try {
     const json = await req.json();
 
-    const jsonParseResult = await meetupSchema.safeParseAsync(json);
+    const meetupFormValues = await safeParseAsync(meetupFormValuesSchema, json);
 
-    if (!jsonParseResult.success) {
-      const errors = jsonParseResult.error.flatten().fieldErrors;
+    if (!meetupFormValues.success) {
+      const issues = meetupFormValues.error.issues;
 
-      console.error('Invalid JSON - schema parsing failed - ', errors);
+      console.error('Invalid JSON - validation error - ', issues);
 
       return {
         errorResponse: new Response(
           JSON.stringify({
             error: {
-              message: 'Invalid JSON - schema parsing failed',
-              details: errors,
+              message: 'Invalid JSON - validation error',
+              details: issues,
             },
           }),
           {
@@ -38,9 +43,9 @@ export async function parseCreateIssueReqBody(req: Request): Promise<
       };
     }
 
-    return { parsedMeetup: jsonParseResult.data };
+    return { parsedMeetup: meetupFormValues.data };
   } catch (e) {
-    console.error('Invalid JSON - catched an error', e);
+    console.error('Invalid JSON - catched an error - ', e);
 
     return {
       errorResponse: new Response(
@@ -59,7 +64,10 @@ export async function parseCreateIssueReqBody(req: Request): Promise<
   }
 }
 
-export async function createIssue(props: { meetup: Meetup; env: Env }): Promise<
+export async function createIssue(props: {
+  meetupFormValues: MeetupFormValues;
+  env: Env;
+}): Promise<
   | {
       errorResponse: Response;
       data?: never;
@@ -82,22 +90,33 @@ export async function createIssue(props: { meetup: Meetup; env: Env }): Promise<
       props.env.GITHUB_APP_INSTALLATION_ID,
     );
 
-    const createdIssue = await octokit.rest.issues.create({
-      owner: 'veeti-k',
-      repo: 'oulu-dev-meetups',
+    const createIssueRes = await octokit.rest.issues.create({
+      owner: props.env.GITHUB_REPO_OWNER,
+      repo: props.env.GITHUB_REPO_NAME,
       labels: ['meetup'],
-      title: props.meetup.title,
-      body: getMeetupIssueBody(props.meetup),
+      title: props.meetupFormValues.title,
+      body: getMeetupIssueBody(props.meetupFormValues),
     });
+
+    if (createIssueRes.status !== 201) {
+      console.error(
+        'Failed to create issue - github api did not respond with 201 - response: ',
+        createIssueRes,
+      );
+
+      return {
+        errorResponse: new Response(undefined, { status: 500 }),
+      };
+    }
 
     return {
       data: {
-        issueUrl: createdIssue.data.html_url,
-        issueNumber: createdIssue.data.number,
+        issueUrl: createIssueRes.data.html_url,
+        issueNumber: createIssueRes.data.number,
       },
     };
   } catch (e) {
-    console.error('Failed to create issue', e);
+    console.error('Failed to create issue - catched an error -', e);
 
     return {
       errorResponse: new Response(undefined, { status: 500 }),

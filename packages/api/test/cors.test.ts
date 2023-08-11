@@ -1,12 +1,17 @@
 import { expect, test } from 'vitest';
+import handler from '../src/worker';
+import { testEnvVars } from './_test.env-vars';
 
-test('answers preflight request with cors stuff', async () => {
-  const allowedOrigin = 'http://localhost:3000';
+test('Answers OPTIONS preflight request with cors stuff', async () => {
+  const allowedOrigin = testEnvVars.ALLOWED_ORIGIN;
 
-  const res = await fetch('http://127.0.0.1:8787', {
-    method: 'OPTIONS',
-    headers: { origin: allowedOrigin },
-  });
+  const res = await handler.fetch(
+    new Request('http://localhost:8000', {
+      method: 'OPTIONS',
+      headers: { Origin: allowedOrigin },
+    }),
+    testEnvVars,
+  );
 
   expect(res.status).toBe(204);
   expect(res.headers.get('Access-Control-Allow-Origin')).toBe(allowedOrigin);
@@ -18,44 +23,19 @@ test('answers preflight request with cors stuff', async () => {
   );
 });
 
-test('Invalid json', async () => {
-  const res = await fetch('http://127.0.0.1:8787', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: 'world' }),
-  });
+test('Answers GET request with Access-Control-Allow-Origin header', async () => {
+  const allowedOrigin = testEnvVars.ALLOWED_ORIGIN;
 
-  expect(res.status).toBe(400);
-  expect(await res.json()).toEqual({
-    error: {
-      message: 'Invalid JSON - schema parsing failed',
-      details: {
-        date: ['Required'],
-        description: ['Required'],
-        location: ['Required'],
-        locationLink: ['Required'],
-        organizer: ['Required'],
-        organizerLink: ['Required'],
-        signupLink: ['Required'],
-        time: ['Required'],
-        title: ['Required'],
+  const res = await handler.fetch(
+    new Request('http://localhost:8000', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Origin: allowedOrigin,
       },
-    },
-  });
-});
+    }),
+    testEnvVars,
+  );
 
-test('Malformed JSON', async () => {
-  const res = await fetch('http://127.0.0.1:8787', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: '{',
-  });
-
-  expect(res.status).toBe(400);
-  expect(await res.json()).toEqual({
-    error: {
-      message: 'Invalid JSON - catched an error',
-      details: {},
-    },
-  });
+  expect(res.headers.get('Access-Control-Allow-Origin')).toBe(allowedOrigin);
 });

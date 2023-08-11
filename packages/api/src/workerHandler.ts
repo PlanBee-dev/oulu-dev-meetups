@@ -2,24 +2,25 @@ import { parseCreateIssueReqBody, createIssue } from './workerCreateIssue';
 import { Env } from './workerEnv';
 
 export async function handleRequest(req: Request, env: Env): Promise<Response> {
-  const meetupParseResult = await parseCreateIssueReqBody(req);
+  const meetupFormValues = await parseCreateIssueReqBody(req);
 
-  if (meetupParseResult.errorResponse) {
-    return meetupParseResult.errorResponse;
+  if (meetupFormValues.errorResponse) {
+    return meetupFormValues.errorResponse;
   }
 
-  const meetup = meetupParseResult.parsedMeetup;
+  const createIssueRes = await createIssue({
+    meetupFormValues: meetupFormValues.parsedMeetup,
+    env,
+  });
 
-  const createIssueResult = await createIssue({ meetup, env });
-
-  if (createIssueResult.errorResponse) {
-    return createIssueResult.errorResponse;
+  if (createIssueRes.errorResponse) {
+    return createIssueRes.errorResponse;
   }
 
   return new Response(
     JSON.stringify({
-      issueNumber: createIssueResult.data.issueNumber,
-      issueUrl: createIssueResult.data.issueUrl,
+      issueNumber: createIssueRes.data.issueNumber,
+      issueUrl: createIssueRes.data.issueUrl,
     }),
     {
       status: 201,

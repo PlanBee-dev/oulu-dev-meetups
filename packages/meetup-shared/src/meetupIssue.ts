@@ -1,67 +1,79 @@
-import {
-  Meetup,
-  MeetupKey,
-  meetupKeyMap,
-  meetupSchema,
-} from './meetupBaseType';
+import { safeParseAsync } from 'valibot';
+import { type MeetupFormValues, meetupFormValuesSchema } from './meetupForm';
 
-export function getMeetupIssueBody(meetup: Meetup) {
-  let issueBody = '';
+export function getMeetupIssueBody(meetup: MeetupFormValues) {
+  return `
+### Meetup title
 
-  const length = Object.keys(meetupKeyMap).length;
+${meetup.title}
 
-  Object.entries(meetupKeyMap).forEach(([key, title], i) => {
-    const isLast = i === length - 1;
+### Date
 
-    issueBody +=
-      '### ' +
-      title +
-      '\n\n' +
-      meetup[key as MeetupKey] +
-      (isLast ? '' : '\n\n');
-  });
+${meetup.date}
 
-  console.log({
-    issueBody,
-    meetupKeyMap,
-  });
+### Time
 
-  return issueBody;
+${meetup.time}
+
+### Street address
+
+${meetup.location}
+
+### Maps link for address
+
+${meetup.locationLink}
+
+### Organizer
+
+${meetup.organizer}
+
+### Organizer link
+
+${meetup.organizerLink}
+
+### Signup link for meetup
+
+${meetup.signupLink}
+
+### Description
+
+${meetup.description}`;
 }
 
 export function parseMeetupIssueBody(body: string) {
-  const obj: Record<string | number | symbol, unknown> = {};
+  const unverifiedMeetupFormValues = {
+    title: getValueFromBody(body, 'Meetup title'),
+    date: getValueFromBody(body, 'Date'),
+    time: getValueFromBody(body, 'Time'),
+    location: getValueFromBody(body, 'Street address'),
+    locationLink: getValueFromBody(body, 'Maps link for address'),
+    organizer: getValueFromBody(body, 'Organizer'),
+    organizerLink: getValueFromBody(body, 'Organizer link'),
+    signupLink: getValueFromBody(body, 'Signup link for meetup'),
+    description: getRestAfterTitle(body, 'Description'),
+  };
 
-  const length = Object.keys(meetupKeyMap).length;
-
-  Object.entries(meetupKeyMap).forEach(([key, title], i) => {
-    const isLast = i === length - 1;
-
-    // The last prop is a free text field, needs to be handled differently
-    if (isLast) {
-      const target = '### ' + title;
-
-      const stringIndex = body.indexOf(target);
-      if (stringIndex === -1) {
-        obj[key] = '';
-      } else {
-        const resultString = body.slice(stringIndex + target.length);
-
-        obj[key] = resultString.trim();
-      }
-    } else {
-      const regex = getTitleParsingRegex(title);
-      const match = body.match(regex);
-
-      if (match) {
-        obj[key] = match[1];
-      }
-    }
-  });
-
-  return meetupSchema.safeParseAsync(obj);
+  return safeParseAsync(meetupFormValuesSchema, unverifiedMeetupFormValues);
 }
 
-function getTitleParsingRegex(title: string) {
-  return new RegExp(`### ${title}\\s*\\n\\s*([\\s\\S]*?)\\s*\\n\\s*###`);
+function getValueFromBody(body: string, title: string) {
+  const regex = new RegExp(`### ${title}\\s*\\n\\s*([\\s\\S]*?)\\s*\\n\\s*###`);
+  const match = body.match(regex);
+
+  if (match) {
+    return match[1];
+  }
+
+  return null;
+}
+
+function getRestAfterTitle(body: string, title: string) {
+  const regex = new RegExp(`### ${title}\\s*\\n\\s*([\\s\\S]*)`);
+  const match = body.match(regex);
+
+  if (match) {
+    return match[1];
+  }
+
+  return null;
 }

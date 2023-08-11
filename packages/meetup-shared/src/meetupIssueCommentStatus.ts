@@ -1,3 +1,5 @@
+import { ValidationErrors } from './formatValidationErrors';
+
 type Step =
   | {
       status: 'idle' | 'loading' | 'success';
@@ -5,7 +7,7 @@ type Step =
     }
   | {
       status: 'error';
-      error: Record<string, string[]>;
+      errors: ValidationErrors;
     };
 
 export function getMeetupIssueCommentStatus(
@@ -19,7 +21,7 @@ export function getMeetupIssueCommentStatus(
       : steps[0].status === 'success'
       ? 'Validating meetup details... Done! ✅'
       : steps[0].status === 'error'
-      ? 'Validating meetup details... Failed! ❌' + showError(steps[0].error)
+      ? 'Validating meetup details... Failed! ❌' + showError(steps[0].errors)
       : null;
 
   const secondMessage =
@@ -30,7 +32,7 @@ export function getMeetupIssueCommentStatus(
       : steps[1].status === 'success'
       ? 'Creating meetup file... Done! ✅'
       : steps[1].status === 'error'
-      ? 'Creating meetup file... Failed! ❌' + showError(steps[1].error)
+      ? 'Creating meetup file... Failed! ❌' + showError(steps[1].errors)
       : null;
 
   const thirdMessage =
@@ -42,7 +44,7 @@ export function getMeetupIssueCommentStatus(
       ? 'Creating new branch and pull request... Done! ✅'
       : steps[2].status === 'error'
       ? 'Creating new branch and pull request... Failed! ❌' +
-        showError(steps[2].error)
+        showError(steps[2].errors)
       : null;
 
   return (
@@ -56,7 +58,7 @@ export function getMeetupIssueCommentStatus(
   );
 }
 
-function showError(error: Record<string, string[]>) {
+function showError(error: ValidationErrors) {
   return `\n<details>
 
 <summary>Click to see the error</summary>

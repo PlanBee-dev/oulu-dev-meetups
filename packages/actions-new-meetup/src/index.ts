@@ -4,12 +4,14 @@ import format from 'date-fns/format';
 import fs from 'node:fs/promises';
 import { z } from 'zod';
 import {
-  getMeetupDate,
   getMeetupMarkdownFileContent,
   getMeetupPullRequestContent,
   getMeetupIssueCommentStatus,
   parseMeetupIssueBody,
+  parseMeetupDateAndTime,
+  meetupFormValuesToMeetup,
 } from 'meetup-shared';
+import { formatValidationErrors } from '../../meetup-shared/src/formatValidationErrors';
 
 const envSchema = z.object({
   MEETUP_FOLDER: z.string(),
@@ -37,15 +39,11 @@ async function main() {
 
   core.setOutput('comment_id', createCommentResponse.data.id);
 
-  const meetupIssueBodyResult = await parseMeetupIssueBody(env.ISSUE_BODY);
+  const meetupFormValues = await parseMeetupIssueBody(env.ISSUE_BODY);
 
-  if (!meetupIssueBodyResult.success) {
-    core.debug(
-      `Invalid issue body - ${JSON.stringify(
-        meetupIssueBodyResult.error.flatten().fieldErrors,
-        null,
-        4,
-      )}`,
+  if (!meetupFormValues.success) {
+    const validationErrors = formatValidationErrors(
+      meetupFormValues.error.issues,
     );
 
     await octokit.rest.issues.updateComment({
@@ -55,22 +53,45 @@ async function main() {
       body: getMeetupIssueCommentStatus([
         {
           status: 'error',
-          error: meetupIssueBodyResult.error.flatten().fieldErrors,
+          errors: validationErrors,
         },
         { status: 'idle' },
         { status: 'idle' },
       ]),
     });
 
-    core.setFailed('Invalid issue body');
+    core.setFailed(`Invalid issue body - ${JSON.stringify(validationErrors)}`);
 
     return;
   }
 
-  const meetup = meetupIssueBodyResult.data;
+  const meetup = await meetupFormValuesToMeetup(meetupFormValues.data);
+
+  if (!meetup.success) {
+    const validationErrors = formatValidationErrors(meetup.error.issues);
+
+    await octokit.rest.issues.updateComment({
+      comment_id: createCommentResponse.data.id,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      body: getMeetupIssueCommentStatus([
+        {
+          status: 'error',
+          errors: validationErrors,
+        },
+        { status: 'idle' },
+        { status: 'idle' },
+      ]),
+    });
+
+    core.setFailed(`Invalid issue body - ${JSON.stringify(validationErrors)}`);
+
+    return;
+  }
+
   const sanitizedMeetupTitle = sanitizeString(meetup.title);
 
-  const meetupDate = getMeetupDate(meetup.date, meetup.time);
+  const meetupDate = parseMeetupDateAndTime(meetup.date, meetup.time);
   const sanitizedDate = format(meetupDate, 'yyyy-MM-dd-HH-mm');
 
   await octokit.rest.issues.updateComment({

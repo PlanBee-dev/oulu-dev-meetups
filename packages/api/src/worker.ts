@@ -1,6 +1,10 @@
+import {
+  createPreflightResponse,
+  isPreflight,
+  setCorsHeaders,
+} from './workerCors';
 import { parseEnv } from './workerEnv';
 import { handleRequest } from './workerHandler';
-import { getCorsHeaders, isPreflight } from './workerCors';
 
 const handler = {
   async fetch(req: Request, unsafeEnv: unknown): Promise<Response> {
@@ -11,19 +15,15 @@ const handler = {
     }
     const env = envResult.env;
 
-    const corsHeaders = getCorsHeaders(env.ALLOWED_ORIGIN);
-
     if (isPreflight(req)) {
-      return new Response(undefined, { status: 204, headers: corsHeaders });
+      return createPreflightResponse(env.ALLOWED_ORIGIN);
     }
 
-    const response = await handleRequest(req, env);
+    const res = await handleRequest(req, env);
 
-    Object.entries(corsHeaders).forEach((keyVal) =>
-      response.headers.set(keyVal[0], keyVal[1]),
-    );
+    setCorsHeaders(req, res, env.ALLOWED_ORIGIN);
 
-    return response;
+    return res;
   },
 };
 

@@ -1,5 +1,4 @@
-import { Meetup } from './meetupBaseType';
-import { getMeetupDate } from './meetupDate';
+import { type Meetup } from './meetupType';
 
 export function getMeetupMarkdownFileContent(meetup: Meetup) {
   return `---
@@ -9,7 +8,7 @@ locationLink: ${meetup.locationLink}
 organizer: ${meetup.organizer}
 organizerLink: ${meetup.organizerLink}
 signupLink: ${meetup.signupLink}
-pubDate: ${getMeetupDate(meetup.date, meetup.time).toISOString()}
+date: ${meetup.date.toUTCString()}
 ---
 
 ${meetup.description}`;
