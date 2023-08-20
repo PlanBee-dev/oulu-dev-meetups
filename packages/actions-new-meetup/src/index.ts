@@ -9,6 +9,7 @@ import {
   parseMeetupIssueBody,
 } from 'meetup-shared';
 import fs from 'node:fs/promises';
+import { join } from 'node:path';
 import { z } from 'zod';
 import { formatValidationErrors } from '../../meetup-shared/src/formatValidationErrors';
 
@@ -109,7 +110,7 @@ async function main() {
 
   try {
     await fs.writeFile(
-      `${env.MEETUP_FOLDER}/${sanitizedMeetupTitle}-${sanitizedDate}.md`,
+      join(env.MEETUP_FOLDER, `${sanitizedMeetupTitle}-${sanitizedDate}.md`),
       newMeetupFile,
     );
   } catch (err) {
@@ -123,9 +124,7 @@ async function main() {
         { status: 'success' },
         {
           status: 'error',
-          errors: {
-            message: 'Error writing new meetup file',
-          },
+          errors: { message: 'Error writing new meetup file' },
         },
         { status: 'idle' },
       ]),
