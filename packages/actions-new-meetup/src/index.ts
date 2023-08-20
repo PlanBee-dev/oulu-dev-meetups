@@ -15,7 +15,6 @@ import { formatValidationErrors } from '../../meetup-shared/src/formatValidation
 
 const envSchema = object({
   MEETUP_FOLDER: string(),
-  ISSUE_TITLE: string(),
   ISSUE_BODY: string(),
   ISSUE_NUMBER: transform(string(), Number),
   GITHUB_TOKEN: string(),

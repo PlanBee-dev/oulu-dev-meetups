@@ -28,7 +28,6 @@ jobs:
           pnpm -r --filter=actions-new-meetup run start
         env:
           MEETUP_FOLDER: './packages/site/src/content/meetups'
-          ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ github.token }}
