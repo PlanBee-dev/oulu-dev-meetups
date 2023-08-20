@@ -14,7 +14,6 @@
     "date-fns": "^2.30.0",
     "meetup-shared": "workspace:*",
     "tsx": "^3.12.7",
-    "valibot": "^0.11.1",
-    "zod": "^3.21.4"
+    "valibot": "^0.11.1"
   }
 }
