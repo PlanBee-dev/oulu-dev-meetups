@@ -1,16 +1,15 @@
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import format from 'date-fns/format';
-import fs from 'node:fs/promises';
-import { z } from 'zod';
 import {
+  getMeetupIssueCommentStatus,
   getMeetupMarkdownFileContent,
   getMeetupPullRequestContent,
-  getMeetupIssueCommentStatus,
-  parseMeetupIssueBody,
-  parseMeetupDateAndTime,
   meetupFormValuesToMeetup,
+  parseMeetupIssueBody,
 } from 'meetup-shared';
+import fs from 'node:fs/promises';
+import { z } from 'zod';
 import { formatValidationErrors } from '../../meetup-shared/src/formatValidationErrors';
 
 const envSchema = z.object({
@@ -65,10 +64,10 @@ async function main() {
     return;
   }
 
-  const meetup = await meetupFormValuesToMeetup(meetupFormValues.data);
+  const meetupResult = await meetupFormValuesToMeetup(meetupFormValues.data);
 
-  if (!meetup.success) {
-    const validationErrors = formatValidationErrors(meetup.error.issues);
+  if (!meetupResult.success) {
+    const validationErrors = formatValidationErrors(meetupResult.error.issues);
 
     await octokit.rest.issues.updateComment({
       comment_id: createCommentResponse.data.id,
@@ -89,10 +88,11 @@ async function main() {
     return;
   }
 
+  const meetup = meetupResult.data;
+
   const sanitizedMeetupTitle = sanitizeString(meetup.title);
 
-  const meetupDate = parseMeetupDateAndTime(meetup.date, meetup.time);
-  const sanitizedDate = format(meetupDate, 'yyyy-MM-dd-HH-mm');
+  const sanitizedDate = format(meetup.date, 'yyyy-MM-dd-HH-mm');
 
   await octokit.rest.issues.updateComment({
     comment_id: createCommentResponse.data.id,
