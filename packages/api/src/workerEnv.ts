@@ -1,12 +1,11 @@
 import {
-  type Input,
-  type Output,
   object,
+  safeParseAsync,
   string,
   transform,
   url,
-  safeParseAsync,
-  ValiError,
+  type Input,
+  type Output,
 } from 'valibot';
 
 export const envSchema = object({
@@ -14,23 +13,7 @@ export const envSchema = object({
   GITHUB_REPO_OWNER: string(),
   GITHUB_APP_ID: string(),
   GITHUB_APP_PRIVATE_KEY: string(),
-  GITHUB_APP_INSTALLATION_ID: transform(string(), (input) => {
-    const number = Number(input);
-
-    if (Number.isNaN(number)) {
-      throw new ValiError([
-        {
-          input,
-          message: 'Must be a number',
-          origin: 'value',
-          reason: 'type',
-          validation: 'number',
-        },
-      ]);
-    }
-
-    return number;
-  }),
+  GITHUB_APP_INSTALLATION_ID: transform(string(), Number),
   ALLOWED_ORIGIN: string([url()]),
 });
 

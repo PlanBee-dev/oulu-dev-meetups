@@ -10,15 +10,15 @@ import {
 } from 'meetup-shared';
 import fs from 'node:fs/promises';
 import { join } from 'node:path';
-import { z } from 'zod';
+import { object, string, transform } from 'valibot';
 import { formatValidationErrors } from '../../meetup-shared/src/formatValidationErrors';
 
-const envSchema = z.object({
-  MEETUP_FOLDER: z.string(),
-  ISSUE_TITLE: z.string(),
-  ISSUE_BODY: z.string(),
-  ISSUE_NUMBER: z.string().transform(Number),
-  GITHUB_TOKEN: z.string(),
+const envSchema = object({
+  MEETUP_FOLDER: string(),
+  ISSUE_TITLE: string(),
+  ISSUE_BODY: string(),
+  ISSUE_NUMBER: transform(string(), Number),
+  GITHUB_TOKEN: string(),
 });
 
 async function main() {

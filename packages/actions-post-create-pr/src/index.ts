@@ -1,15 +1,15 @@
 import { context, getOctokit } from '@actions/github';
-import { z } from 'zod';
 import { getMeetupIssueCommentStatus } from 'meetup-shared';
+import { object, parse, string, transform } from 'valibot';
 
-const envSchema = z.object({
-  PULL_REQUEST_NUMBER: z.string().transform(Number),
-  COMMENT_ID: z.string().transform(Number),
-  GITHUB_TOKEN: z.string(),
+const envSchema = object({
+  PULL_REQUEST_NUMBER: transform(string(), Number),
+  COMMENT_ID: transform(string(), Number),
+  GITHUB_TOKEN: string(),
 });
 
 async function main() {
-  const env = envSchema.parse(process.env);
+  const env = parse(envSchema, process.env);
 
   const octokit = getOctokit(env.GITHUB_TOKEN);
 

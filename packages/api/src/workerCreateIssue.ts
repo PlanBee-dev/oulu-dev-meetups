@@ -3,9 +3,9 @@ import {
   getMeetupIssueBody,
   meetupFormValuesSchema,
 } from 'meetup-shared';
-import { Env } from './workerEnv';
 import { App } from 'octokit';
 import { safeParseAsync } from 'valibot';
+import { Env } from './workerEnv';
 
 export async function parseCreateIssueReqBody(req: Request): Promise<
   | {

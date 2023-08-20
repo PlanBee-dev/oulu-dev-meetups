@@ -9,9 +9,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "meetup-shared": "workspace:*",
     "@actions/github": "^5.1.1",
-    "tsx": "^3.12.7"
+    "meetup-shared": "workspace:*",
+    "tsx": "^3.12.7",
+    "valibot": "^0.11.1"
   },
   "devDependencies": {
     "msw": "^1.2.3"
