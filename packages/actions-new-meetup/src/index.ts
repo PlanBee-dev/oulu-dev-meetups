@@ -114,7 +114,11 @@ async function main() {
     console.log('files', files);
 
     await fs.writeFile(
-      join(env.MEETUP_FOLDER, `${sanitizedMeetupTitle}-${sanitizedDate}.md`),
+      join(
+        '../../',
+        env.MEETUP_FOLDER,
+        `${sanitizedMeetupTitle}-${sanitizedDate}.md`,
+      ),
       newMeetupFile,
     );
   } catch (err) {
