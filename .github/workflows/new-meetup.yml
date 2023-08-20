@@ -1,5 +1,8 @@
 name: New meetup
 
+env:
+  MEETUP_FOLDER: './packages/site/src/content/meetups'
+
 permissions:
   contents: write
   pull-requests: write
@@ -27,7 +30,6 @@ jobs:
           pnpm -r --filter=actions-new-meetup... run build
           pnpm -r --filter=actions-new-meetup run start
         env:
-          MEETUP_FOLDER: './packages/site/src/content/meetups'
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ github.token }}
