@@ -109,6 +109,10 @@ async function main() {
   const newMeetupFile = getMeetupMarkdownFileContent(meetup);
 
   try {
+    const files = await fs.readdir('./');
+
+    console.log('files', files);
+
     await fs.writeFile(
       join(env.MEETUP_FOLDER, `${sanitizedMeetupTitle}-${sanitizedDate}.md`),
       newMeetupFile,
