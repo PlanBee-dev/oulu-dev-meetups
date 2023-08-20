@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import format from 'date-fns/format';
 import {
+  formatValidationErrors,
   getMeetupIssueCommentStatus,
   getMeetupMarkdownFileContent,
   getMeetupPullRequestContent,
@@ -11,7 +12,6 @@ import {
 import fs from 'node:fs/promises';
 import { join } from 'node:path';
 import { object, string, transform } from 'valibot';
-import { formatValidationErrors } from '../../meetup-shared/src/formatValidationErrors';
 
 const envSchema = object({
   MEETUP_FOLDER: string(),
