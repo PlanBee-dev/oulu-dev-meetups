@@ -107,10 +107,30 @@ async function main() {
 
   const newMeetupFile = getMeetupMarkdownFileContent(meetup);
 
-  await fs.writeFile(
-    `${env.MEETUP_FOLDER}/${sanitizedMeetupTitle}-${sanitizedDate}.md`,
-    newMeetupFile,
-  );
+  try {
+    await fs.writeFile(
+      `${env.MEETUP_FOLDER}/${sanitizedMeetupTitle}-${sanitizedDate}.md`,
+      newMeetupFile,
+    );
+  } catch (err) {
+    console.error('Error writing new meetup file', err);
+
+    await octokit.rest.issues.updateComment({
+      comment_id: createCommentResponse.data.id,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      body: getMeetupIssueCommentStatus([
+        {
+          status: 'error',
+          errors: {
+            message: "Couldn't write new meetup file",
+          },
+        },
+        { status: 'idle' },
+        { status: 'idle' },
+      ]),
+    });
+  }
 
   await octokit.rest.issues.updateComment({
     comment_id: createCommentResponse.data.id,

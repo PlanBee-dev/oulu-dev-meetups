@@ -7,7 +7,7 @@ type Step =
     }
   | {
       status: 'error';
-      errors: ValidationErrors;
+      errors: ValidationErrors | object;
     };
 
 export function getMeetupIssueCommentStatus(
@@ -58,7 +58,7 @@ export function getMeetupIssueCommentStatus(
   );
 }
 
-function showError(error: ValidationErrors) {
+function showError(error: object) {
   return `\n<details>
 
 <summary>Click to see the error</summary>
