@@ -7,16 +7,9 @@ import { App } from 'octokit';
 import { safeParseAsync } from 'valibot';
 import { Env } from './workerEnv';
 
-export async function parseCreateIssueReqBody(req: Request): Promise<
-  | {
-      errorResponse: Response;
-      parsedMeetup?: never;
-    }
-  | {
-      errorResponse?: never;
-      parsedMeetup: MeetupFormValues;
-    }
-> {
+export async function parseCreateIssueReqBody(
+  req: Request,
+): Promise<{ errorResponse: Response } | { parsedMeetup: MeetupFormValues }> {
   try {
     const json = await req.json();
 
@@ -68,17 +61,8 @@ export async function createIssue(props: {
   meetupFormValues: MeetupFormValues;
   env: Env;
 }): Promise<
-  | {
-      errorResponse: Response;
-      data?: never;
-    }
-  | {
-      errorResponse?: never;
-      data: {
-        issueUrl: string;
-        issueNumber: number;
-      };
-    }
+  | { errorResponse: Response }
+  | { data: { issueUrl: string; issueNumber: number } }
 > {
   try {
     const app = new App({

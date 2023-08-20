@@ -20,16 +20,9 @@ export const envSchema = object({
 export type Env = Output<typeof envSchema>;
 export type EnvInput = Input<typeof envSchema>;
 
-export async function parseEnv(unsafeEnv: unknown): Promise<
-  | {
-      env?: never;
-      errorResponse: globalThis.Response;
-    }
-  | {
-      env: Env;
-      errorResponse?: never;
-    }
-> {
+export async function parseEnv(
+  unsafeEnv: unknown,
+): Promise<{ errorResponse: Response } | { env: Env }> {
   const envSchemaResult = await safeParseAsync(envSchema, unsafeEnv);
 
   if (!envSchemaResult.success) {

@@ -10,7 +10,7 @@ const handler = {
   async fetch(req: Request, unsafeEnv: unknown): Promise<Response> {
     const envResult = await parseEnv(unsafeEnv);
 
-    if (envResult.errorResponse) {
+    if ('errorResponse' in envResult) {
       return envResult.errorResponse;
     }
     const env = envResult.env;

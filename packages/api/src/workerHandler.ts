@@ -1,10 +1,10 @@
-import { parseCreateIssueReqBody, createIssue } from './workerCreateIssue';
+import { createIssue, parseCreateIssueReqBody } from './workerCreateIssue';
 import { Env } from './workerEnv';
 
 export async function handleRequest(req: Request, env: Env): Promise<Response> {
   const meetupFormValues = await parseCreateIssueReqBody(req);
 
-  if (meetupFormValues.errorResponse) {
+  if ('errorResponse' in meetupFormValues) {
     return meetupFormValues.errorResponse;
   }
 
@@ -13,7 +13,7 @@ export async function handleRequest(req: Request, env: Env): Promise<Response> {
     env,
   });
 
-  if (createIssueRes.errorResponse) {
+  if ('errorResponse' in createIssueRes) {
     return createIssueRes.errorResponse;
   }
 
