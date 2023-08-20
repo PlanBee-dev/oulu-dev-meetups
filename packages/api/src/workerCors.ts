@@ -18,7 +18,5 @@ export function setCorsHeaders(
   res: Response,
   allowedOrigin: string,
 ) {
-  if (req.method === 'GET') {
-    res.headers.set('Access-Control-Allow-Origin', allowedOrigin);
-  }
+  res.headers.set('Access-Control-Allow-Origin', allowedOrigin);
 }
