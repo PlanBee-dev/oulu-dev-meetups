@@ -152,7 +152,7 @@ async function main() {
 
   const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;
 
-  const pullRequestTitle = `New meetup: ${env.ISSUE_TITLE}`;
+  const pullRequestTitle = `New meetup: ${meetup.title}`;
   const pullRequestBody = getMeetupPullRequestContent(meetup, env.ISSUE_NUMBER);
 
   core.setOutput('branch_name', newBranchName);
