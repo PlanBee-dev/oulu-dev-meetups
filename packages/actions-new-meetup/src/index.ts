@@ -120,16 +120,20 @@ async function main() {
       owner: context.repo.owner,
       repo: context.repo.repo,
       body: getMeetupIssueCommentStatus([
+        { status: 'success' },
         {
           status: 'error',
           errors: {
-            message: "Couldn't write new meetup file",
+            message: 'Error writing new meetup file',
           },
         },
         { status: 'idle' },
-        { status: 'idle' },
       ]),
     });
+
+    core.setFailed('Error writing new meetup file');
+
+    return;
   }
 
   await octokit.rest.issues.updateComment({
