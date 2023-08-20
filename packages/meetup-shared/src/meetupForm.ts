@@ -2,25 +2,25 @@ import format from 'date-fns/format';
 import isValid from 'date-fns/isValid';
 import parse from 'date-fns/parse';
 import {
-  type Output,
+  ValiError,
+  minLength,
   object,
   safeParseAsync,
   string,
   transform,
   url,
+  type Output,
 } from 'valibot';
-import { meetupSchema } from './meetupType';
-import { ValiError } from 'valibot';
-import { type Meetup } from './meetupType';
+import { meetupSchema, type Meetup } from './meetupType';
 
 export const meetupFormValuesSchema = object({
-  title: string(),
-  description: string(),
-  date: transform(string(), meetupFormDateSchema),
-  time: transform(string(), meetupFormTimeSchema),
-  location: string(),
+  title: string([minLength(1)]),
+  description: string([minLength(1)]),
+  date: transform(string([minLength(1)]), meetupFormDateSchema),
+  time: transform(string([minLength(1)]), meetupFormTimeSchema),
+  location: string([minLength(1)]),
   locationLink: string([url()]),
-  organizer: string(),
+  organizer: string([minLength(1)]),
   organizerLink: string([url()]),
   signupLink: string([url()]),
 });
