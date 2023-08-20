@@ -11,8 +11,7 @@
   "dependencies": {
     "meetup-shared": "workspace:*",
     "@actions/github": "^5.1.1",
-    "tsx": "^3.12.7",
-    "zod": "^3.21.4"
+    "tsx": "^3.12.7"
   },
   "devDependencies": {
     "msw": "^1.2.3"

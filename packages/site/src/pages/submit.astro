@@ -262,7 +262,7 @@ import Spinner from '../components/Spinner.astro';
     formFieldset.disabled = true;
 
     const [res] = await Promise.allSettled([
-      fetch('http://127.0.0.1:8787', {
+      fetch(import.meta.env.PUBLIC_API_BASE_URL, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },

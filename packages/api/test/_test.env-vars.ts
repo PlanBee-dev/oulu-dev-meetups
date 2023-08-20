@@ -3,7 +3,6 @@ import type { EnvInput } from '../src/workerEnv';
 export const testEnvVars: EnvInput = {
   GITHUB_REPO_NAME: 'test-repo',
   GITHUB_REPO_OWNER: 'test-repo-owner',
-  GITHUB_ISSUE_LABEL: 'test-label',
   GITHUB_APP_ID: '123',
   GITHUB_APP_INSTALLATION_ID: '123',
   GITHUB_APP_PRIVATE_KEY:
