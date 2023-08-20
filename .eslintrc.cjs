@@ -30,7 +30,7 @@ module.exports = {
     },
     {
       files: ['./packages/**/*.ts'],
-      excludedFiles: ['**/*.d.ts'],
+      excludedFiles: ['**/*.d.ts', 'vitest.config.ts'],
       parserOptions: {
         project: ['./packages/*/tsconfig.json'],
       },
