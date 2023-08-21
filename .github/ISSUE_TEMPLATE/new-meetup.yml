@@ -8,7 +8,7 @@ body:
       required: true
     attributes:
       label: Meetup title
-      placeholder: "Let's all learn javascript"
+      placeholder: "Let's all learn JavaScript"
 
   - type: input
     id: signupLink
