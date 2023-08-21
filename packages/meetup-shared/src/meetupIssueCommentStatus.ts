@@ -10,52 +10,62 @@ type Step =
       errors: ValidationErrors | unknown;
     };
 
-export function getMeetupIssueCommentStatus(
-  steps: readonly [Step, Step, Step],
-) {
-  const firstMessage =
-    steps[0].status === 'idle'
-      ? 'Validating meetup details...'
-      : steps[0].status === 'loading'
-      ? 'Validating meetup details...'
-      : steps[0].status === 'success'
-      ? 'Validating meetup details... Done! ✅'
-      : steps[0].status === 'error'
-      ? 'Validating meetup details... Failed! ❌' + showError(steps[0].errors)
-      : null;
-
-  const secondMessage =
-    steps[1].status === 'idle'
-      ? 'Create meetup file'
-      : steps[1].status === 'loading'
-      ? 'Creating meetup file...'
-      : steps[1].status === 'success'
-      ? 'Creating meetup file... Done! ✅'
-      : steps[1].status === 'error'
-      ? 'Creating meetup file... Failed! ❌' + showError(steps[1].errors)
-      : null;
-
-  const thirdMessage =
-    steps[2].status === 'idle'
-      ? 'Create new branch and pull request'
-      : steps[2].status === 'loading'
-      ? 'Creating new branch and pull request...'
-      : steps[2].status === 'success'
-      ? 'Creating new branch and pull request... Done! ✅'
-      : steps[2].status === 'error'
-      ? 'Creating new branch and pull request... Failed! ❌' +
-        showError(steps[2].errors)
-      : null;
-
+export function getMeetupIssueCommentStatus([
+  firstStep,
+  secondStep,
+  thirdStep,
+]: readonly [Step, Step, Step]) {
   return (
     "Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you." +
     '\n\n' +
-    `1. ${firstMessage}` +
+    `1. ${getFirstStepMessage(firstStep)}` +
     '\n' +
-    `2. ${secondMessage}` +
+    `2. ${getSecondStepMessage(secondStep)}` +
     '\n' +
-    `3. ${thirdMessage}`
+    `3. ${getThirdStepMessage(thirdStep)}`
   );
+}
+
+function getFirstStepMessage(step: Step) {
+  switch (step.status) {
+    case 'idle':
+      return 'Validating meetup details...';
+    case 'loading':
+      return 'Validating meetup details...';
+    case 'success':
+      return 'Validating meetup details... Done! ✅';
+    case 'error':
+      return 'Validating meetup details... Failed! ❌' + showError(step.errors);
+  }
+}
+
+function getSecondStepMessage(step: Step) {
+  switch (step.status) {
+    case 'idle':
+      return 'Create meetup file';
+    case 'loading':
+      return 'Creating meetup file...';
+    case 'success':
+      return 'Creating meetup file... Done! ✅';
+    case 'error':
+      return 'Creating meetup file... Failed! ❌' + showError(step.errors);
+  }
+}
+
+function getThirdStepMessage(step: Step) {
+  switch (step.status) {
+    case 'idle':
+      return 'Create new branch and pull request';
+    case 'loading':
+      return 'Creating new branch and pull request...';
+    case 'success':
+      return 'Creating new branch and pull request... Done! ✅';
+    case 'error':
+      return (
+        'Creating new branch and pull request... Failed! ❌' +
+        showError(step.errors)
+      );
+  }
 }
 
 function showError(error: unknown) {
