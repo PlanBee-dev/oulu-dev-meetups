@@ -7,7 +7,7 @@ type Step =
     }
   | {
       status: 'error';
-      errors: ValidationErrors | unknown;
+      errors: ValidationErrors | object;
     };
 
 export function getMeetupIssueCommentStatus([
