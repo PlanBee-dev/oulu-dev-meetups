@@ -1,4 +1,4 @@
-import { afterEach, expect, test } from 'vitest';
+import { afterEach, expect, test, vi } from 'vitest';
 import handler from '../src/worker';
 import { onIssueCreated, shouldCreateIssueFail } from './GithubAPI.mock';
 import { testEnvVars } from './_test.env-vars';
@@ -50,7 +50,9 @@ test('Calls github api to create an issue (happy path)', async () => {
 test('Returns 500 when call to github api fails', async () => {
   shouldCreateIssueFail.mockReturnValue(true);
 
-  const response = await handler.fetch(
+  vi.useFakeTimers();
+
+  const promise = handler.fetch(
     new Request('http://localhost:3000', {
       method: 'POST',
       headers: {
@@ -71,6 +73,12 @@ test('Returns 500 when call to github api fails', async () => {
     }),
     testEnvVars,
   );
+
+  await vi.runAllTimersAsync();
+
+  const response = await promise;
+
+  vi.useRealTimers();
 
   expect(onIssueCreated).toHaveBeenCalled();
   expect(onIssueCreated).toHaveBeenCalledWith({
