@@ -1,20 +1,16 @@
-import { ValidationErrors } from './formatValidationErrors';
+import { Issues } from 'valibot';
 
-type Step =
-  | {
-      status: 'idle' | 'loading' | 'success';
-      error?: never;
-    }
-  | {
-      status: 'error';
-      errors: ValidationErrors | object;
-    };
+export type Step =
+  | { status: 'idle' | 'loading' | 'success' }
+  | { status: 'error'; issues?: Issues; message?: string };
+
+export type Steps = readonly [Step, Step, Step];
 
 export function getMeetupIssueCommentStatus([
   firstStep,
   secondStep,
   thirdStep,
-]: readonly [Step, Step, Step]) {
+]: Steps) {
   return (
     "Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you." +
     '\n\n' +
@@ -35,7 +31,7 @@ function getFirstStepMessage(step: Step) {
     case 'success':
       return 'Validating meetup details... Done! ✅';
     case 'error':
-      return 'Validating meetup details... Failed! ❌' + showError(step.errors);
+      return 'Validating meetup details... Failed! ❌' + showError(step);
   }
 }
 
@@ -48,7 +44,7 @@ function getSecondStepMessage(step: Step) {
     case 'success':
       return 'Creating meetup file... Done! ✅';
     case 'error':
-      return 'Creating meetup file... Failed! ❌' + showError(step.errors);
+      return 'Creating meetup file... Failed! ❌' + showError(step);
   }
 }
 
@@ -62,13 +58,12 @@ function getThirdStepMessage(step: Step) {
       return 'Creating new branch and pull request... Done! ✅';
     case 'error':
       return (
-        'Creating new branch and pull request... Failed! ❌' +
-        showError(step.errors)
+        'Creating new branch and pull request... Failed! ❌' + showError(step)
       );
   }
 }
 
-function showError(error: unknown) {
+function showError(error: { issues?: Issues; message?: string }) {
   return `\n<details>
 
 <summary>Click to see the error</summary>
