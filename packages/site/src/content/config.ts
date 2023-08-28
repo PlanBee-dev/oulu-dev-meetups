@@ -1,6 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 
 const meetups = defineCollection({
+  type: 'content',
   schema: z.object({
     name: z.string(),
     description: z.string(),
