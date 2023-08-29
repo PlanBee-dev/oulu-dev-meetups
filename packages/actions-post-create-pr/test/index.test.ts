@@ -1,4 +1,4 @@
-import { test, expect, vi } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { onCommentUpdated } from './GithubAPI.mock';
 
 vi.mock('@actions/github', async () => {
@@ -38,13 +38,12 @@ test('sends pull request', async () => {
 
   const { body } = JSON.parse(onCommentUpdated.mock.calls[0][0].body);
   expect(body).toMatchInlineSnapshot(`
-    "
-    Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
+      "Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
 
-    1. Validating meetup details... Done! ✅
-    2. Creating meetup file... Done! ✅
-    3. Creating new branch and pull request... Done! ✅
+      1. Validating meetup details... Done! ✅
+      2. Creating meetup file... Done! ✅
+      3. Creating new branch and pull request... Done! ✅
 
-    Here's the new pull request: #123"
-  `);
+      Here's the new pull request: #123"
+    `);
 });

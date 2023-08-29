@@ -1,17 +1,19 @@
 {
-  "name": "new-meetup-action",
+  "name": "actions-new-meetup",
   "private": true,
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "start": "tsx src/index.ts",
+    "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
     "date-fns": "^2.30.0",
+    "meetup-shared": "workspace:*",
     "tsx": "^3.12.7",
-    "zod": "^3.21.4"
+    "valibot": "^0.11.1"
   }
 }

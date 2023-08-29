@@ -9,7 +9,9 @@
     "test": "vitest",
     "build": "pnpm -r run build",
     "lint": "eslint . --max-warnings 0 --ext .astro,.ts,.js",
-    "typecheck": "pnpm -r --parallel run typecheck"
+    "typecheck": "pnpm -r --parallel run typecheck",
+    "dev": "pnpm -r --parallel run dev",
+    "start": "pnpm -r --parallel run start"
   },
   "devDependencies": {
     "@types/node": "^20.4.4",

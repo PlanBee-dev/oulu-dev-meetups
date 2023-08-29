@@ -1,30 +1,42 @@
 import { context, getOctokit } from '@actions/github';
-import { z } from 'zod';
+import { getMeetupIssueCommentStatus } from 'meetup-shared';
+import { nullish, object, parse, string, transform } from 'valibot';
 
-const envSchema = z.object({
-  PULL_REQUEST_NUMBER: z.string().transform(Number),
-  COMMENT_ID: z.string().transform(Number),
-  GITHUB_TOKEN: z.string(),
+const envSchema = object({
+  PULL_REQUEST_NUMBER: transform(string(), Number),
+  COMMENT_ID: nullish(transform(string(), Number)),
+  GITHUB_TOKEN: string(),
 });
 
 async function main() {
-  const env = envSchema.parse(process.env);
+  const env = parse(envSchema, process.env);
 
   const octokit = getOctokit(env.GITHUB_TOKEN);
 
-  await octokit.rest.issues.updateComment({
-    comment_id: env.COMMENT_ID,
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    body: `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
+  const body =
+    getMeetupIssueCommentStatus([
+      { status: 'success' },
+      { status: 'success' },
+      { status: 'success' },
+    ]) +
+    '\n\n' +
+    `Here's the new pull request: #${env.PULL_REQUEST_NUMBER}`;
 
-1. Validating meetup details... Done! ✅
-2. Creating meetup file... Done! ✅
-3. Creating new branch and pull request... Done! ✅
-
-Here's the new pull request: #${env.PULL_REQUEST_NUMBER}`,
-  });
+  if (env.COMMENT_ID) {
+    await octokit.rest.issues.updateComment({
+      comment_id: env.COMMENT_ID,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      body,
+    });
+  } else {
+    await octokit.rest.issues.createComment({
+      issue_number: env.PULL_REQUEST_NUMBER,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      body,
+    });
+  }
 }
 
 void main();

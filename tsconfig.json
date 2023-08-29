@@ -4,6 +4,9 @@
     "moduleResolution": "Node",
     "strict": true,
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "meetup-shared": ["./packages/meetup-shared/src/index.ts"]
+    }
   }
 }

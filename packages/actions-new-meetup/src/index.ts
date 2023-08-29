@@ -1,146 +1,133 @@
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import format from 'date-fns/format';
-import isValid from 'date-fns/isValid';
-import parse from 'date-fns/parse';
+import {
+  Steps,
+  getMeetupIssueCommentStatus,
+  getMeetupMarkdownFileContent,
+  getMeetupPullRequestContent,
+  meetupFormValuesToMeetup,
+  parseMeetupIssueBody,
+} from 'meetup-shared';
 import fs from 'node:fs/promises';
-import { z } from 'zod';
+import { join } from 'node:path';
+import { object, string, transform } from 'valibot';
 
-const envSchema = z.object({
-  MEETUP_FOLDER: z.string(),
-  ISSUE_TITLE: z.string(),
-  ISSUE_BODY: z.string(),
-  ISSUE_NUMBER: z.string().transform(Number),
-  GITHUB_TOKEN: z.string(),
+const envSchema = object({
+  MEETUP_FOLDER: string(),
+  ISSUE_BODY: string(),
+  ISSUE_NUMBER: transform(string(), Number),
+  GITHUB_TOKEN: string(),
 });
 
 async function main() {
   const env = envSchema.parse(process.env);
 
-  const octokit = getOctokit(env.GITHUB_TOKEN);
-
-  const createCommentResponse = await octokit.rest.issues.createComment({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    title: `New meetup: ${env.ISSUE_TITLE}`,
+  const upsertComment = getUpsertComment({
+    octokit: getOctokit(env.GITHUB_TOKEN),
     issue_number: env.ISSUE_NUMBER,
-    body: getStatusMessage(['loading', 'idle', 'idle']),
-  });
-
-  core.setOutput('comment_id', createCommentResponse.data.id);
-
-  const sanitizedMeetupTitle = sanitizeString(env.ISSUE_TITLE);
-
-  const date = env.ISSUE_BODY.match(getTitleParsingRegex('Time and date'))?.[1];
-  const location = env.ISSUE_BODY.match(getTitleParsingRegex('Location'))?.[1];
-  const locationLinkGoogleMaps = env.ISSUE_BODY.match(
-    getTitleParsingRegex('Location as a Google Maps link'),
-  )?.[1];
-  const organiser = env.ISSUE_BODY.match(
-    getTitleParsingRegex('Organiser'),
-  )?.[1];
-  const organiserLink = env.ISSUE_BODY.match(
-    getTitleParsingRegex('Link to organiser'),
-  )?.[1];
-  const joinLink = env.ISSUE_BODY.match(
-    getTitleParsingRegex('Joining link'),
-  )?.[1];
-
-  const description = getDescription(env.ISSUE_BODY);
-
-  if (
-    !date ||
-    !location ||
-    !locationLinkGoogleMaps ||
-    !organiser ||
-    !organiserLink ||
-    !joinLink ||
-    !description
-  ) {
-    core.debug(`Date: ${date}`);
-    core.debug(`Location: ${location}`);
-    core.debug(`Location link: ${locationLinkGoogleMaps}`);
-    core.debug(`Organiser: ${organiser}`);
-    core.debug(`Organiser link: ${organiserLink}`);
-    core.debug(`Join link: ${joinLink}`);
-    core.debug(`Description: ${description}`);
-    core.debug(`Issue body: ${env.ISSUE_BODY}`);
-
-    await octokit.rest.issues.updateComment({
-      comment_id: createCommentResponse.data.id,
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      body: getStatusMessage(['error', 'idle', 'idle']),
-    });
-
-    core.setFailed('Invalid issue body');
-
-    return;
-  }
-
-  const parsedDate = parse(date, 'dd-MM-yyyy HH:mm', new Date());
-  if (!isValid(parsedDate)) {
-    await octokit.rest.issues.updateComment({
-      comment_id: createCommentResponse.data.id,
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      body: getStatusMessage(['error', 'idle', 'idle']),
-    });
-
-    core.setFailed('Invalid date');
-    return;
-  }
-
-  await octokit.rest.issues.updateComment({
-    comment_id: createCommentResponse.data.id,
     owner: context.repo.owner,
     repo: context.repo.repo,
-    body: getStatusMessage(['success', 'loading', 'idle']),
-  });
-  const isoDate = parsedDate.toISOString();
-  const sanitizedDate = format(parsedDate, 'dd-MM-yyyy-HH-mm');
-
-  const newMeetupFile = getMeetupFileContent({
-    isoDate,
-    organiser,
-    organiserLink,
-    location,
-    locationLinkGoogleMaps,
-    issueNumber: env.ISSUE_NUMBER,
-    issueTitle: env.ISSUE_TITLE,
-    description,
-    joinLink,
   });
 
-  await fs.writeFile(
-    `./${env.MEETUP_FOLDER}/${sanitizedMeetupTitle}-${sanitizedDate}.md`,
-    newMeetupFile,
-  );
+  await upsertComment.withSteps([
+    { status: 'loading' },
+    { status: 'idle' },
+    { status: 'idle' },
+  ]);
 
-  await octokit.rest.issues.updateComment({
-    comment_id: createCommentResponse.data.id,
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    body: getStatusMessage(['success', 'success', 'loading']),
-  });
+  try {
+    const meetupFormValues = await parseMeetupIssueBody(env.ISSUE_BODY);
 
-  const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;
+    if (!meetupFormValues.success) {
+      throw new CustomError('Invalid issue body ', [
+        { status: 'error', issues: meetupFormValues.error.issues },
+        { status: 'idle' },
+        { status: 'idle' },
+      ]);
+    }
 
-  const pullRequestTitle = `New meetup: ${env.ISSUE_TITLE}`;
-  const pullRequestBody = getPullRequestBody({
-    isoDate,
-    organiser,
-    organiserLink,
-    location,
-    locationLinkGoogleMaps,
-    issueNumber: env.ISSUE_NUMBER,
-  });
+    const meetupResult = await meetupFormValuesToMeetup(meetupFormValues.data);
 
-  core.setOutput('branch_name', newBranchName);
-  core.setOutput('pull_request_title', pullRequestTitle);
-  core.setOutput('pull_request_body', pullRequestBody);
+    if (!meetupResult.success) {
+      throw new CustomError('Invalid issue body ', [
+        { status: 'error', issues: meetupResult.error.issues },
+        { status: 'idle' },
+        { status: 'idle' },
+      ]);
+    }
 
-  core.info('Done');
+    const meetup = meetupResult.data;
+
+    const sanitizedMeetupTitle = sanitizeString(meetup.title);
+
+    const sanitizedDate = format(meetup.date, 'yyyy-MM-dd-HH-mm');
+
+    await upsertComment.withSteps([
+      { status: 'success' },
+      { status: 'loading' },
+      { status: 'idle' },
+    ]);
+
+    const newMeetupFile = getMeetupMarkdownFileContent(meetup);
+
+    await fs
+      .writeFile(
+        join(
+          '../../',
+          env.MEETUP_FOLDER,
+          `${sanitizedMeetupTitle}-${sanitizedDate}.md`,
+        ),
+        newMeetupFile,
+      )
+      .catch(() => {
+        throw new CustomError('Error writing new meetup file', [
+          { status: 'success' },
+          { status: 'error', message: 'Error writing new meetup file' },
+          { status: 'idle' },
+        ]);
+      });
+
+    await upsertComment.withSteps([
+      { status: 'success' },
+      { status: 'success' },
+      { status: 'loading' },
+    ]);
+
+    const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;
+
+    const pullRequestTitle = `New meetup: ${meetup.title}`;
+    const pullRequestBody = getMeetupPullRequestContent(
+      meetup,
+      env.ISSUE_NUMBER,
+    );
+
+    core.setOutput('branch_name', newBranchName);
+    core.setOutput('pull_request_title', pullRequestTitle);
+    core.setOutput('pull_request_body', pullRequestBody);
+
+    core.info('Done');
+
+    core.setOutput('comment_id', upsertComment.comment_id);
+  } catch (err) {
+    if (err instanceof CustomError) {
+      console.error('Error creating meetup - ', err);
+
+      upsertComment.withSteps(err.steps).catch((err) => {
+        console.error('Error updating comment - ', err);
+      });
+    } else {
+      console.error('Unexpected error creating meetup - ', err);
+
+      upsertComment
+        .withMessage('Unexpected error while creating meetup')
+        .catch((err) => {
+          console.error('Error updating comment - ', err);
+        });
+    }
+
+    core.setFailed('Error creating meetup');
+  }
 }
 
 void main();
@@ -149,103 +136,94 @@ function sanitizeString(str: string) {
   return str.replace(/[^a-z0-9]/gi, '-').toLowerCase();
 }
 
-function getPullRequestBody(props: {
-  isoDate: string;
-  organiser: string;
-  organiserLink: string;
-  location: string;
-  locationLinkGoogleMaps: string;
-  issueNumber: number;
-}) {
-  return `
-New meetup
+class CustomError extends Error {
+  public readonly steps: Steps;
 
-Date:
-${props.isoDate}
+  constructor(message: string, steps: Steps) {
+    super(`Custom error - ${message}`);
 
-Organiser:
-[${props.organiser}](${props.organiserLink})
-
-Location:
-[${props.location}](${props.locationLinkGoogleMaps})
-
-Closes #${props.issueNumber}`;
-}
-
-function getMeetupFileContent(props: {
-  isoDate: string;
-  organiser: string;
-  organiserLink: string;
-  location: string;
-  locationLinkGoogleMaps: string;
-  issueNumber: number;
-  issueTitle: string;
-  description: string;
-  joinLink: string;
-}) {
-  return `
----
-date: "${props.isoDate}"
-location: "${props.location}"
-locationGoogleMaps: "${props.locationLinkGoogleMaps}"
-organiser: "${props.organiser}"
-organiserLink: "${props.organiserLink}"
-joinLink: "${props.joinLink}"
----
-
-# ${props.issueTitle}
-
-${props.description}`;
-}
-
-function getTitleParsingRegex(title: string) {
-  return new RegExp(`### ${title}\\s*\\n\\s*([\\s\\S]*?)\\s*\\n\\s*###`);
-}
-
-function getDescription(issueBody: string) {
-  const targetPhrase = '### Description';
-
-  const descriptionIndex = issueBody.indexOf(targetPhrase);
-  if (descriptionIndex === -1) {
-    return null;
+    this.steps = steps;
   }
-
-  const resultString = issueBody.slice(descriptionIndex + targetPhrase.length);
-  return resultString.trim();
 }
 
-type Status = 'loading' | 'success' | 'error' | 'idle';
+function getUpsertComment({
+  octokit,
+  owner,
+  repo,
+  issue_number,
+}: {
+  octokit: ReturnType<typeof getOctokit>;
+  owner: string;
+  repo: string;
+  issue_number: number;
+}) {
+  let _comment_id: number | undefined = undefined;
 
-function getStatusMessage(status: readonly [Status, Status, Status]) {
-  const firstMessage =
-    status[0] === 'idle'
-      ? 'Validating meetup details...'
-      : status[0] === 'loading'
-      ? 'Validating meetup details...'
-      : status[0] === 'success'
-      ? 'Validating meetup details... Done! ✅'
-      : 'Validating meetup details... Failed! ❌';
+  return {
+    withSteps: async (steps: Steps) => {
+      const body = getMeetupIssueCommentStatus(steps);
 
-  const secondMessage =
-    status[1] === 'idle'
-      ? 'Creating meetup file...'
-      : status[1] === 'loading'
-      ? 'Creating meetup file...'
-      : status[1] === 'success'
-      ? 'Creating meetup file... Done! ✅'
-      : 'Creating meetup file... Failed! ❌';
+      if (_comment_id) {
+        await octokit.rest.issues
+          .updateComment({
+            comment_id: _comment_id,
+            owner,
+            repo,
+            body,
+          })
+          .catch((err) => {
+            console.error('Error updating comment', err);
+          });
+      } else {
+        const res = await octokit.rest.issues
+          .createComment({
+            owner,
+            repo,
+            issue_number,
+            body,
+          })
+          .catch((err) => {
+            console.error('Error creating comment', err);
+          });
 
-  const thirdMessage =
-    status[2] === 'idle'
-      ? 'Create new branch and pull request'
-      : status[2] === 'loading'
-      ? 'Creating new branch and pull request...'
-      : null;
+        if (res) {
+          _comment_id = res.data.id;
+        }
+      }
+    },
+    withMessage: async (message: string) => {
+      const body = message;
 
-  return `
-Hi there! Thanks for creating a new meetup. I'm going to create a new branch and pull request for you.
+      if (_comment_id) {
+        await octokit.rest.issues
+          .updateComment({
+            comment_id: _comment_id,
+            owner,
+            repo,
+            body,
+          })
+          .catch((err) => {
+            console.error('Error updating comment', err);
+          });
+      } else {
+        const res = await octokit.rest.issues
+          .createComment({
+            owner,
+            repo,
+            issue_number,
+            body,
+          })
+          .catch((err) => {
+            console.error('Error creating comment', err);
+          });
 
-1. ${firstMessage}
-2. ${secondMessage}
-3. ${thirdMessage}`;
+        if (res) {
+          _comment_id = res.data.id;
+        }
+      }
+    },
+    get comment_id() {
+      return _comment_id;
+    },
+  };
 }

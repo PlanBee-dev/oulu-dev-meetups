@@ -1,52 +1,53 @@
 name: New meetup
 
+env:
+  MEETUP_FOLDER: './packages/site/src/content/meetups'
+
 permissions:
-    contents: write
-    pull-requests: write
-    issues: write
+  contents: write
+  pull-requests: write
+  issues: write
 
 on:
-    issues:
-        types: [opened]
+  issues:
+    types: [opened]
 
 jobs:
-    new-meetup:
-        runs-on: ubuntu-latest
-        if: "contains( github.event.issue.labels.*.name, 'meetup' )"
+  new-meetup:
+    runs-on: ubuntu-latest
+    if: "contains( github.event.issue.labels.*.name, 'meetup' )"
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-            - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v2
 
-            - name: Create new meetup
-              id: new_meetup
-              working-directory: ./packages/actions-new-meetup
-              run: |
-                  pnpm i
-                  pnpm start
-              env:
-                  MEETUP_FOLDER: "../site/content/meetups" # relative from action's root
-                  ISSUE_TITLE: ${{ github.event.issue.title }}
-                  ISSUE_BODY: ${{ github.event.issue.body }}
-                  ISSUE_NUMBER: ${{ github.event.issue.number }}
-                  GITHUB_TOKEN: ${{ github.token }}
+      - name: Create new meetup
+        id: new_meetup
+        run: |
+          pnpm -r --filter=actions-new-meetup... install
+          pnpm -r --filter=actions-new-meetup... run build
+          pnpm -r --filter=actions-new-meetup run start
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GITHUB_TOKEN: ${{ github.token }}
 
-            - name: Create pull request
-              uses: peter-evans/create-pull-request@v5
-              id: create_pr
-              with:
-                  branch: ${{ steps.new_meetup.outputs.branch_name }}
-                  title: ${{ steps.new_meetup.outputs.pull_request_title }}
-                  body: ${{ steps.new_meetup.outputs.pull_request_body }}
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v5
+        id: create_pr
+        with:
+          branch: ${{ steps.new_meetup.outputs.branch_name }}
+          title: ${{ steps.new_meetup.outputs.pull_request_title }}
+          body: ${{ steps.new_meetup.outputs.pull_request_body }}
 
-            - name: Update comment
-              working-directory: ./packages/actions-new-meetup
-              run: |
-                  pnpm i
-                  pnpm start
-              env:
-                  PULL_REQUEST_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
-                  COMMENT_ID: ${{ steps.new_meetup.outputs.comment_id }}
-                  GITHUB_TOKEN: ${{ github.token }}
+      - name: Update comment
+        run: |
+          pnpm -r --filter=actions-post-create-pr... install
+          pnpm -r --filter=actions-post-create-pr... run build
+          pnpm -r --filter=actions-post-create-pr run start
+        env:
+          PULL_REQUEST_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
+          COMMENT_ID: ${{ steps.new_meetup.outputs.comment_id }}
+          GITHUB_TOKEN: ${{ github.token }}
