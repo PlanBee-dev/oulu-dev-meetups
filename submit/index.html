@@ -26,9 +26,8 @@
 <meta property="twitter:title" content="Oulu developer meetups">
 <meta property="twitter:description" content="Listing of developer meetups in Oulu area">
 <meta property="twitter:image" content="https://planbee-dev.github.io/images/oulu-devmeetups-hero.jpg">
-<link rel="stylesheet" href="/oulu-dev-meetups/_astro/index.16350830.css" />
-<link rel="stylesheet" href="/oulu-dev-meetups/_astro/_...slug_.32e2b4d0.css" /><script type="module">const e=document.querySelector("#mobile-menu-button");e.addEventListener("click",()=>{document.querySelector("#mobile-menu").classList.toggle("hidden")});
-</script></head>
+<link rel="stylesheet" href="/oulu-dev-meetups/_astro/index.77590045.css" />
+<link rel="stylesheet" href="/oulu-dev-meetups/_astro/_...slug_.32e2b4d0.css" /><script type="module" src="/oulu-dev-meetups/_astro/hoisted.35434e51.js"></script></head>
 <body class="h-full">
   <div class="min-h-full">
     
@@ -100,117 +99,145 @@
       <main>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="mx-auto max-w-3xl border border-gray-400 rounded-xl p-8 sm:px-24 bg-gray-50">
-            <form>
-              <div class="space-y-12">
-                <div>
-                  <h2 class="text-base font-semibold leading-7 text-gray-900">
-                    Submit your meetup like a pleb
-                  </h2>
-                  <p class="mt-1 text-sm leading-6 text-gray-600">
-                    Fill in the data and let github actions work it's magic
-                  </p>
+            <form id="submit-form">
+              <fieldset id="submit-form-fieldset" class="disabled:opacity-50 disabled:cursor-not-allowed group">
+                <div class="space-y-12">
+                  <div>
+                    <h2 class="text-base font-semibold leading-7 text-gray-900">
+                      Submit your meetup like a pleb
+                    </h2>
+                    <p class="mt-1 text-sm leading-6 text-gray-600">
+                      Fill in the data and let github actions work it's magic
+                    </p>
 
-                  <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div class="sm:col-span-3">
-                      <label for="meetup_title" class="block text-sm font-medium leading-6 text-gray-900">
-                        Meetup title
-                      </label>
-                      <div class="mt-2">
-                        <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                          <input type="text" name="meetup_title" id="meetup_title" autocomplete="meetup_title" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Let's all learn javascript">
+                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                      <div class="sm:col-span-3">
+                        <label for="title" class="block text-sm font-medium leading-6 text-gray-900">
+                          Meetup title
+                        </label>
+                        <div class="mt-2">
+                          <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            <input type="text" name="title" id="title" autocomplete="title" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Let's all learn JavaScript">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="sm:col-span-3">
+                        <label for="signupLink" class="block text-sm font-medium leading-6 text-gray-900">
+                          Signup link for meetup
+                        </label>
+                        <div class="mt-2">
+                          <input type="text" name="signupLink" id="signupLink" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+
+                      <div class="col-span-full">
+                        <label for="description" class="block text-sm font-medium leading-6 text-gray-900">
+                          Description
+                        </label>
+                        <div class="mt-2">
+                          <textarea id="description" name="description" rows="3" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">                          </textarea>
+                        </div>
+                        <p class="mt-3 text-sm leading-6 text-gray-600">
+                          Tell us more about the meetup. What will attendees
+                          learn?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="border-b border-gray-900/10 pb-12">
+                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                      <div class="sm:col-span-3">
+                        <label for="organizer" class="block text-sm font-medium leading-6 text-gray-900">
+                          Organizer
+                        </label>
+                        <div class="mt-2">
+                          <input id="organizer" name="organizer" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+                      <div class="sm:col-span-3">
+                        <label for="organizerLink" class="block text-sm font-medium leading-6 text-gray-900">
+                          Organizer link
+                        </label>
+                        <div class="mt-2">
+                          <input type="text" name="organizerLink" id="organizerLink" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+
+                      <div class="sm:col-span-3">
+                        <label for="date" class="block text-sm font-medium leading-6 text-gray-900">
+                          Date
+                        </label>
+                        <div class="mt-2">
+                          <input type="date" name="date" id="date" autocomplete="given-name" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+
+                      <div class="sm:col-span-3">
+                        <label for="time" class="block text-sm font-medium leading-6 text-gray-900">
+                          Time
+                        </label>
+                        <div class="mt-2">
+                          <input type="time" name="time" id="time" autocomplete="family-name" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+                      <div class="sm:col-span-3 sm:col-start-1">
+                        <label for="location" class="block text-sm font-medium leading-6 text-gray-900">
+                          Street address
+                        </label>
+                        <div class="mt-2">
+                          <input type="text" name="location" id="location" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+
+                      <div class="sm:col-span-3">
+                        <label for="locationLink" class="block text-sm font-medium leading-6 text-gray-900">
+                          Maps link for address
+                        </label>
+                        <div class="mt-2">
+                          <input type="text" name="locationLink" id="locationLink" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </div>
                       </div>
                     </div>
-
-                    <div class="sm:col-span-3">
-                      <label for="meetupLink" class="block text-sm font-medium leading-6 text-gray-900">
-                        Signup link for meetup
-                      </label>
-                      <div class="mt-2">
-                        <input type="text" name="meetupLink" id="meetupLink" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      </div>
-                    </div>
-
-                    <div class="col-span-full">
-                      <label for="description" class="block text-sm font-medium leading-6 text-gray-900">
-                        Description
-                      </label>
-                      <div class="mt-2">
-                        <textarea id="description" name="description" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">                        </textarea>
-                      </div>
-                      <p class="mt-3 text-sm leading-6 text-gray-600">
-                        Tell us more about the meetup. What will attendees
-                        learn?
-                      </p>
-                    </div>
                   </div>
                 </div>
 
-                <div class="border-b border-gray-900/10 pb-12">
-                  <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div class="sm:col-span-3">
-                      <label for="organizer" class="block text-sm font-medium leading-6 text-gray-900">
-                        Organizer
-                      </label>
-                      <div class="mt-2">
-                        <input id="organizer" name="organizer" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      </div>
-                    </div>
-                    <div class="sm:col-span-3">
-                      <label for="organizerLink" class="block text-sm font-medium leading-6 text-gray-900">
-                        Organizer link
-                      </label>
-                      <div class="mt-2">
-                        <input type="text" name="organizerLink" id="organizerLink" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      </div>
-                    </div>
-
-                    <div class="sm:col-span-3">
-                      <label for="meetupDate" class="block text-sm font-medium leading-6 text-gray-900">
-                        Date
-                      </label>
-                      <div class="mt-2">
-                        <input type="date" name="meetupDate" id="meetupDate" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      </div>
-                    </div>
-
-                    <div class="sm:col-span-3">
-                      <label for="meetupTime" class="block text-sm font-medium leading-6 text-gray-900">
-                        Time
-                      </label>
-                      <div class="mt-2">
-                        <input type="time" name="meetupTime" id="meetupTime" autocomplete="family-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      </div>
-                    </div>
-                    <div class="sm:col-span-3 sm:col-start-1">
-                      <label for="location" class="block text-sm font-medium leading-6 text-gray-900">
-                        Street address
-                      </label>
-                      <div class="mt-2">
-                        <input type="text" name="location" id="location" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      </div>
-                    </div>
-
-                    <div class="sm:col-span-3">
-                      <label for="locationLink" class="block text-sm font-medium leading-6 text-gray-900">
-                        Maps link for address
-                      </label>
-                      <div class="mt-2">
-                        <input type="text" name="locationLink" id="locationLink" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      </div>
-                    </div>
-                  </div>
+                <div class="mt-6 flex items-center justify-end gap-x-6">
+                  <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+                    Cancel
+                  </button>
+                  <button type="submit" class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27" class="absolute h-4 group-enabled:opacity-0 animate-spin" style="animation-timing-function:steps(12, end)">
+  <path style="opacity:1" d="M18.696 10.5a1.002 1.002 0 01.365-1.367l4.759-2.751a1.007 1.007 0 011.37.368.995.995 0 01-.364 1.364l-4.764 2.751a1 1 0 01-1.366-.365z" fill="currentColor">
+  </path>
+  <path style="opacity:0.9166666666666666" fill="currentColor" d="M16.133 6.938l2.75-4.765a1 1 0 011.732 1l-2.748 4.762a1 1 0 11-1.734-.997z">
+  </path>
+  <path style="opacity:0.8333333333333334" fill="currentColor" d="M13.499 7.5a1 1 0 01-1-1.001V1a1.001 1.001 0 012.003 0v5.499A1.002 1.002 0 0113.499 7.5z">
+  </path>
+  <path style="opacity:0.75" fill="currentColor" d="M8.303 10.5a1 1 0 01-1.365.365L2.175 8.114a.997.997 0 01-.367-1.364c.277-.479.89-.642 1.367-.368l4.762 2.751a1 1 0 01.366 1.367z">
+  </path>
+  <path style="opacity:0.6666666666666666" fill="currentColor" d="M9.133 7.937l-2.75-4.763a.999.999 0 111.732-1l2.75 4.765a1 1 0 01-1.732.998z">
+  </path>
+  <path style="opacity:0.5833333333333334" fill="currentColor" d="M6.499 14.5H1a1 1 0 110-2.001h5.499a1.001 1.001 0 010 2.001z">
+  </path>
+  <path style="opacity:0.5" fill="currentColor" d="M8.303 16.502a1 1 0 01-.365 1.366l-4.762 2.749a1.006 1.006 0 01-1.368-.366 1.003 1.003 0 01.367-1.368l4.762-2.748a.996.996 0 011.366.367z">
+  </path>
+  <path style="opacity:0.4166666666666667" fill="currentColor" d="M10.866 20.062l-2.75 4.767c-.277.475-.89.639-1.367.362a.999.999 0 01-.365-1.365l2.75-4.764a1 1 0 011.732 1z">
+  </path>
+  <path style="opacity:0.3333333333333333" fill="currentColor" d="M13.499 19.502c.554 0 1.003.448 1.003 1.002v5.498a1.001 1.001 0 01-2.003 0v-5.498a1 1 0 011-1.002z">
+  </path>
+  <path style="opacity:0.25" fill="currentColor" d="M17.867 19.062l2.748 4.764a1 1 0 01-1.732 1.003l-2.75-4.767a1 1 0 011.734-1z">
+  </path>
+  <path style="opacity:0.16666666666666666" fill="currentColor" d="M18.696 16.502a.995.995 0 011.365-.367l4.765 2.748a1.002 1.002 0 01-1.006 1.734l-4.759-2.749a1.002 1.002 0 01-.365-1.366z">
+  </path>
+  <path style="opacity:0.08333333333333333" fill="currentColor" d="M25.998 12.499h-5.501a1.001 1.001 0 000 2.001h5.501a1 1 0 100-2.001z">
+  </path>
+</svg>
+                    <span class="group-disabled:opacity-0">Submit</span>
+                  </button>
                 </div>
-              </div>
-
-              <div class="mt-6 flex items-center justify-end gap-x-6">
-                <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
-                  Cancel
-                </button>
-                <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  Submit
-                </button>
-              </div>
+              </fieldset>
             </form>
           </div>
         </div>
