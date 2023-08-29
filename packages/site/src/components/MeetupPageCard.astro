@@ -7,11 +7,6 @@ const { Content } = await meetupProps.meetup.render();
 ---
 
 <div class="m-auto max-w-7xl overflow-hidden bg-white shadow sm:rounded-lg">
-  <style>
-    h2 {
-      margin-top: 2rem !important;
-    }
-  </style>
   <div class="m-auto overflow-hidden max-w-7xl bg-white shadow sm:rounded-lg">
     <!--card header -->
     <div class="border-b border-gray-200 bg-sky-100 px-4 py-5 sm:px-6">
@@ -102,3 +97,8 @@ const { Content } = await meetupProps.meetup.render();
     </div>
   </div>
 </div>
+<style>
+  :global(h2) {
+    margin-top: 2rem !important;
+  }
+</style>
