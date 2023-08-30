@@ -12,6 +12,7 @@ const meetups = defineCollection({
     organizer: z.string(),
     organizerLink: z.string().optional(),
     meetupLink: z.string(),
+    image: z.string().optional(),
   }),
 });
 

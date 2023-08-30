@@ -1,13 +1,35 @@
 ---
 const meetupProps = Astro.props;
-const { location, locationLink, time, organizer, organizerLink, meetupLink } =
-  meetupProps.meetup.data;
-
+const {
+  location,
+  locationLink,
+  time,
+  organizer,
+  organizerLink,
+  meetupLink,
+  image,
+} = meetupProps.meetup.data;
+const heroImage = image ? image : 'images/heroimages/1-meetup-image.jpg';
 const { Content } = await meetupProps.meetup.render();
 ---
 
-<div class="m-auto max-w-7xl overflow-hidden bg-white shadow sm:rounded-lg">
-  <div class="m-auto overflow-hidden max-w-7xl bg-white shadow sm:rounded-lg">
+<div class="container mb-8">
+  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="relative shadow-xl sm:rounded-2xl">
+      <div class="">
+        <img
+          class="sm:rounded-2xl"
+          width={1200}
+          height={600}
+          src={`${import.meta.env.BASE_URL}${heroImage}`}
+          alt="artistic picture Oulu meetup"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="m-auto max-w-7xl overflow-hidden bg-white shadow">
+  <div class="m-auto overflow-hidden max-w-7xl bg-white shadow">
     <!--card header -->
     <div class="border-b border-gray-200 bg-sky-100 px-4 py-5 sm:px-6">
       <div
@@ -63,6 +85,13 @@ const { Content } = await meetupProps.meetup.render();
     <div class="border-t border-gray-100">
       <dl class="divide-y divide-gray-100">
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dd
+            class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0"
+          >
+            <article class="prose"><Content /></article>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-900">When</dt>
           <dd
             class="mt-1 font-semibold leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
@@ -84,13 +113,6 @@ const { Content } = await meetupProps.meetup.render();
             class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
           >
             <a href={meetupLink} target="_blank">{meetupLink}</a>
-          </dd>
-        </div>
-        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dd
-            class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-3 sm:mt-0"
-          >
-            <article class="prose"><Content /></article>
           </dd>
         </div>
       </dl>
