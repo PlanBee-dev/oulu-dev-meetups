@@ -5,8 +5,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import BaseHead from '../../components/BaseHead.astro';
 import { getCollection } from 'astro:content';
 import MeetupListItem from '../../components/MeetupListItem.astro';
+import { getMeetupsCollectionName } from '../../content/config';
 
-const meetups = await getCollection('meetups');
+const collectionName = getMeetupsCollectionName();
+const meetups = await getCollection(collectionName);
 ---
 
 <head>

@@ -1,9 +1,11 @@
 ---
 import { getCollection, CollectionEntry } from 'astro:content';
 import Meetup from '../../layouts/Meetup.astro';
+import { getMeetupsCollectionName } from '../../content/config';
 
 export async function getStaticPaths() {
-  const meetups = await getCollection('meetups');
+  const collectionName = getMeetupsCollectionName();
+  const meetups = await getCollection(collectionName);
   return meetups.map((meetup) => ({
     params: { slug: meetup.slug },
     props: meetup,

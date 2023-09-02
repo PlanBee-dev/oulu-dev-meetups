@@ -17,3 +17,10 @@ const meetups = defineCollection({
 });
 
 export const collections = { meetups };
+
+export const getMeetupsCollectionName = () => {
+  if (process.env.NODE_ENV === 'production') {
+    // Use a production collection name in production
+    return 'meetups';
+  } else return 'testmeetups';
+}
