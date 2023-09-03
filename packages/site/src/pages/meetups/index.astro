@@ -8,7 +8,7 @@ import MeetupListItem from '../../components/MeetupListItem.astro';
 import { getMeetupsCollectionName } from '../../content/config';
 
 const collectionName = getMeetupsCollectionName();
-const meetups = await getCollection(collectionName);
+const meetups: any = await getCollection(collectionName);
 ---
 
 <head>
@@ -27,7 +27,7 @@ const meetups = await getCollection(collectionName);
               <section>
                 <ul role="list" class="divide-y divide-gray-100">
                   {
-                    meetups.map((meetup) => (
+                    meetups.map((meetup: any) => (
                       <MeetupListItem
                         name={meetup.data.name}
                         location={meetup.data.location}
