@@ -9,6 +9,10 @@ import { getMeetupsCollectionName } from '../../content/config';
 
 const collectionName = getMeetupsCollectionName();
 const meetups: any = await getCollection(collectionName);
+meetups.sort((a: any, b: any) => {
+  new Date(a.data.time).getMilliseconds() -
+    new Date(b.data.time).getMilliseconds();
+});
 ---
 
 <head>
