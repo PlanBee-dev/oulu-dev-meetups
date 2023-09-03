@@ -1,5 +1,8 @@
 name: Deploy
 
+env:
+  PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
+
 on:
   push:
     branches:
@@ -15,7 +18,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
+      - uses: ./.github/actions/setup-and-cache
 
       - run: |
           pnpm install
