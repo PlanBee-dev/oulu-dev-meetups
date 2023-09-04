@@ -5,17 +5,27 @@ import Intro from '../components/Intro.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import BaseHead from '../components/BaseHead.astro';
 import MeetupCard from '../components/MeetupCard.astro';
+import { getCollection } from 'astro:content';
+import { getMeetupsCollectionName } from '../content/config';
+import { getNextMeetup } from '../utils';
 
-const meetup = {
-  name: 'Great AI Meetup',
-  location: 'Oulu, Elektroniikkatie',
-  locationLink: 'https://goo.gl/maps/GvuboievRSW5VfZf6',
-  time: '23.8.2023 17:00',
-  organizer: 'Cloudamite',
-  organizerLink: 'https://cloudamite.com',
-  description: 'Join us for an evening of AI talks and discussions.',
-  meetupLink: 'https://meetup.com/great-ai-meetup',
-};
+const collectionName = getMeetupsCollectionName();
+const meetups: any = await getCollection(collectionName);
+
+const nextMeetup = getNextMeetup(meetups);
+
+const meetupDetails = nextMeetup
+  ? {
+      name: nextMeetup.data.name,
+      location: nextMeetup.data.location,
+      locationLink: nextMeetup.data.locationLink,
+      time: nextMeetup.data.time,
+      organizer: nextMeetup.data.organizer,
+      organizerLink: nextMeetup.data.organizerLink,
+      description: nextMeetup.data.description,
+      meetupLink: nextMeetup.data.meetupLink,
+    }
+  : null;
 ---
 
 <html class="h-full">
@@ -51,7 +61,7 @@ const meetup = {
             <div class="m-4 text-center text-2xl">
               <h2>What is coming next?</h2>
             </div>
-            <MeetupCard {...meetup} />
+            {meetupDetails && <MeetupCard {...meetupDetails} />}
           </div>
         </main>
         <Footer />

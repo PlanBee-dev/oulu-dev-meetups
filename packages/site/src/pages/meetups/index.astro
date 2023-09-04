@@ -5,8 +5,14 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import BaseHead from '../../components/BaseHead.astro';
 import { getCollection } from 'astro:content';
 import MeetupListItem from '../../components/MeetupListItem.astro';
+import { getMeetupsCollectionName } from '../../content/config';
+import { parseMeetupDate } from '../../utils';
 
-const meetups = await getCollection('meetups');
+const collectionName = getMeetupsCollectionName();
+const meetups: any = await getCollection(collectionName);
+meetups.sort((a: any, b: any) => {
+  return parseMeetupDate(b.data.time) - parseMeetupDate(a.data.time);
+});
 ---
 
 <head>
@@ -25,7 +31,7 @@ const meetups = await getCollection('meetups');
               <section>
                 <ul role="list" class="divide-y divide-gray-100">
                   {
-                    meetups.map((meetup) => (
+                    meetups.map((meetup: any) => (
                       <MeetupListItem
                         name={meetup.data.name}
                         location={meetup.data.location}
