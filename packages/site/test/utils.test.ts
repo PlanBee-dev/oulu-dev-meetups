@@ -70,7 +70,9 @@ test('date parsing works in user format', () => {
   expect(parsedDate).toBeDefined();
   expect(parsedDate).not.toBeNull();
   if (parsedDate) {
-    expect(new Date(parsedDate).toLocaleString()).toBe('8/25/2023, 5:00:00 PM');
+    expect(new Date(parsedDate).toUTCString()).toBe(
+      'Fri, 25 Aug 2023 14:00:00 GMT',
+    );
   }
 });
 
@@ -80,7 +82,9 @@ test('date parsing works in system format', () => {
   expect(parsedDate).toBeDefined();
   expect(parsedDate).not.toBeNull();
   if (parsedDate) {
-    expect(new Date(parsedDate).toLocaleString()).toBe('9/13/2023, 7:30:00 PM');
+    expect(new Date(parsedDate).toUTCString()).toBe(
+      'Wed, 13 Sep 2023 16:30:00 GMT',
+    );
   }
 });
 
