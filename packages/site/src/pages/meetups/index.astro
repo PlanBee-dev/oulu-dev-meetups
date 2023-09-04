@@ -6,12 +6,12 @@ import BaseHead from '../../components/BaseHead.astro';
 import { getCollection } from 'astro:content';
 import MeetupListItem from '../../components/MeetupListItem.astro';
 import { getMeetupsCollectionName } from '../../content/config';
+import { parseMeetupDate } from '../../utils';
 
 const collectionName = getMeetupsCollectionName();
 const meetups: any = await getCollection(collectionName);
 meetups.sort((a: any, b: any) => {
-  new Date(a.data.time).getMilliseconds() -
-    new Date(b.data.time).getMilliseconds();
+  return parseMeetupDate(b.data.time) - parseMeetupDate(a.data.time);
 });
 ---
 

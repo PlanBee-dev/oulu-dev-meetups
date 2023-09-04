@@ -42,4 +42,4 @@ export const getMeetupsCollectionName = () => {
   if (process.env.NODE_ENV === 'production') {
     return MEETUPS;
   } else return TEST_MEETUPS;
-}
+};
