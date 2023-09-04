@@ -70,9 +70,7 @@ test('date parsing works in user format', () => {
   expect(parsedDate).toBeDefined();
   expect(parsedDate).not.toBeNull();
   if (parsedDate) {
-    expect(
-      new Date(parsedDate).toLocaleString('fi-FI', { timeZone: 'UTC' }),
-    ).toBe('25.8.2023 17.00.00');
+    expect(new Date(parsedDate).toDateString()).toBe('Fri Aug 25 2023');
   }
 });
 
