@@ -61,7 +61,7 @@ const meetupDetails = nextMeetup
             <div class="m-4 text-center text-2xl">
               <h2>What is coming next?</h2>
             </div>
-            <MeetupCard {...meetupDetails} />
+            {meetupDetails && <MeetupCard {...meetupDetails} />}
           </div>
         </main>
         <Footer />
