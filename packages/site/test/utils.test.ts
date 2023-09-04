@@ -65,14 +65,14 @@ test('random randomnumber returns number between 1-5', () => {
 });
 
 test('date parsing works in user format', () => {
-  const userDate = '2023-08-25 17:00';
+  const userDate = '2023-08-25 20:00';
   const parsedDate = parseMeetupDate(userDate);
   expect(parsedDate).toBeDefined();
   expect(parsedDate).not.toBeNull();
   if (parsedDate) {
-    expect(new Date(parsedDate).toUTCString()).toBe(
-      'Fri, 25 Aug 2023 14:00:00 GMT',
-    );
+    expect(
+      new Date(parsedDate).toLocaleString('fi-FI', { timeZone: 'UTC' }),
+    ).toBe('25.8.2023 17.00.00');
   }
 });
 
