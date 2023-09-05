@@ -20,16 +20,13 @@ if (!headerText) {
       <div class="flex h-16 justify-between">
         <div class="flex">
           <div class="flex flex-shrink-0 items-center rounded-lg">
-            <img
-              class="block h-8 w-auto rounded-full object-cover lg:hidden"
-              src={`${import.meta.env.BASE_URL}images/linna-logo.jpg`}
-              alt="Oulu Dev Meetups logo"
-            />
-            <img
-              class="hidden h-8 w-auto rounded-full object-cover lg:block"
-              src={`${import.meta.env.BASE_URL}images/linna-logo.jpg`}
-              alt="Oulu Dev Meetups logo"
-            />
+            <a href={import.meta.env.BASE_URL}>
+              <img
+                class="block h-8 w-auto rounded-full object-cover"
+                src={`${import.meta.env.BASE_URL}images/linna-logo.jpg`}
+                alt="Oulu Dev Meetups logo"
+              />
+            </a>
           </div>
           <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
             <HeaderLink
