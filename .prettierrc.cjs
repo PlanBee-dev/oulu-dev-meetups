@@ -4,7 +4,8 @@ module.exports = {
     require.resolve('prettier-plugin-astro'),
     require.resolve('prettier-plugin-tailwindcss'),
   ],
-  singleQuote: true,
+  useTabs: true,
+  tabWidth: 4,
   htmlWhitespaceSensitivity: 'ignore',
   overrides: [
     {
