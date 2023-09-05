@@ -8,6 +8,7 @@ const {
   organizer,
   organizerLink,
   meetupLink,
+  slug,
 } = Astro.props;
 ---
 
@@ -27,11 +28,13 @@ const {
             />
           </div>
           <div class="ml-4">
-            <h3 class="text-base font-semibold leading-6 text-gray-900">
-              {name}
-            </h3>
+            <a href={`${import.meta.env.BASE_URL}meetups/${slug}`}>
+              <h3 class="text-base font-semibold leading-6 text-gray-900">
+                {name}
+              </h3>
+            </a>
             <p class="text-sm text-gray-500">
-              <a href={organizerLink} target="_blank">{organizer}</a>
+              {organizer}
             </p>
           </div>
         </div>
@@ -81,7 +84,7 @@ const {
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-900">Organizer</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-          {organizer}
+          <a href={organizerLink} target="_blank">{organizer}</a>
         </dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
