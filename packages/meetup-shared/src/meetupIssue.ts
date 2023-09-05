@@ -1,8 +1,8 @@
-import { safeParseAsync } from 'valibot';
-import { type MeetupFormValues, meetupFormValuesSchema } from './meetupForm';
+import { safeParseAsync } from "valibot";
+import { type MeetupFormValues, meetupFormValuesSchema } from "./meetupForm";
 
 export function getMeetupIssueBody(meetup: MeetupFormValues) {
-  return `
+	return `
 ### Meetup title
 
 ${meetup.title}
@@ -41,39 +41,41 @@ ${meetup.description}`;
 }
 
 export function parseMeetupIssueBody(body: string) {
-  const unverifiedMeetupFormValues = {
-    title: getValueFromBody(body, 'Meetup title'),
-    date: getValueFromBody(body, 'Date'),
-    time: getValueFromBody(body, 'Time'),
-    location: getValueFromBody(body, 'Street address'),
-    locationLink: getValueFromBody(body, 'Maps link for address'),
-    organizer: getValueFromBody(body, 'Organizer'),
-    organizerLink: getValueFromBody(body, 'Organizer link'),
-    signupLink: getValueFromBody(body, 'Signup link for meetup'),
-    description: getRestAfterTitle(body, 'Description'),
-  };
+	const unverifiedMeetupFormValues = {
+		title: getValueFromBody(body, "Meetup title"),
+		date: getValueFromBody(body, "Date"),
+		time: getValueFromBody(body, "Time"),
+		location: getValueFromBody(body, "Street address"),
+		locationLink: getValueFromBody(body, "Maps link for address"),
+		organizer: getValueFromBody(body, "Organizer"),
+		organizerLink: getValueFromBody(body, "Organizer link"),
+		signupLink: getValueFromBody(body, "Signup link for meetup"),
+		description: getRestAfterTitle(body, "Description"),
+	};
 
-  return safeParseAsync(meetupFormValuesSchema, unverifiedMeetupFormValues);
+	return safeParseAsync(meetupFormValuesSchema, unverifiedMeetupFormValues);
 }
 
 function getValueFromBody(body: string, title: string) {
-  const regex = new RegExp(`### ${title}\\s*\\n\\s*([\\s\\S]*?)\\s*\\n\\s*###`);
-  const match = body.match(regex);
+	const regex = new RegExp(
+		`### ${title}\\s*\\n\\s*([\\s\\S]*?)\\s*\\n\\s*###`,
+	);
+	const match = body.match(regex);
 
-  if (match) {
-    return match[1];
-  }
+	if (match) {
+		return match[1];
+	}
 
-  return null;
+	return null;
 }
 
 function getRestAfterTitle(body: string, title: string) {
-  const regex = new RegExp(`### ${title}\\s*\\n\\s*([\\s\\S]*)`);
-  const match = body.match(regex);
+	const regex = new RegExp(`### ${title}\\s*\\n\\s*([\\s\\S]*)`);
+	const match = body.match(regex);
 
-  if (match) {
-    return match[1];
-  }
+	if (match) {
+		return match[1];
+	}
 
-  return null;
+	return null;
 }

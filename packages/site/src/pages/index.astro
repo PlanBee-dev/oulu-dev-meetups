@@ -1,13 +1,13 @@
 ---
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import Intro from '../components/Intro.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import BaseHead from '../components/BaseHead.astro';
-import MeetupCard from '../components/MeetupCard.astro';
-import { getCollection } from 'astro:content';
-import { getMeetupsCollectionName } from '../content/config';
-import { getNextMeetup } from '../utils';
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Intro from "../components/Intro.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import BaseHead from "../components/BaseHead.astro";
+import MeetupCard from "../components/MeetupCard.astro";
+import { getCollection } from "astro:content";
+import { getMeetupsCollectionName } from "../content/config";
+import { getNextMeetup } from "../utils";
 
 const collectionName = getMeetupsCollectionName();
 const meetups: any = await getCollection(collectionName);
@@ -15,57 +15,59 @@ const meetups: any = await getCollection(collectionName);
 const nextMeetup = getNextMeetup(meetups);
 
 const meetupDetails = nextMeetup
-  ? {
-      name: nextMeetup.data.name,
-      location: nextMeetup.data.location,
-      locationLink: nextMeetup.data.locationLink,
-      time: nextMeetup.data.time,
-      organizer: nextMeetup.data.organizer,
-      organizerLink: nextMeetup.data.organizerLink,
-      description: nextMeetup.data.description,
-      meetupLink: nextMeetup.data.meetupLink,
-    }
-  : null;
+	? {
+			name: nextMeetup.data.name,
+			location: nextMeetup.data.location,
+			locationLink: nextMeetup.data.locationLink,
+			time: nextMeetup.data.time,
+			organizer: nextMeetup.data.organizer,
+			organizerLink: nextMeetup.data.organizerLink,
+			description: nextMeetup.data.description,
+			meetupLink: nextMeetup.data.meetupLink,
+	  }
+	: null;
 ---
 
 <html class="h-full">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
-  <body class="h-full">
-    <div class="min-h-full">
-      <Header />
-      <div class="py-4">
-        <main>
-          <div class="mx-auto flex max-w-7xl flex-col sm:px-6 lg:px-8">
-            <div class="container">
-              <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="relative shadow-xl sm:rounded-2xl">
-                  <div class="">
-                    <img
-                      class="sm:rounded-2xl"
-                      width={1200}
-                      height={600}
-                      src={`${
-                        import.meta.env.BASE_URL
-                      }images/oulu-devmeetups-hero.jpg`}
-                      alt="artistic picture of Oulu castle"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="m-4 text-center">
-              <Intro />
-            </div>
-            <div class="m-4 text-center text-2xl">
-              <h2>What is coming next?</h2>
-            </div>
-            {meetupDetails && <MeetupCard {...meetupDetails} />}
-          </div>
-        </main>
-        <Footer />
-      </div>
-    </div>
-  </body>
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body class="h-full">
+		<div class="min-h-full">
+			<Header />
+			<div class="py-4">
+				<main>
+					<div
+						class="mx-auto flex max-w-7xl flex-col sm:px-6 lg:px-8"
+					>
+						<div class="container">
+							<div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+								<div class="relative shadow-xl sm:rounded-2xl">
+									<div class="">
+										<img
+											class="sm:rounded-2xl"
+											width={1200}
+											height={600}
+											src={`${
+												import.meta.env.BASE_URL
+											}images/oulu-devmeetups-hero.jpg`}
+											alt="artistic picture of Oulu castle"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="m-4 text-center">
+							<Intro />
+						</div>
+						<div class="m-4 text-center text-2xl">
+							<h2>What is coming next?</h2>
+						</div>
+						{meetupDetails && <MeetupCard {...meetupDetails} />}
+					</div>
+				</main>
+				<Footer />
+			</div>
+		</div>
+	</body>
 </html>

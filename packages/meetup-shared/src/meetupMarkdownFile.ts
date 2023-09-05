@@ -1,7 +1,7 @@
-import { type Meetup } from './meetupType';
+import { type Meetup } from "./meetupType";
 
 export function getMeetupMarkdownFileContent(meetup: Meetup) {
-  return `---
+	return `---
 title: ${meetup.title}
 location: ${meetup.location}
 locationLink: ${meetup.locationLink}

@@ -1,13 +1,13 @@
-import { extractMeetupDateAndTime } from './meetupForm';
-import { type Meetup } from './meetupType';
+import { extractMeetupDateAndTime } from "./meetupForm";
+import { type Meetup } from "./meetupType";
 
 export function getMeetupPullRequestContent(
-  meetup: Meetup,
-  issueNumber: number,
+	meetup: Meetup,
+	issueNumber: number,
 ) {
-  const meetupDateAndTime = extractMeetupDateAndTime(meetup);
+	const meetupDateAndTime = extractMeetupDateAndTime(meetup);
 
-  return `New meetup
+	return `New meetup
 
 Date:
 ${meetupDateAndTime.date}
