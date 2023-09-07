@@ -6,7 +6,7 @@ const {
   time,
   organizer,
   organizerLink,
-  meetupLink,
+  signupLink,
   image,
 } = meetupProps.meetup.data;
 const heroImage = image ? image : 'images/heroimages/1-meetup-image.jpg';
@@ -113,7 +113,7 @@ const { Content } = await meetupProps.meetup.render();
             <dd
               class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
             >
-              <a href={meetupLink} target="_blank">{meetupLink}</a>
+              <a href={signupLink} target="_blank">{signupLink}</a>
             </dd>
           </div>
         </dl>

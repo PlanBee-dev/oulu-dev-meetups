@@ -1,14 +1,14 @@
 // place any helper functions here
 export type Meetup = {
   data: {
-    name: string;
+    title: string;
     description: string;
-    time: string;
+    date: string;
     location: string;
     locationLink: string | null;
     organizer: string;
     organizerLink: string | null;
-    meetupLink: string;
+    signupLink: string;
     image: string | null;
   };
 };
@@ -40,13 +40,13 @@ export const getNextMeetup = (meetups: Meetup[]) => {
 
   const currentDate = new Date();
   const futureMeetups = meetups.filter((meetup: Meetup) => {
-    return parseMeetupDate(meetup.data.time) > currentDate.getTime();
+    return parseMeetupDate(meetup.data.date) > currentDate.getTime();
   });
 
   if (futureMeetups.length === 0) return null;
 
   futureMeetups.sort((a: Meetup, b: Meetup) => {
-    return parseMeetupDate(a.data.time) - parseMeetupDate(b.data.time);
+    return parseMeetupDate(a.data.date) - parseMeetupDate(b.data.date);
   });
   return futureMeetups[0];
 };

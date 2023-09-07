@@ -11,7 +11,7 @@ import { parseMeetupDate } from '../../utils';
 const collectionName = getMeetupsCollectionName();
 const meetups: any = await getCollection(collectionName);
 meetups.sort((a: any, b: any) => {
-  return parseMeetupDate(b.data.time) - parseMeetupDate(a.data.time);
+  return parseMeetupDate(b.data.date) - parseMeetupDate(a.data.date);
 });
 ---
 
@@ -33,9 +33,9 @@ meetups.sort((a: any, b: any) => {
                   {
                     meetups.map((meetup: any) => (
                       <MeetupListItem
-                        name={meetup.data.name}
+                        name={meetup.data.title}
                         location={meetup.data.location}
-                        time={meetup.data.time}
+                        time={meetup.data.date}
                         organizer={meetup.data.organizer}
                         slug={meetup.slug}
                       />
