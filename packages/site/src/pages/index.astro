@@ -14,7 +14,7 @@ const meetups: any = await getCollection(collectionName);
 
 const nextMeetup = getNextMeetup(meetups);
 
-const createDescription = (meetup) => {
+const createDescription = (meetup: any) => {
   if (meetup.body.length > 100) {
     return meetup.body.substring(0, 100) + '...';
   } else return meetup.body;
@@ -25,7 +25,7 @@ const meetupDetails = nextMeetup
       name: nextMeetup.data.title,
       location: nextMeetup.data.location,
       locationLink: nextMeetup.data.locationLink,
-      time: nextMeetup.data.date,
+      date: nextMeetup.data.date,
       organizer: nextMeetup.data.organizer,
       organizerLink: nextMeetup.data.organizerLink,
       signupLink: nextMeetup.data.signupLink,
