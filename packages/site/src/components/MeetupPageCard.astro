@@ -3,7 +3,7 @@ const meetupProps = Astro.props;
 const {
   location,
   locationLink,
-  time,
+  date,
   organizer,
   organizerLink,
   signupLink,
@@ -99,7 +99,7 @@ const { Content } = await meetupProps.meetup.render();
             <dd
               class="mt-1 font-semibold leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
             >
-              {time}
+              {date}
             </dd>
           </div>
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

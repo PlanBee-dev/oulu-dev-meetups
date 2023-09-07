@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "deploy": "touch dist/.nojekyll && gh-pages --dist dist --dotfiles true",
+    "deploy": "touch dist/.nojekyll && echo 'ouludevmeetup.com' > ./dist/CNAME && gh-pages --dist dist --dotfiles true",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest"
