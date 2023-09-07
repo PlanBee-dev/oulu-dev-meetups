@@ -17,41 +17,41 @@ afterEach(() => {
 const meetups: Meetup[] = [];
 meetups.push({
   data: {
-    name: 'React coding Meetup',
+    title: 'React coding Meetup',
     description: 'Monthly meetup for coders',
     location: 'Oulu Library',
     locationLink: null,
-    time: '2023-09-25 17:00',
+    date: '2023-09-25 17:00',
     organizer: 'React Community',
     organizerLink: null,
-    meetupLink: 'https://www.meetup.com/react',
+    signupLink: 'https://www.meetup.com/react',
     image: 'react-meetup.jpg',
   },
 });
 meetups.push({
   data: {
-    name: 'Vitest Meetup',
+    title: 'Vitest Meetup',
     description: 'Monthly meetup for Vitest users',
     location: 'Oulu University',
     locationLink: null,
-    time: '2023-08-25 18:00',
+    date: '2023-08-25 18:00',
     organizer: 'Vitest Community',
     organizerLink: null,
-    meetupLink: 'https://www.meetup.com/vitest',
+    signupLink: 'https://www.meetup.com/vitest',
     image: 'vitest-meetup.jpg',
   },
 });
 meetups.push({
   data: {
-    name: 'Local AWS group Meetup',
+    title: 'Local AWS group Meetup',
     location: 'Oulu Elektroniikkatie',
     locationLink: 'https://goo.gl/maps/GvuboievRSW5VfZf6',
-    time: '2023-10-03 17:00',
+    date: '2023-10-03 17:00',
     organizer: 'Cloudinary',
     organizerLink: 'https://google.com',
     description:
       'Join us for an evening of cloud optimizing talks and discussions.',
-    meetupLink: 'https://meetup.com/local-aws-meetup',
+    signupLink: 'https://meetup.com/local-aws-meetup',
     image: 'images/heroimages/4-meetup-image.jpg',
   },
 });
@@ -90,5 +90,5 @@ test('get next meetup from today', () => {
   const date = new Date(2023, 8, 4, 10, 0);
   vi.setSystemTime(date);
   const nextMeetup = getNextMeetup(meetups);
-  expect(nextMeetup?.data.name).toBe('React coding Meetup');
+  expect(nextMeetup?.data.title).toBe('React coding Meetup');
 });

@@ -14,17 +14,23 @@ const meetups: any = await getCollection(collectionName);
 
 const nextMeetup = getNextMeetup(meetups);
 
+const createDescription = (meetup) => {
+  if (meetup.body.length > 100) {
+    return meetup.body.substring(0, 100) + '...';
+  } else return meetup.body;
+};
+
 const meetupDetails = nextMeetup
   ? {
-      name: nextMeetup.data.name,
+      name: nextMeetup.data.title,
       location: nextMeetup.data.location,
       locationLink: nextMeetup.data.locationLink,
-      time: nextMeetup.data.time,
+      time: nextMeetup.data.date,
       organizer: nextMeetup.data.organizer,
       organizerLink: nextMeetup.data.organizerLink,
-      description: nextMeetup.data.description,
-      meetupLink: nextMeetup.data.meetupLink,
+      signupLink: nextMeetup.data.signupLink,
       slug: nextMeetup.slug,
+      description: createDescription(nextMeetup),
     }
   : null;
 ---

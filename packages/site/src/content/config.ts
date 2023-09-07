@@ -3,15 +3,14 @@ import { defineCollection, z } from 'astro:content';
 const meetups = defineCollection({
   type: 'content',
   schema: z.object({
-    name: z.string(),
-    description: z.string(),
+    title: z.string(),
     // Transform string to Date object
-    time: z.string(),
+    date: z.string(),
     location: z.string(),
     locationLink: z.string().optional(),
     organizer: z.string(),
     organizerLink: z.string().optional(),
-    meetupLink: z.string(),
+    signupLink: z.string(),
     image: z.string().optional(),
   }),
 });
@@ -19,15 +18,14 @@ const meetups = defineCollection({
 const testmeetups = defineCollection({
   type: 'content',
   schema: z.object({
-    name: z.string(),
-    description: z.string(),
+    title: z.string(),
     // Transform string to Date object
-    time: z.string(),
+    date: z.string(),
     location: z.string(),
     locationLink: z.string().optional(),
     organizer: z.string(),
     organizerLink: z.string().optional(),
-    meetupLink: z.string(),
+    signupLink: z.string(),
     image: z.string().optional(),
   }),
 });
