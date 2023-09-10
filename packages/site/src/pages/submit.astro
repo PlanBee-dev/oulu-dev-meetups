@@ -256,6 +256,39 @@ Stable diffusion for the win. For images and animations. But what is facebook do
                 </div>
               </fieldset>
             </form>
+            <!--error message -->
+            <div
+              id="submit-error-element"
+              class="mt-8 hidden rounded-md bg-red-50 p-4"
+            >
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg
+                    class="h-5 w-5 text-red-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                      clip-rule="evenodd"
+                    >
+                    </path>
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-sm font-medium text-red-800">
+                    Something went wrong.
+                  </h3>
+                  <div class="mt-2 text-sm text-red-700">
+                    <ul role="list" class="list-disc space-y-1 pl-5">
+                      <li id="submit-error-message"></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -270,6 +303,14 @@ Stable diffusion for the win. For images and animations. But what is facebook do
     const formFieldset = document.getElementById(
       'submit-form-fieldset',
     ) as HTMLFieldSetElement;
+
+    const setError = (errorMessage: string) => {
+      document
+        .getElementById('submit-error-element')!
+        .classList.remove('hidden');
+      document.getElementById('submit-error-message')!.textContent =
+        errorMessage;
+    };
 
     async function onSubmit(event: SubmitEvent) {
       event.preventDefault();
@@ -298,14 +339,21 @@ Stable diffusion for the win. For images and animations. But what is facebook do
       ]);
 
       formFieldset.disabled = false;
-
+      console.log('RESPONSE: ', res, JSON.stringify(res));
       if (res.status === 'rejected') {
-        console.error('Error submitting form', res.reason);
+        setError(res.reason || 'unknown error');
         return;
       }
 
       if (res.status !== 'fulfilled') {
-        console.log('no response');
+        setError('no response');
+        return;
+      }
+
+      if (res.status === 'fulfilled' && res.value.ok === false) {
+        setError(
+          `Submission failed, status ${res.value.status}, ${res.value.statusText}. Please try again later`,
+        );
         return;
       }
 
