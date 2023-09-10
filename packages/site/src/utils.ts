@@ -4,13 +4,28 @@ export type Meetup = {
     title: string;
     description: string;
     date: string;
+    time?: string;
     location: string;
     locationLink: string | null;
     organizer: string;
     organizerLink: string | null;
     signupLink: string;
-    image: string | null;
+    image?: string | null;
   };
+};
+
+export const checkMeetupData = (meetup: Meetup['data']) => {
+  if (!meetup) return;
+  if (meetup.organizerLink && !meetup.organizerLink.startsWith('http')) {
+    meetup.organizerLink = `https://${meetup.organizerLink}`;
+  }
+  if (meetup.signupLink && !meetup.signupLink.startsWith('http')) {
+    meetup.signupLink = `https://${meetup.signupLink}`;
+  }
+  if (!meetup.locationLink) {
+    const addressData = meetup.location.split(' ');
+    meetup.locationLink = `https://www.google.com/maps/place/${addressData[0]}+${addressData[1]},+Oulu+Finland`;
+  }
 };
 
 export const getRandomLogonumber = () => {

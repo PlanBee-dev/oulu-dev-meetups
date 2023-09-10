@@ -212,6 +212,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
                             type="text"
                             name="location"
                             id="location"
+                            placeholder="Elektroniikkatie 2"
                             required
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           />
@@ -223,7 +224,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
                           for="locationLink"
                           class="block text-sm font-medium leading-6 text-gray-900"
                         >
-                          Maps link for address
+                          (Google) Maps link for address
                         </label>
                         <div class="mt-2">
                           <input
@@ -263,6 +264,8 @@ Stable diffusion for the win. For images and animations. But what is facebook do
   </div>
 
   <script>
+    import { checkMeetupData } from '../utils';
+
     const form = document.getElementById('submit-form') as HTMLFormElement;
     const formFieldset = document.getElementById(
       'submit-form-fieldset',
@@ -278,6 +281,8 @@ Stable diffusion for the win. For images and animations. But what is facebook do
 
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
+
+      checkMeetupData(data);
 
       // fieldset must be disabled after getting formdata
       // otherwise formdata will be empty
