@@ -82,7 +82,18 @@ import Spinner from '../components/Spinner.astro';
                           for="description"
                           class="block text-sm font-medium leading-6 text-gray-900"
                         >
-                          Description
+                          <span>Description</span>
+                          <span>(</span>
+                          <span>syntax is</span>
+                          <span>
+                            <a
+                              class="text-cyan-700 hover:text-cyan-500"
+                              href="https://www.markdownguide.org/basic-syntax/"
+                            >
+                              markdown
+                            </a>
+                          </span>
+                          <span>)</span>
                         </label>
                         <div class="mt-2">
                           <!-- prettier-ignore -->
@@ -250,54 +261,54 @@ Stable diffusion for the win. For images and animations. But what is facebook do
       <Footer />
     </div>
   </div>
+
+  <script>
+    const form = document.getElementById('submit-form') as HTMLFormElement;
+    const formFieldset = document.getElementById(
+      'submit-form-fieldset',
+    ) as HTMLFieldSetElement;
+
+    async function onSubmit(event: SubmitEvent) {
+      event.preventDefault();
+
+      if (!form || !formFieldset) {
+        console.log('no element');
+        return;
+      }
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      // fieldset must be disabled after getting formdata
+      // otherwise formdata will be empty
+      formFieldset.disabled = true;
+
+      const [res] = await Promise.allSettled([
+        fetch(import.meta.env.PUBLIC_API_BASE_URL, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' },
+        }),
+        new Promise((resolve) => setTimeout(resolve, 800)), // always wait at least 800ms so spinner is visible
+      ]);
+
+      formFieldset.disabled = false;
+
+      if (res.status === 'rejected') {
+        console.error('Error submitting form', res.reason);
+        return;
+      }
+
+      if (res.status !== 'fulfilled') {
+        console.log('no response');
+        return;
+      }
+
+      const json = await res.value.json();
+
+      console.log(json);
+    }
+
+    form.addEventListener('submit', onSubmit, false);
+  </script>
 </body>
-
-<script>
-  const form = document.getElementById('submit-form') as HTMLFormElement;
-  const formFieldset = document.getElementById(
-    'submit-form-fieldset',
-  ) as HTMLFieldSetElement;
-
-  async function onSubmit(event: SubmitEvent) {
-    event.preventDefault();
-
-    if (!form || !formFieldset) {
-      console.log('no element');
-      return;
-    }
-
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-
-    // fieldset must be disabled after getting formdata
-    // otherwise formdata will be empty
-    formFieldset.disabled = true;
-
-    const [res] = await Promise.allSettled([
-      fetch(import.meta.env.PUBLIC_API_BASE_URL, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
-      }),
-      new Promise((resolve) => setTimeout(resolve, 800)), // always wait at least 800ms so spinner is visible
-    ]);
-
-    formFieldset.disabled = false;
-
-    if (res.status === 'rejected') {
-      console.error('Error submitting form', res.reason);
-      return;
-    }
-
-    if (res.status !== 'fulfilled') {
-      console.log('no response');
-      return;
-    }
-
-    const json = await res.value.json();
-
-    console.log(json);
-  }
-
-  form.addEventListener('submit', onSubmit, false);
-</script>
