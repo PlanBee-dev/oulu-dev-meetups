@@ -115,4 +115,11 @@ test('check and fix meetup datas urls', () => {
   expect(meetup.data.locationLink).toBe(
     'https://www.google.com/maps/place/Elektroniikkatie+2,+Oulu+Finland',
   );
+
+  meetup.data.location = 'Kirkkokatu';
+  meetup.data.locationLink = null;
+  checkMeetupData(meetup.data);
+  expect(meetup.data.locationLink).toBe(
+    'https://www.google.com/maps/place/Kirkkokatu,+Oulu+Finland',
+  );
 });

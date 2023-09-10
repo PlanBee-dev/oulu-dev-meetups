@@ -22,9 +22,13 @@ export const checkMeetupData = (meetup: Meetup['data']) => {
   if (meetup.signupLink && !meetup.signupLink.startsWith('http')) {
     meetup.signupLink = `https://${meetup.signupLink}`;
   }
-  if (!meetup.locationLink) {
+  if (!meetup.locationLink && !!meetup.location) {
     const addressData = meetup.location.split(' ');
-    meetup.locationLink = `https://www.google.com/maps/place/${addressData[0]}+${addressData[1]},+Oulu+Finland`;
+    if (addressData.length > 1) {
+      meetup.locationLink = `https://www.google.com/maps/place/${addressData[0]}+${addressData[1]},+Oulu+Finland`;
+    } else {
+      meetup.locationLink = `https://www.google.com/maps/place/${addressData[0]},+Oulu+Finland`;
+    }
   }
 };
 
