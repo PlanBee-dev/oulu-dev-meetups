@@ -1,5 +1,6 @@
 import {
   Meetup,
+  checkMeetupData,
   getNextMeetup,
   getRandomLogonumber,
   parseMeetupDate,
@@ -91,4 +92,34 @@ test('get next meetup from today', () => {
   vi.setSystemTime(date);
   const nextMeetup = getNextMeetup(meetups);
   expect(nextMeetup?.data.title).toBe('React coding Meetup');
+});
+
+test('check and fix meetup datas urls', () => {
+  const meetup: Meetup = {
+    data: {
+      title: 'Test SECOND THIRD AND MORE FINAL New Meetup',
+      signupLink: 'cloudamite.com',
+      description: '## ARRR great pirate meetup \n\nbest download sites',
+      organizer: 'Plan Bee',
+      organizerLink: 'planbee.dev',
+      date: '2023-09-21',
+      time: '17:30',
+      location: 'Elektroniikkatie 2',
+      locationLink: '',
+    },
+  };
+
+  checkMeetupData(meetup.data);
+  expect(meetup.data.signupLink).toBe('https://cloudamite.com');
+  expect(meetup.data.organizerLink).toBe('https://planbee.dev');
+  expect(meetup.data.locationLink).toBe(
+    'https://www.google.com/maps/place/Elektroniikkatie+2,+Oulu+Finland',
+  );
+
+  meetup.data.location = 'Kirkkokatu';
+  meetup.data.locationLink = null;
+  checkMeetupData(meetup.data);
+  expect(meetup.data.locationLink).toBe(
+    'https://www.google.com/maps/place/Kirkkokatu,+Oulu+Finland',
+  );
 });
