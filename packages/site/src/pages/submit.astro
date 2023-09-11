@@ -50,7 +50,7 @@ import Spinner from '../components/Spinner.astro';
                               type="text"
                               name="title"
                               id="title"
-                              date-testid="title"
+                              data-testid="title"
                               autocomplete="title"
                               required
                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -142,6 +142,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
                         <div class="mt-2">
                           <input
                             id="organizer"
+                            data-testid="organizer"
                             name="organizer"
                             required
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -252,7 +253,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
                   </button>
                   <button
                     type="submit"
-                    date-testid="submit"
+                    data-testid="submit"
                     class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     <Spinner class="absolute h-4 group-enabled:opacity-0" />
@@ -264,6 +265,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
             <!--error message -->
             <div
               id="submit-error-element"
+              data-testid="submit-error-element"
               class="mt-8 hidden rounded-md bg-red-50 p-4"
             >
               <div class="flex">
@@ -319,7 +321,6 @@ Stable diffusion for the win. For images and animations. But what is facebook do
 
     async function onSubmit(event: SubmitEvent) {
       event.preventDefault();
-
       if (!form || !formFieldset) {
         console.log('no element');
         return;
@@ -327,13 +328,11 @@ Stable diffusion for the win. For images and animations. But what is facebook do
 
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
-
       checkMeetupData(data);
 
       // fieldset must be disabled after getting formdata
       // otherwise formdata will be empty
       formFieldset.disabled = true;
-
       const [res] = await Promise.allSettled([
         fetch(import.meta.env.PUBLIC_API_BASE_URL, {
           method: 'POST',
@@ -344,8 +343,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
       ]);
 
       formFieldset.disabled = false;
-      console.log('RESPONSE: ', res, JSON.stringify(res));
-      if (res.status === 'rejected') {
+      if (!res.status || res.status === 'rejected') {
         setError(res.reason || 'unknown error');
         return;
       }
