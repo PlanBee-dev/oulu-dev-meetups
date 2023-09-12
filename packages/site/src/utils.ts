@@ -70,3 +70,18 @@ export const getNextMeetup = (meetups: Meetup[]) => {
   });
   return futureMeetups[0];
 };
+
+export const createShortDescription = (descriptionToCut: string) => {
+  const description = descriptionToCut.trimStart();
+  console.log('SHORTING', description.at(0));
+
+  let shortDesc =
+    description.length > 150
+      ? description.substring(0, 150) + '...'
+      : description;
+  if (shortDesc.startsWith('#')) {
+    console.log('CUTTING DESCRIPTION STARTING WITH #', shortDesc);
+    shortDesc = shortDesc.substring(description.indexOf(' ') + 1);
+  }
+  return shortDesc;
+};

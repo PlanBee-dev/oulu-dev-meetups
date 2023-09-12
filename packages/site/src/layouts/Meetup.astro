@@ -3,13 +3,11 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import BaseHead from '../components/BaseHead.astro';
 import MeetupPageCard from '../components/MeetupPageCard.astro';
+import { createShortDescription } from '../utils';
 
 const { meetup } = Astro.props;
 const title = meetup.data.title;
-const description =
-  meetup.body.length > 150
-    ? meetup.body.substring(0, 150) + '...'
-    : meetup.body;
+const description = createShortDescription(meetup.body);
 const image = meetup.data.image;
 ---
 
