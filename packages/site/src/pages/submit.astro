@@ -275,6 +275,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
+                    onclick="document.getElementById('submit-error-element').classList.add('hidden');"
                   >
                     <path
                       fill-rule="evenodd"
@@ -361,8 +362,11 @@ Stable diffusion for the win. For images and animations. But what is facebook do
       }
 
       const json = await res.value.json();
-
       console.log(json);
+
+      window.location.href = `/success?githubLink=${encodeURIComponent(
+        json.issueUrl,
+      )}`;
     }
 
     form.addEventListener('submit', onSubmit, false);
