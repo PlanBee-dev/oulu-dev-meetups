@@ -30,6 +30,7 @@ meetups.push({
     image: 'react-meetup.jpg',
   },
   slug: 'd',
+  body: 'x',
 });
 meetups.push({
   data: {
@@ -44,6 +45,7 @@ meetups.push({
     image: 'vitest-meetup.jpg',
   },
   slug: 'd',
+  body: 'x',
 });
 meetups.push({
   data: {
@@ -59,6 +61,7 @@ meetups.push({
     image: 'images/heroimages/4-meetup-image.jpg',
   },
   slug: 'W',
+  body: 'x',
 });
 
 test('random randomnumber returns number between 1-5', () => {
@@ -112,6 +115,7 @@ test('check and fix meetup datas urls', () => {
       locationLink: '',
     },
     slug: 'x',
+    body: 'x',
   };
 
   checkMeetupData(meetup.data);
