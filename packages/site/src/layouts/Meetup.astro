@@ -1,15 +1,20 @@
 ---
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import BaseHead from '../components/BaseHead.astro';
 import MeetupPageCard from '../components/MeetupPageCard.astro';
 
 const { meetup } = Astro.props;
+const title = meetup.data.title;
+const description =
+  meetup.body.length > 150
+    ? meetup.body.substring(0, 150) + '...'
+    : meetup.body;
+const image = meetup.data.image;
 ---
 
 <head>
-  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  <BaseHead title={title} description={description} image={image} />
 </head>
 <body class="h-full">
   <div class="min-h-full">

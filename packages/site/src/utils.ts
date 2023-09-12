@@ -12,6 +12,7 @@ export type Meetup = {
     signupLink: string;
     image?: string | null;
   };
+  slug: string;
 };
 
 export const checkMeetupData = (meetup: Meetup['data']) => {
