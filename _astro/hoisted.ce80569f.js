@@ -1,0 +1,1 @@
+import"./hoisted.49d07815.js";const t=new URLSearchParams(window.location.search),n=t.get("githubLink");if(n){const e=document.createElement("a");e.innerText=n,e.href=n,document.getElementById("issue-link").appendChild(e)}else document.getElementById("success-message").classList.add("hidden");
