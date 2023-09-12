@@ -7,18 +7,12 @@ import BaseHead from '../components/BaseHead.astro';
 import MeetupCard from '../components/MeetupCard.astro';
 import { getCollection } from 'astro:content';
 import { getMeetupsCollectionName } from '../content/config';
-import { getNextMeetup } from '../utils';
+import { createShortDescription, getNextMeetup } from '../utils';
 
 const collectionName = getMeetupsCollectionName();
 const meetups: any = await getCollection(collectionName);
 
 const nextMeetup = getNextMeetup(meetups);
-
-const createDescription = (meetup: any) => {
-  if (meetup.body.length > 100) {
-    return meetup.body.substring(0, 100) + '...';
-  } else return meetup.body;
-};
 
 const meetupDetails = nextMeetup
   ? {
@@ -30,7 +24,7 @@ const meetupDetails = nextMeetup
       organizerLink: nextMeetup.data.organizerLink,
       signupLink: nextMeetup.data.signupLink,
       slug: nextMeetup.slug,
-      description: createDescription(nextMeetup),
+      description: createShortDescription(nextMeetup.body),
     }
   : null;
 ---

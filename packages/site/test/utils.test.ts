@@ -1,6 +1,7 @@
 import {
   Meetup,
   checkMeetupData,
+  createShortDescription,
   getNextMeetup,
   getRandomLogonumber,
   parseMeetupDate,
@@ -28,6 +29,8 @@ meetups.push({
     signupLink: 'https://www.meetup.com/react',
     image: 'react-meetup.jpg',
   },
+  slug: 'd',
+  body: 'x',
 });
 meetups.push({
   data: {
@@ -41,6 +44,8 @@ meetups.push({
     signupLink: 'https://www.meetup.com/vitest',
     image: 'vitest-meetup.jpg',
   },
+  slug: 'd',
+  body: 'x',
 });
 meetups.push({
   data: {
@@ -55,6 +60,8 @@ meetups.push({
     signupLink: 'https://meetup.com/local-aws-meetup',
     image: 'images/heroimages/4-meetup-image.jpg',
   },
+  slug: 'W',
+  body: 'x',
 });
 
 test('random randomnumber returns number between 1-5', () => {
@@ -107,6 +114,8 @@ test('check and fix meetup datas urls', () => {
       location: 'Elektroniikkatie 2',
       locationLink: '',
     },
+    slug: 'x',
+    body: 'x',
   };
 
   checkMeetupData(meetup.data);
@@ -121,5 +130,21 @@ test('check and fix meetup datas urls', () => {
   checkMeetupData(meetup.data);
   expect(meetup.data.locationLink).toBe(
     'https://www.google.com/maps/place/Kirkkokatu,+Oulu+Finland',
+  );
+});
+
+test('short the description text', () => {
+  const description =
+    '         ## Great AI meetup   Join us for an evening of AI talks and discussions, while our seasoned and awesome developers' +
+    ' share their experiences and insights about latest AI tools.   ## Coding helpers     - [CoPilot](https://github.com/features/copilot)  ' +
+    '- [Whisperer](https://aws.amazon.com/pm/codewhisperer/)   - [Cody AI](https://about.sourcegraph.com/demo/cody)    ' +
+    "There are so much more options nowadays than just github's copilot. Like Amazon's code whisperer on sourcegraph's Cody AI. " +
+    'Or you can just ask chatGPT(-4).   ## Do art! With open source  Stable diffusion for the win. For images and animations. ' +
+    'But what is facebook doing releasing their own models?';
+
+  const shortDesc = createShortDescription(description);
+  expect(shortDesc.length).toBe(150);
+  expect(shortDesc).toBe(
+    'Great AI meetup   Join us for an evening of AI talks and discussions, while our seasoned and awesome developers share their experiences and insight...',
   );
 });
