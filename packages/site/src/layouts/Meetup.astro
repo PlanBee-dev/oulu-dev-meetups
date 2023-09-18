@@ -1,7 +1,5 @@
 ---
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import BaseHead from '../components/BaseHead.astro';
+import PageLayout from './PageLayout.astro';
 import MeetupPageCard from '../components/MeetupPageCard.astro';
 import { createShortDescription } from '../utils';
 
@@ -11,17 +9,13 @@ const description = createShortDescription(meetup.body);
 const image = meetup.data.image;
 ---
 
-<head>
-  <BaseHead title={title} description={description} image={image} />
-</head>
-<body class="h-full">
-  <div class="min-h-full">
-    <Header headerText={meetup.data.title} />
-    <main>
-      <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <MeetupPageCard meetup={meetup} />
-      </div>
-    </main>
-    <Footer />
+<PageLayout
+  title={title}
+  description={description}
+  image={image}
+  headerText={meetup.data.title}
+>
+  <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+    <MeetupPageCard meetup={meetup} />
   </div>
-</body>
+</PageLayout>
