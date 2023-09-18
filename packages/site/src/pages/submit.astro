@@ -1,105 +1,98 @@
 ---
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
-import BaseHead from '../components/BaseHead.astro';
 import Spinner from '../components/Spinner.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 ---
 
-<head>
-  <BaseHead title={SITE_TITLE} description={'Submit your own meetup here'} />
-</head>
-<body class="h-full">
-  <div class="min-h-full">
-    <Header headerText="Submitting your own meetup" />
-    <div class="py-4">
-      <main>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div
-            class="mx-auto max-w-3xl rounded-xl border border-gray-400 bg-gray-50 p-8 sm:px-24"
-          >
-            <form id="submit-form">
-              <fieldset
-                id="submit-form-fieldset"
-                class="group disabled:cursor-not-allowed disabled:opacity-50"
+<PageLayout
+  description={'Submit your own meetup here'}
+  headerText="Submitting your own meetup"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div
+      class="mx-auto max-w-3xl rounded-xl border border-gray-400 bg-gray-50 p-8 sm:px-24"
+    >
+      <form id="submit-form">
+        <fieldset
+          id="submit-form-fieldset"
+          class="group disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <div class="space-y-12">
+            <div>
+              <h2 class="text-base font-semibold leading-7 text-gray-900">
+                Submit your meetup like a pleb
+              </h2>
+              <p class="mt-1 text-sm leading-6 text-gray-600">
+                Fill in the data and let github actions work it's magic
+              </p>
+
+              <div
+                class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
               >
-                <div class="space-y-12">
-                  <div>
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">
-                      Submit your meetup like a pleb
-                    </h2>
-                    <p class="mt-1 text-sm leading-6 text-gray-600">
-                      Fill in the data and let github actions work it's magic
-                    </p>
-
+                <div class="sm:col-span-3">
+                  <label
+                    for="title"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Meetup title
+                  </label>
+                  <div class="mt-2">
                     <div
-                      class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+                      class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
                     >
-                      <div class="sm:col-span-3">
-                        <label
-                          for="title"
-                          class="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Meetup title
-                        </label>
-                        <div class="mt-2">
-                          <div
-                            class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-                          >
-                            <input
-                              type="text"
-                              name="title"
-                              id="title"
-                              data-testid="title"
-                              autocomplete="title"
-                              required
-                              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                              placeholder="Let's all learn AI programming"
-                            />
-                          </div>
-                        </div>
-                      </div>
+                      <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        data-testid="title"
+                        autocomplete="title"
+                        required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="Let's all learn AI programming"
+                      />
+                    </div>
+                  </div>
+                </div>
 
-                      <div class="sm:col-span-3">
-                        <label
-                          for="signupLink"
-                          class="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Signup link for meetup
-                        </label>
-                        <div class="mt-2">
-                          <input
-                            type="text"
-                            name="signupLink"
-                            id="signupLink"
-                            data-testid="signupLink"
-                            required
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
-                      </div>
+                <div class="sm:col-span-3">
+                  <label
+                    for="signupLink"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Signup link for meetup
+                  </label>
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="signupLink"
+                      id="signupLink"
+                      data-testid="signupLink"
+                      required
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
 
-                      <div class="col-span-full">
-                        <label
-                          for="description"
-                          class="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          <span>Description</span>
-                          <span>(</span>
-                          <span>syntax is</span>
-                          <span>
-                            <a
-                              class="text-cyan-700 hover:text-cyan-500"
-                              href="https://www.markdownguide.org/basic-syntax/"
-                            >
-                              markdown
-                            </a>
-                          </span>
-                          <span>)</span>
-                        </label>
-                        <div class="mt-2">
-                          <!-- prettier-ignore -->
-                          <textarea
+                <div class="col-span-full">
+                  <label
+                    for="description"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    <span>Description</span>
+                    <span>(</span>
+                    <span>syntax is</span>
+                    <span>
+                      <a
+                        class="text-cyan-700 hover:text-cyan-500"
+                        href="https://www.markdownguide.org/basic-syntax/"
+                      >
+                        markdown
+                      </a>
+                    </span>
+                    <span>)</span>
+                  </label>
+                  <div class="mt-2">
+                    <!-- prettier-ignore -->
+                    <textarea
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             id="description"
                             name="description"
@@ -119,256 +112,247 @@ There are so much more options nowadays than just github's copilot. Like Amazon'
 ## Do art! With open source
 Stable diffusion for the win. For images and animations. But what is facebook doing releasing their own models?"
                           ></textarea>
-                        </div>
-                        <p class="mt-3 text-sm leading-6 text-gray-600">
-                          Tell us more about the meetup. What will attendees
-                          learn?
-                        </p>
-                      </div>
-                    </div>
                   </div>
+                  <p class="mt-3 text-sm leading-6 text-gray-600">
+                    Tell us more about the meetup. What will attendees learn?
+                  </p>
+                </div>
+              </div>
+            </div>
 
-                  <div class="border-b border-gray-900/10 pb-12">
-                    <div
-                      class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
-                    >
-                      <div class="sm:col-span-3">
-                        <label
-                          for="organizer"
-                          class="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Organizer
-                        </label>
-                        <div class="mt-2">
-                          <input
-                            id="organizer"
-                            data-testid="organizer"
-                            name="organizer"
-                            required
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
-                      </div>
-                      <div class="sm:col-span-3">
-                        <label
-                          for="organizerLink"
-                          class="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Organizer link
-                        </label>
-                        <div class="mt-2">
-                          <input
-                            type="text"
-                            name="organizerLink"
-                            id="organizerLink"
-                            data-testid="organizerLink"
-                            required
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
-                      </div>
-
-                      <div class="sm:col-span-3">
-                        <label
-                          for="date"
-                          class="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Date
-                        </label>
-                        <div class="mt-2">
-                          <input
-                            type="date"
-                            name="date"
-                            id="date"
-                            required
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
-                      </div>
-
-                      <div class="sm:col-span-3">
-                        <label
-                          for="time"
-                          class="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Time
-                        </label>
-                        <div class="mt-2">
-                          <input
-                            type="time"
-                            name="time"
-                            id="time"
-                            required
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
-                      </div>
-                      <div class="sm:col-span-3 sm:col-start-1">
-                        <label
-                          for="location"
-                          class="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Street address
-                        </label>
-                        <div class="mt-2">
-                          <input
-                            type="text"
-                            name="location"
-                            id="location"
-                            data-testid="location"
-                            placeholder="Elektroniikkatie 2"
-                            required
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
-                      </div>
-
-                      <div class="sm:col-span-3">
-                        <label
-                          for="locationLink"
-                          class="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          (Google) Maps link for address
-                        </label>
-                        <div class="mt-2">
-                          <input
-                            type="text"
-                            name="locationLink"
-                            id="locationLink"
-                            data-testid="locationLink"
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
-                      </div>
-                    </div>
+            <div class="border-b border-gray-900/10 pb-12">
+              <div
+                class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+              >
+                <div class="sm:col-span-3">
+                  <label
+                    for="organizer"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Organizer
+                  </label>
+                  <div class="mt-2">
+                    <input
+                      id="organizer"
+                      data-testid="organizer"
+                      name="organizer"
+                      required
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+                <div class="sm:col-span-3">
+                  <label
+                    for="organizerLink"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Organizer link
+                  </label>
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="organizerLink"
+                      id="organizerLink"
+                      data-testid="organizerLink"
+                      required
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
                   </div>
                 </div>
 
-                <div class="mt-6 flex items-center justify-end gap-x-6">
-                  <button
-                    type="button"
-                    class="text-sm font-semibold leading-6 text-gray-900"
+                <div class="sm:col-span-3">
+                  <label
+                    for="date"
+                    class="block text-sm font-medium leading-6 text-gray-900"
                   >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    data-testid="submit"
-                    class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    <Spinner class="absolute h-4 group-enabled:opacity-0" />
-                    <span class="group-disabled:opacity-0">Submit</span>
-                  </button>
+                    Date
+                  </label>
+                  <div class="mt-2">
+                    <input
+                      type="date"
+                      name="date"
+                      id="date"
+                      required
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
-              </fieldset>
-            </form>
-            <!--error message -->
-            <div
-              id="submit-error-element"
-              data-testid="submit-error-element"
-              class="mt-8 hidden rounded-md bg-red-50 p-4"
-            >
-              <div class="flex">
-                <div class="flex-shrink-0">
-                  <svg
-                    class="h-5 w-5 text-red-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                    onclick="document.getElementById('submit-error-element').classList.add('hidden');"
+
+                <div class="sm:col-span-3">
+                  <label
+                    for="time"
+                    class="block text-sm font-medium leading-6 text-gray-900"
                   >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                      clip-rule="evenodd"
-                    >
-                    </path>
-                  </svg>
+                    Time
+                  </label>
+                  <div class="mt-2">
+                    <input
+                      type="time"
+                      name="time"
+                      id="time"
+                      required
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
-                <div class="ml-3">
-                  <h3 class="text-sm font-medium text-red-800">
-                    Something went wrong.
-                  </h3>
-                  <div class="mt-2 text-sm text-red-700">
-                    <ul role="list" class="list-disc space-y-1 pl-5">
-                      <li id="submit-error-message"></li>
-                    </ul>
+                <div class="sm:col-span-3 sm:col-start-1">
+                  <label
+                    for="location"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Street address
+                  </label>
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="location"
+                      id="location"
+                      data-testid="location"
+                      placeholder="Elektroniikkatie 2"
+                      required
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                  <label
+                    for="locationLink"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    (Google) Maps link for address
+                  </label>
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="locationLink"
+                      id="locationLink"
+                      data-testid="locationLink"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button
+              type="button"
+              class="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              data-testid="submit"
+              class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              <Spinner class="absolute h-4 group-enabled:opacity-0" />
+              <span class="group-disabled:opacity-0">Submit</span>
+            </button>
+          </div>
+        </fieldset>
+      </form>
+      <!--error message -->
+      <div
+        id="submit-error-element"
+        data-testid="submit-error-element"
+        class="mt-8 hidden rounded-md bg-red-50 p-4"
+      >
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg
+              class="h-5 w-5 text-red-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+              onclick="document.getElementById('submit-error-element').classList.add('hidden');"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                clip-rule="evenodd"
+              >
+              </path>
+            </svg>
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-red-800">
+              Something went wrong.
+            </h3>
+            <div class="mt-2 text-sm text-red-700">
+              <ul role="list" class="list-disc space-y-1 pl-5">
+                <li id="submit-error-message"></li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </main>
-      <Footer />
+      </div>
     </div>
   </div>
+</PageLayout>
+<script>
+  import { checkMeetupData, Meetup } from '../utils';
 
-  <script>
-    import { checkMeetupData } from '../utils';
+  const form = document.getElementById('submit-form') as HTMLFormElement;
+  const formFieldset = document.getElementById(
+    'submit-form-fieldset',
+  ) as HTMLFieldSetElement;
 
-    const form = document.getElementById('submit-form') as HTMLFormElement;
-    const formFieldset = document.getElementById(
-      'submit-form-fieldset',
-    ) as HTMLFieldSetElement;
+  const setError = (errorMessage: string) => {
+    document.getElementById('submit-error-element')!.classList.remove('hidden');
+    document.getElementById('submit-error-message')!.textContent = errorMessage;
+  };
 
-    const setError = (errorMessage: string) => {
-      document
-        .getElementById('submit-error-element')!
-        .classList.remove('hidden');
-      document.getElementById('submit-error-message')!.textContent =
-        errorMessage;
-    };
-
-    async function onSubmit(event: SubmitEvent) {
-      event.preventDefault();
-      if (!form || !formFieldset) {
-        console.log('no element');
-        return;
-      }
-
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-      checkMeetupData(data);
-
-      // fieldset must be disabled after getting formdata
-      // otherwise formdata will be empty
-      formFieldset.disabled = true;
-      const [res] = await Promise.allSettled([
-        fetch(import.meta.env.PUBLIC_API_BASE_URL, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' },
-        }),
-        new Promise((resolve) => setTimeout(resolve, 800)), // always wait at least 800ms so spinner is visible
-      ]);
-
-      formFieldset.disabled = false;
-      if (!res.status || res.status === 'rejected') {
-        setError(res.reason || 'unknown error');
-        return;
-      }
-
-      if (res.status !== 'fulfilled') {
-        setError('no response');
-        return;
-      }
-
-      if (res.status === 'fulfilled' && res.value.ok === false) {
-        setError(
-          `Submission failed, status ${res.value.status}, ${res.value.statusText}. Please try again later`,
-        );
-        return;
-      }
-
-      const json = await res.value.json();
-      console.log(json);
-
-      window.location.href = `/success?githubLink=${encodeURIComponent(
-        json.issueUrl,
-      )}`;
+  async function onSubmit(event: SubmitEvent) {
+    event.preventDefault();
+    if (!form || !formFieldset) {
+      console.log('no element');
+      return;
     }
 
-    form.addEventListener('submit', onSubmit, false);
-  </script>
-</body>
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries()) as Meetup['data'];
+    checkMeetupData(data);
+
+    // fieldset must be disabled after getting formdata
+    // otherwise formdata will be empty
+    formFieldset.disabled = true;
+    const [res] = await Promise.allSettled([
+      fetch(import.meta.env.PUBLIC_API_BASE_URL, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+      }),
+      new Promise((resolve) => setTimeout(resolve, 800)), // always wait at least 800ms so spinner is visible
+    ]);
+
+    formFieldset.disabled = false;
+    if (!res.status || res.status === 'rejected') {
+      setError(res.reason || 'unknown error');
+      return;
+    }
+
+    if (res.status !== 'fulfilled') {
+      setError('no response');
+      return;
+    }
+
+    if (res.status === 'fulfilled' && res.value.ok === false) {
+      setError(
+        `Submission failed, status ${res.value.status}, ${res.value.statusText}. Please try again later`,
+      );
+      return;
+    }
+
+    const json = await res.value.json();
+    console.log(json);
+
+    window.location.href = `/success?githubLink=${encodeURIComponent(
+      json.issueUrl,
+    )}`;
+  }
+
+  form.addEventListener('submit', onSubmit, false);
+</script>
