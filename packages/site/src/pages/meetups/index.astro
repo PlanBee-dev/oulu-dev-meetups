@@ -27,23 +27,21 @@ meetups.sort((a: any, b: any) => {
           <div
             class="mx-auto max-w-4xl rounded-xl border border-gray-400 bg-gray-50 p-8 sm:px-24"
           >
-            <main>
-              <section>
-                <ul role="list" class="divide-y divide-gray-100">
-                  {
-                    meetups.map((meetup: any) => (
-                      <MeetupListItem
-                        name={meetup.data.title}
-                        location={meetup.data.location}
-                        time={meetup.data.date}
-                        organizer={meetup.data.organizer}
-                        slug={meetup.slug}
-                      />
-                    ))
-                  }
-                </ul>
-              </section>
-            </main>
+            <section>
+              <ul role="list" class="divide-y divide-gray-100">
+                {
+                  meetups.map((meetup: any) => (
+                    <MeetupListItem
+                      name={meetup.data.title}
+                      location={meetup.data.location}
+                      time={meetup.data.date}
+                      organizer={meetup.data.organizer}
+                      slug={meetup.slug}
+                    />
+                  ))
+                }
+              </ul>
+            </section>
           </div>
         </div>
       </main>
