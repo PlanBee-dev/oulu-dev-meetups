@@ -3,15 +3,29 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import BaseHead from '../components/BaseHead.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  headerText?: string;
+  image?: string;
+}
+
+const {
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  headerText = 'Developer meetups in Oulu area',
+  image,
+} = Astro.props;
 ---
 
 <html class="h-full">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title={title} description={description} image={image} />
   </head>
   <body class="h-full">
     <div class="min-h-full">
-      <Header />
+      <Header headerText={headerText} />
       <div class="py-4">
         <main>
           <slot />

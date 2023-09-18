@@ -2,16 +2,13 @@
 import HeaderLink from './HeaderLink.astro';
 
 let { headerText } = Astro.props;
-if (!headerText) {
-  headerText = 'Developer meetups in Oulu area';
-}
 ---
 
 <script>
   const button = document.querySelector('#mobile-menu-button');
-  button.addEventListener('click', () => {
+  button!.addEventListener('click', () => {
     const menu = document.querySelector('#mobile-menu');
-    menu.classList.toggle('hidden');
+    menu!.classList.toggle('hidden');
   });
 </script>
 <header>
