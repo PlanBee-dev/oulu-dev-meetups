@@ -1,8 +1,5 @@
 ---
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import BaseHead from '../../components/BaseHead.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
 import { getCollection } from 'astro:content';
 import MeetupListItem from '../../components/MeetupListItem.astro';
 import { getMeetupsCollectionName } from '../../content/config';
@@ -15,37 +12,26 @@ meetups.sort((a: any, b: any) => {
 });
 ---
 
-<head>
-  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-</head>
-<body class="h-full">
-  <div class="min-h-full">
-    <Header />
-    <div class="py-4">
-      <main>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div
-            class="mx-auto max-w-4xl rounded-xl border border-gray-400 bg-gray-50 p-8 sm:px-24"
-          >
-            <section>
-              <ul role="list" class="divide-y divide-gray-100">
-                {
-                  meetups.map((meetup: any) => (
-                    <MeetupListItem
-                      name={meetup.data.title}
-                      location={meetup.data.location}
-                      time={meetup.data.date}
-                      organizer={meetup.data.organizer}
-                      slug={meetup.slug}
-                    />
-                  ))
-                }
-              </ul>
-            </section>
-          </div>
-        </div>
-      </main>
-      <Footer />
+<PageLayout>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div
+      class="mx-auto max-w-4xl rounded-xl border border-gray-400 bg-gray-50 p-8 sm:px-24"
+    >
+      <section>
+        <ul role="list" class="divide-y divide-gray-100">
+          {
+            meetups.map((meetup: any) => (
+              <MeetupListItem
+                name={meetup.data.title}
+                location={meetup.data.location}
+                time={meetup.data.date}
+                organizer={meetup.data.organizer}
+                slug={meetup.slug}
+              />
+            ))
+          }
+        </ul>
+      </section>
     </div>
   </div>
-</body>
+</PageLayout>
