@@ -56,6 +56,13 @@ export const parseMeetupDate = (date: string) => {
   }
 };
 
+export const formatDate = (date: string) => {
+  const parsedDate = new Date(parseMeetupDate(date));
+  return `${parsedDate.getDate()}.${
+    parsedDate.getMonth() + 1
+  }.${parsedDate.getFullYear()}`;
+};
+
 export const getNextMeetup = (meetups: Meetup[]) => {
   if (!meetups || meetups.length === 0) return null;
 

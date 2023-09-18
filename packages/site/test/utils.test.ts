@@ -2,6 +2,7 @@ import {
   Meetup,
   checkMeetupData,
   createShortDescription,
+  formatDate,
   getNextMeetup,
   getRandomLogonumber,
   parseMeetupDate,
@@ -147,4 +148,9 @@ test('short the description text', () => {
   expect(shortDesc).toBe(
     'Great AI meetup   Join us for an evening of AI talks and discussions, while our seasoned and awesome developers share their experiences and insight...',
   );
+});
+
+test('format meetup dates', () => {
+  expect(formatDate('Wed, 13 Sep 2023 16:30:00 GMT')).toBe('13.9.2023');
+  expect(formatDate('2023-10-17')).toBe('17.10.2023');
 });
