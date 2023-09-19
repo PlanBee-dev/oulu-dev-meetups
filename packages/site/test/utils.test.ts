@@ -11,6 +11,11 @@ import { expect, test, beforeEach, afterEach, vi } from 'vitest';
 
 beforeEach(() => {
   vi.useFakeTimers();
+  vi.setSystemTime(
+    Date.parse(
+      'Tue Sep 19 2023 22:17:00 GMT+0300 (Eastern European Summer Time)',
+    ),
+  );
 });
 
 afterEach(() => {
