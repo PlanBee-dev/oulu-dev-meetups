@@ -79,7 +79,7 @@ test('date parsing works in user format', () => {
   expect(parsedDate).toBeDefined();
   expect(parsedDate).not.toBeNull();
   if (parsedDate) {
-    expect(new Date(parsedDate).toDateString()).toBe('Fri Aug 25 2023');
+    expect(new Date(parsedDate).toLocaleString()).toBe('8/25/2023, 8:00:00 PM');
   }
 });
 
@@ -89,9 +89,7 @@ test('date parsing works in system format', () => {
   expect(parsedDate).toBeDefined();
   expect(parsedDate).not.toBeNull();
   if (parsedDate) {
-    expect(new Date(parsedDate).toUTCString()).toBe(
-      'Wed, 13 Sep 2023 16:30:00 GMT',
-    );
+    expect(new Date(parsedDate).toLocaleString()).toBe('9/13/2023, 4:30:00 PM');
   }
 });
 
@@ -150,7 +148,10 @@ test('short the description text', () => {
   );
 });
 
-test('format meetup dates', () => {
-  expect(formatDate('Wed, 13 Sep 2023 16:30:00 GMT')).toBe('13.9.2023');
-  expect(formatDate('2023-10-17')).toBe('17.10.2023');
+test('format meetup system date', () => {
+  expect(formatDate('Wed, 13 Sep 2023 16:30:00 GMT')).toBe('13.09.2023 16:30');
+});
+
+test('format meetup user date', () => {
+  expect(formatDate('2023-10-17 19:00')).toBe('17.10.2023 19:00');
 });

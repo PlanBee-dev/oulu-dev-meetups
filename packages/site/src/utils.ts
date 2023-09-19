@@ -1,3 +1,5 @@
+import format from 'date-fns/format/index.js';
+
 // place any helper functions here
 export type Meetup = {
   data: {
@@ -45,22 +47,18 @@ export const getRandomLogonumber = () => {
 
 export const parseMeetupDate = (date: string) => {
   if (!date) return -1;
-  if (Date.parse(date) > 0) return Date.parse(date);
-  else {
-    const parsedDate = date.split(' ');
-    const [year, month, day] = parsedDate[0]
-      .split('-')
-      .map((str) => parseInt(str));
-    const [hour, minute] = parsedDate[1].split(':').map((str) => parseInt(str));
-    return new Date(year, month - 1, day, hour, minute).getTime();
+  if (Date.parse(date) > 0) {
+    if (date.endsWith('GMT')) {
+      date = date.concat('+0300');
+    }
+    return Date.parse(date);
+  } else {
+    throw Error('Invalid date format');
   }
 };
 
 export const formatDate = (date: string) => {
-  const parsedDate = new Date(parseMeetupDate(date));
-  return `${parsedDate.getDate()}.${
-    parsedDate.getMonth() + 1
-  }.${parsedDate.getFullYear()}`;
+  return format(parseMeetupDate(date), 'dd.MM.yyyy HH:mm');
 };
 
 export const getNextMeetup = (meetups: Meetup[]) => {
