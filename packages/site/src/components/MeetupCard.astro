@@ -1,17 +1,17 @@
 ---
-import { formatDate } from '../utils';
 const {
   name,
   description,
   location,
   locationLink,
   date,
+  time,
   organizer,
   organizerLink,
   signupLink,
   slug,
 } = Astro.props;
-const formattedDate = formatDate(date);
+const formattedDate = `${date} ${time}`;
 ---
 
 <div class="m-auto max-w-2xl overflow-hidden bg-white shadow sm:rounded-lg">

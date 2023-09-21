@@ -3,12 +3,12 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import { getCollection } from 'astro:content';
 import MeetupListItem from '../../components/MeetupListItem.astro';
 import { getMeetupsCollectionName } from '../../content/config';
-import { parseMeetupDate } from '../../utils';
+import { parseDate } from '../../utils';
 
 const collectionName = getMeetupsCollectionName();
 const meetups: any = await getCollection(collectionName);
 meetups.sort((a: any, b: any) => {
-  return parseMeetupDate(b.data.date) - parseMeetupDate(a.data.date);
+  return parseDate(b) - parseDate(a);
 });
 ---
 
@@ -25,6 +25,7 @@ meetups.sort((a: any, b: any) => {
                 name={meetup.data.title}
                 location={meetup.data.location}
                 date={meetup.data.date}
+                time={meetup.data.time}
                 organizer={meetup.data.organizer}
                 slug={meetup.slug}
               />

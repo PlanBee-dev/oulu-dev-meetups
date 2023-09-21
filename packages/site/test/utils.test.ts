@@ -2,20 +2,14 @@ import {
   Meetup,
   checkMeetupData,
   createShortDescription,
-  formatDate,
   getNextMeetup,
   getRandomLogonumber,
-  parseMeetupDate,
+  parseDate,
 } from '../src/utils';
 import { expect, test, beforeEach, afterEach, vi } from 'vitest';
 
 beforeEach(() => {
   vi.useFakeTimers();
-  vi.setSystemTime(
-    Date.parse(
-      'Tue Sep 19 2023 22:17:00 GMT+0300 (Eastern European Summer Time)',
-    ),
-  );
 });
 
 afterEach(() => {
@@ -29,7 +23,8 @@ meetups.push({
     description: 'Monthly meetup for coders',
     location: 'Oulu Library',
     locationLink: null,
-    date: '2023-09-25 17:00',
+    date: '25.9.2023',
+    time: '17:00',
     organizer: 'React Community',
     organizerLink: null,
     signupLink: 'https://www.meetup.com/react',
@@ -44,7 +39,8 @@ meetups.push({
     description: 'Monthly meetup for Vitest users',
     location: 'Oulu University',
     locationLink: null,
-    date: '2023-08-25 18:00',
+    date: '25.8.2023',
+    time: '17:00',
     organizer: 'Vitest Community',
     organizerLink: null,
     signupLink: 'https://www.meetup.com/vitest',
@@ -58,7 +54,8 @@ meetups.push({
     title: 'Local AWS group Meetup',
     location: 'Oulu Elektroniikkatie',
     locationLink: 'https://goo.gl/maps/GvuboievRSW5VfZf6',
-    date: '2023-10-03 17:00',
+    date: '3.10.2023',
+    time: '17:00',
     organizer: 'Cloudinary',
     organizerLink: 'https://google.com',
     description:
@@ -75,26 +72,6 @@ test('random randomnumber returns number between 1-5', () => {
     const randomNumber: number = getRandomLogonumber();
     expect(randomNumber).toBeGreaterThanOrEqual(1);
     expect(randomNumber).toBeLessThanOrEqual(5);
-  }
-});
-
-test('date parsing works in user format', () => {
-  const userDate = '2023-08-25 20:00';
-  const parsedDate = parseMeetupDate(userDate);
-  expect(parsedDate).toBeDefined();
-  expect(parsedDate).not.toBeNull();
-  if (parsedDate) {
-    expect(new Date(parsedDate).toLocaleString()).toBe('8/25/2023, 8:00:00 PM');
-  }
-});
-
-test('date parsing works in system format', () => {
-  const systemDate = 'Wed, 13 Sep 2023 16:30:00 GMT';
-  const parsedDate = parseMeetupDate(systemDate);
-  expect(parsedDate).toBeDefined();
-  expect(parsedDate).not.toBeNull();
-  if (parsedDate) {
-    expect(new Date(parsedDate).toLocaleString()).toBe('9/13/2023, 4:30:00 PM');
   }
 });
 
@@ -153,10 +130,6 @@ test('short the description text', () => {
   );
 });
 
-test('format meetup system date', () => {
-  expect(formatDate('Wed, 13 Sep 2023 16:30:00 GMT')).toBe('13.09.2023 16:30');
-});
-
-test('format meetup user date', () => {
-  expect(formatDate('2023-10-17 19:00')).toBe('17.10.2023 19:00');
+test('parse meetup date', () => {
+  expect(parseDate(meetups.at(0) as Meetup)).toBeGreaterThan(0);
 });

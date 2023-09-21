@@ -145,9 +145,6 @@ importers:
       astro:
         specifier: ^2.9.0
         version: 2.9.0
-      date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0
       tailwindcss:
         specifier: ^3.3.3
         version: 3.3.3

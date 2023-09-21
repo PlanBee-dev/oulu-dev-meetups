@@ -1,10 +1,11 @@
 ---
-import { getRandomLogonumber, formatDate } from '../utils';
-const { name, date, location, organizer, slug } = Astro.props;
+import { getRandomLogonumber } from '../utils';
+const { name, date, time, location, organizer, slug } = Astro.props;
 // TODO: green light for near future, yellow for far future
 // red for cancelled, gray for past
 
 const devLogoNum = getRandomLogonumber();
+const formattedDate = `${date} ${time}`;
 ---
 
 <li class="relative py-10 hover:bg-gray-50">
@@ -34,7 +35,7 @@ const devLogoNum = getRandomLogonumber();
             <p
               class="text-sm font-semibold text-gray-900 first-letter:leading-6"
             >
-              {formatDate(date)}
+              {formattedDate}
             </p>
             <div class="mt-1 flex items-center gap-x-1.5">
               <p class="text-xs leading-5 text-gray-500">{location}</p>
