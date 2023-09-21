@@ -5,11 +5,13 @@ const {
   location,
   locationLink,
   date,
+  time,
   organizer,
   organizerLink,
   signupLink,
   slug,
 } = Astro.props;
+const formattedDate = `${date} ${time}`;
 ---
 
 <div class="m-auto max-w-2xl overflow-hidden bg-white shadow sm:rounded-lg">
@@ -74,7 +76,7 @@ const {
         <dd
           class="mt-1 font-semibold leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
         >
-          {date}
+          {formattedDate}
         </dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

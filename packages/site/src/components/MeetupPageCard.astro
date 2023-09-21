@@ -4,6 +4,7 @@ const {
   location,
   locationLink,
   date,
+  time,
   organizer,
   organizerLink,
   signupLink,
@@ -11,6 +12,7 @@ const {
 } = meetupProps.meetup.data;
 const heroImage = image ? image : 'images/heroimages/1-meetup-image.jpg';
 const { Content } = await meetupProps.meetup.render();
+const formattedDate = `${date} ${time}`;
 ---
 
 <div class="mx-auto flex max-w-7xl flex-col sm:px-6 lg:px-8">
@@ -99,7 +101,7 @@ const { Content } = await meetupProps.meetup.render();
             <dd
               class="mt-1 font-semibold leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
             >
-              {date}
+              {formattedDate}
             </dd>
           </div>
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

@@ -6,6 +6,7 @@ const meetups = defineCollection({
     title: z.string(),
     // Transform string to Date object
     date: z.string(),
+    time: z.string(),
     location: z.string(),
     locationLink: z.string().optional(),
     organizer: z.string(),
@@ -21,6 +22,7 @@ const testmeetups = defineCollection({
     title: z.string(),
     // Transform string to Date object
     date: z.string(),
+    time: z.string(),
     location: z.string(),
     locationLink: z.string().optional(),
     organizer: z.string(),

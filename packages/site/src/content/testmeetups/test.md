@@ -5,7 +5,8 @@ locationLink: https://planbee-dev.github.io/oulu-dev-meetups/submit/
 organizer: Pentagon
 organizerLink: https://www.google.com
 signupLink: https://planbee-dev.github.io/oulu-dev-meetups/submit/
-date: Wed, 13 Sep 2023 16:30:00 GMT
+date: 13.9.2023
+time: '16:30'
 ---
 
 ## Bundle sizes should be great again!

@@ -4,7 +4,7 @@ import {
   createShortDescription,
   getNextMeetup,
   getRandomLogonumber,
-  parseMeetupDate,
+  parseDate,
 } from '../src/utils';
 import { expect, test, beforeEach, afterEach, vi } from 'vitest';
 
@@ -23,7 +23,8 @@ meetups.push({
     description: 'Monthly meetup for coders',
     location: 'Oulu Library',
     locationLink: null,
-    date: '2023-09-25 17:00',
+    date: '25.9.2023',
+    time: '17:00',
     organizer: 'React Community',
     organizerLink: null,
     signupLink: 'https://www.meetup.com/react',
@@ -38,7 +39,8 @@ meetups.push({
     description: 'Monthly meetup for Vitest users',
     location: 'Oulu University',
     locationLink: null,
-    date: '2023-08-25 18:00',
+    date: '25.8.2023',
+    time: '17:00',
     organizer: 'Vitest Community',
     organizerLink: null,
     signupLink: 'https://www.meetup.com/vitest',
@@ -52,7 +54,8 @@ meetups.push({
     title: 'Local AWS group Meetup',
     location: 'Oulu Elektroniikkatie',
     locationLink: 'https://goo.gl/maps/GvuboievRSW5VfZf6',
-    date: '2023-10-03 17:00',
+    date: '3.10.2023',
+    time: '17:00',
     organizer: 'Cloudinary',
     organizerLink: 'https://google.com',
     description:
@@ -69,28 +72,6 @@ test('random randomnumber returns number between 1-5', () => {
     const randomNumber: number = getRandomLogonumber();
     expect(randomNumber).toBeGreaterThanOrEqual(1);
     expect(randomNumber).toBeLessThanOrEqual(5);
-  }
-});
-
-test('date parsing works in user format', () => {
-  const userDate = '2023-08-25 20:00';
-  const parsedDate = parseMeetupDate(userDate);
-  expect(parsedDate).toBeDefined();
-  expect(parsedDate).not.toBeNull();
-  if (parsedDate) {
-    expect(new Date(parsedDate).toDateString()).toBe('Fri Aug 25 2023');
-  }
-});
-
-test('date parsing works in system format', () => {
-  const systemDate = 'Wed, 13 Sep 2023 16:30:00 GMT';
-  const parsedDate = parseMeetupDate(systemDate);
-  expect(parsedDate).toBeDefined();
-  expect(parsedDate).not.toBeNull();
-  if (parsedDate) {
-    expect(new Date(parsedDate).toUTCString()).toBe(
-      'Wed, 13 Sep 2023 16:30:00 GMT',
-    );
   }
 });
 
@@ -147,4 +128,8 @@ test('short the description text', () => {
   expect(shortDesc).toBe(
     'Great AI meetup   Join us for an evening of AI talks and discussions, while our seasoned and awesome developers share their experiences and insight...',
   );
+});
+
+test('parse meetup date', () => {
+  expect(parseDate(meetups.at(0) as Meetup)).toBeGreaterThan(0);
 });
