@@ -1,3 +1,9 @@
+/**
+ * Indicates whether ESLint was run through `package.json` script.
+ * Used to identify IDE integrations.
+ */
+const IS_SCRIPT = process.env.npm_lifecycle_event === 'lint';
+
 /** @type {import('eslint/lib/shared/types').ConfigData} */
 module.exports = {
   root: true,
@@ -13,9 +19,9 @@ module.exports = {
   plugins: ['unicorn'],
   extends: [
     'eslint:recommended',
-    'plugin:prettier/recommended',
+    IS_SCRIPT && 'plugin:prettier/recommended',
     'plugin:astro/recommended',
-  ],
+  ].filter(Boolean),
   rules: {
     'unicorn/prefer-node-protocol': 'error',
   },
