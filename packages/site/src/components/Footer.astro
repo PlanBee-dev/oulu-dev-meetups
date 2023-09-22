@@ -2,7 +2,7 @@
 const today = new Date();
 ---
 
-<footer class="my-6 flex items-center justify-center">
+<footer class={`py-7 flex items-center justify-center ${Astro.props.class}`}>
   &copy; {today.getFullYear()} Plan Bee devs. All rights reserved.
 
   <a
