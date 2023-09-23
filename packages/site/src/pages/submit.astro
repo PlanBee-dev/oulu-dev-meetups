@@ -295,7 +295,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
 <script>
   import {
     type MeetupWithStringDate,
-    assertMeetupFormFields
+    assertMeetupFormFields,
   } from 'meetup-shared';
   import { formatMeetupData } from '../utils';
 
@@ -316,16 +316,16 @@ Stable diffusion for the win. For images and animations. But what is facebook do
       return;
     }
 
-    const formData = Object.fromEntries(
-      new FormData(form).entries(),
-    );
+    const formData = Object.fromEntries(new FormData(form).entries());
     assertMeetupFormFields(formData);
 
     const formattedMeetupData = formatMeetupData(formData);
 
     const body = {
       ...formattedMeetupData,
-      date: new Date(`${formattedMeetupData.date}T${formattedMeetupData.time}:00`).toISOString(),
+      date: new Date(
+        `${formattedMeetupData.date}T${formattedMeetupData.time}:00`,
+      ).toISOString(),
     } satisfies MeetupWithStringDate;
 
     // fieldset must be disabled after getting formdata
