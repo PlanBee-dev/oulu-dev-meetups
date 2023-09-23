@@ -17,6 +17,7 @@
     "@astrojs/rss": "^2.4.3",
     "@astrojs/sitemap": "^2.0.1",
     "@astrojs/tailwind": "^4.0.0",
+    "meetup-shared": "workspace:*",
     "@tailwindcss/forms": "^0.5.4",
     "@tailwindcss/typography": "^0.5.9",
     "astro": "^2.9.0",
@@ -25,7 +26,6 @@
   },
   "devDependencies": {
     "gh-pages": "^5.0.0",
-    "meetup-shared": "workspace:*",
     "playwright": "^1.36.2"
   }
 }

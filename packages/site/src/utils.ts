@@ -1,22 +1,31 @@
 import { MeetupFormValues } from 'meetup-shared';
 import { FrontMeetups } from './get-meetups';
 
-export const checkMeetupData = (meetup: MeetupFormValues) => {
-  if (!meetup) return;
-  if (meetup.organizerLink && !meetup.organizerLink.startsWith('http')) {
-    meetup.organizerLink = `https://${meetup.organizerLink}`;
+export const formatMeetupData = (meetup: MeetupFormValues) => {
+  const formattedMeetup = structuredClone(meetup);
+
+  if (
+    formattedMeetup.organizerLink &&
+    !formattedMeetup.organizerLink.startsWith('http')
+  ) {
+    formattedMeetup.organizerLink = `https://${formattedMeetup.organizerLink}`;
   }
-  if (meetup.signupLink && !meetup.signupLink.startsWith('http')) {
-    meetup.signupLink = `https://${meetup.signupLink}`;
+  if (
+    formattedMeetup.signupLink &&
+    !formattedMeetup.signupLink.startsWith('http')
+  ) {
+    formattedMeetup.signupLink = `https://${formattedMeetup.signupLink}`;
   }
-  if (!meetup.locationLink && !!meetup.location) {
-    const addressData = meetup.location.split(' ');
+  if (!formattedMeetup.locationLink && !!formattedMeetup.location) {
+    const addressData = formattedMeetup.location.split(' ');
     if (addressData.length > 1) {
-      meetup.locationLink = `https://www.google.com/maps/place/${addressData[0]}+${addressData[1]},+Oulu+Finland`;
+      formattedMeetup.locationLink = `https://www.google.com/maps/place/${addressData[0]}+${addressData[1]},+Oulu+Finland`;
     } else {
-      meetup.locationLink = `https://www.google.com/maps/place/${addressData[0]},+Oulu+Finland`;
+      formattedMeetup.locationLink = `https://www.google.com/maps/place/${addressData[0]},+Oulu+Finland`;
     }
   }
+
+  return formattedMeetup;
 };
 
 export const getRandomLogonumber = () => {

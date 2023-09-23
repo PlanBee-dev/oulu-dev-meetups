@@ -11,6 +11,21 @@ import {
 } from 'valibot';
 import { meetupSchema } from './meetupType';
 
+export const meetupFormFields = [
+  'title',
+  'description',
+  'date',
+  'time',
+  'location',
+  'locationLink',
+  'organizer',
+  'organizerLink',
+  'signupLink',
+] as const;
+
+export type MeetupFormFields = typeof meetupFormFields;
+export type MeetupFormField = MeetupFormFields[number];
+
 export const meetupFormValuesSchema = object({
   title: string([minLength(1)]),
   description: string([minLength(1)]),
@@ -21,7 +36,7 @@ export const meetupFormValuesSchema = object({
   organizer: string([minLength(1)]),
   organizerLink: string([url()]),
   signupLink: string([url()]),
-});
+} satisfies Record<MeetupFormField, unknown>);
 
 export type MeetupFormValues = Output<typeof meetupFormValuesSchema>;
 
@@ -70,4 +85,18 @@ export function meetupFormTimeSchema(input: string) {
   }
 
   return input;
+}
+
+export function assertMeetupFormFields(
+  meetupFormValues: Record<string, unknown>,
+): asserts meetupFormValues is Record<MeetupFormField, string> {
+  if (!meetupFormValues || typeof meetupFormValues !== 'object') {
+    throw new Error('Missing values');
+  }
+
+  meetupFormFields.forEach((key) => {
+    if (!(key in meetupFormValues)) {
+      throw new Error(`Meetup form values is missing '${key}'`);
+    }
+  });
 }

@@ -294,10 +294,10 @@ Stable diffusion for the win. For images and animations. But what is facebook do
 </PageLayout>
 <script>
   import {
-    type MeetupFormValues,
     type MeetupWithStringDate,
+    assertMeetupFormFields
   } from 'meetup-shared';
-  import { checkMeetupData } from '../utils';
+  import { formatMeetupData } from '../utils';
 
   const form = document.getElementById('submit-form') as HTMLFormElement;
   const formFieldset = document.getElementById(
@@ -318,13 +318,15 @@ Stable diffusion for the win. For images and animations. But what is facebook do
 
     const formData = Object.fromEntries(
       new FormData(form).entries(),
-    ) as MeetupFormValues;
-    checkMeetupData(formData);
+    );
+    assertMeetupFormFields(formData);
 
-    const data: MeetupWithStringDate = {
-      ...formData,
-      date: new Date(`${formData.date}T${formData.time}:00`).toISOString(),
-    };
+    const formattedMeetupData = formatMeetupData(formData);
+
+    const body = {
+      ...formattedMeetupData,
+      date: new Date(`${formattedMeetupData.date}T${formattedMeetupData.time}:00`).toISOString(),
+    } satisfies MeetupWithStringDate;
 
     // fieldset must be disabled after getting formdata
     // otherwise formdata will be empty
@@ -332,7 +334,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
     const [res] = await Promise.allSettled([
       fetch(import.meta.env.PUBLIC_API_BASE_URL, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },
       }),
       new Promise((resolve) => setTimeout(resolve, 800)), // always wait at least 800ms so spinner is visible

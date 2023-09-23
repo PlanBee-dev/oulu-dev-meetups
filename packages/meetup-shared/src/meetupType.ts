@@ -6,6 +6,9 @@ import {
   transform,
   isoTimestamp,
 } from 'valibot';
+import { MeetupFormField } from './meetupForm';
+
+type MeetupField = Exclude<MeetupFormField, 'time' | 'date'> & { date: Date };
 
 export const meetupSchema = object({
   title: string(),
@@ -16,7 +19,7 @@ export const meetupSchema = object({
   organizer: string(),
   organizerLink: string([url()]),
   signupLink: string([url()]),
-});
+} satisfies Record<MeetupField, unknown>);
 
 export type Meetup = Output<typeof meetupSchema>;
 export type MeetupWithStringDate = Omit<Meetup, 'date'> & { date: string };

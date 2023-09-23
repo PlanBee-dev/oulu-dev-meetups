@@ -148,6 +148,9 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
+      meetup-shared:
+        specifier: workspace:*
+        version: link:../meetup-shared
       tailwindcss:
         specifier: ^3.3.3
         version: 3.3.3
@@ -155,9 +158,6 @@ importers:
       gh-pages:
         specifier: ^5.0.0
         version: 5.0.0
-      meetup-shared:
-        specifier: workspace:*
-        version: link:../meetup-shared
       playwright:
         specifier: ^1.36.2
         version: 1.36.2

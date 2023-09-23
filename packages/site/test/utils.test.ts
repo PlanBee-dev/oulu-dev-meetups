@@ -1,6 +1,6 @@
 import { MeetupFormValues } from 'meetup-shared';
 import {
-  checkMeetupData,
+  formatMeetupData,
   createShortDescription,
   getNextMeetup,
   getRandomLogonumber,
@@ -47,7 +47,7 @@ test('get next meetup from today', () => {
 });
 
 test('check and fix meetup datas urls', () => {
-  const meetup: MeetupFormValues = {
+  const meetupLocationWithSpace = {
     title: 'Test SECOND THIRD AND MORE FINAL New Meetup',
     signupLink: 'cloudamite.com',
     description: '## ARRR great pirate meetup \n\nbest download sites',
@@ -57,19 +57,29 @@ test('check and fix meetup datas urls', () => {
     time: '17:30',
     location: 'Elektroniikkatie 2',
     locationLink: '',
-  };
+  } satisfies MeetupFormValues;
 
-  checkMeetupData(meetup);
-  expect(meetup.signupLink).toBe('https://cloudamite.com');
-  expect(meetup.organizerLink).toBe('https://planbee.dev');
-  expect(meetup.locationLink).toBe(
+  const formattedMeetupData = formatMeetupData(meetupLocationWithSpace);
+  expect(formattedMeetupData.signupLink).toBe('https://cloudamite.com');
+  expect(formattedMeetupData.organizerLink).toBe('https://planbee.dev');
+  expect(formattedMeetupData.locationLink).toBe(
     'https://www.google.com/maps/place/Elektroniikkatie+2,+Oulu+Finland',
   );
 
-  meetup.location = 'Kirkkokatu';
-  meetup.locationLink = '';
-  checkMeetupData(meetup);
-  expect(meetup.locationLink).toBe(
+  const meetupLocationWithoutSpace = {
+    title: 'Test SECOND THIRD AND MORE FINAL New Meetup',
+    signupLink: 'cloudamite.com',
+    description: '## ARRR great pirate meetup \n\nbest download sites',
+    organizer: 'Plan Bee',
+    organizerLink: 'planbee.dev',
+    date: '2023-09-21',
+    time: '17:30',
+    location: 'Kirkkokatu',
+    locationLink: '',
+  } satisfies MeetupFormValues;
+
+  const formattedMeetupData2 = formatMeetupData(meetupLocationWithoutSpace);
+  expect(formattedMeetupData2.locationLink).toBe(
     'https://www.google.com/maps/place/Kirkkokatu,+Oulu+Finland',
   );
 });
