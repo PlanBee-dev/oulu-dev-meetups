@@ -1,37 +1,31 @@
-// place any helper functions here
-export type Meetup = {
-  data: {
-    title: string;
-    description: string;
-    date: string;
-    time?: string;
-    location: string;
-    locationLink: string | null;
-    organizer: string;
-    organizerLink: string | null;
-    signupLink: string;
-    image?: string | null;
-  };
-  slug: string;
-  body: string;
-};
+import { MeetupFormValues } from 'meetup-shared';
+import { FrontMeetups } from './get-meetups';
 
-export const checkMeetupData = (meetup: Meetup['data']) => {
-  if (!meetup) return;
-  if (meetup.organizerLink && !meetup.organizerLink.startsWith('http')) {
-    meetup.organizerLink = `https://${meetup.organizerLink}`;
+export const formatMeetupData = (meetup: MeetupFormValues) => {
+  const formattedMeetup = structuredClone(meetup);
+
+  if (
+    formattedMeetup.organizerLink &&
+    !formattedMeetup.organizerLink.startsWith('http')
+  ) {
+    formattedMeetup.organizerLink = `https://${formattedMeetup.organizerLink}`;
   }
-  if (meetup.signupLink && !meetup.signupLink.startsWith('http')) {
-    meetup.signupLink = `https://${meetup.signupLink}`;
+  if (
+    formattedMeetup.signupLink &&
+    !formattedMeetup.signupLink.startsWith('http')
+  ) {
+    formattedMeetup.signupLink = `https://${formattedMeetup.signupLink}`;
   }
-  if (!meetup.locationLink && !!meetup.location) {
-    const addressData = meetup.location.split(' ');
+  if (!formattedMeetup.locationLink && !!formattedMeetup.location) {
+    const addressData = formattedMeetup.location.split(' ');
     if (addressData.length > 1) {
-      meetup.locationLink = `https://www.google.com/maps/place/${addressData[0]}+${addressData[1]},+Oulu+Finland`;
+      formattedMeetup.locationLink = `https://www.google.com/maps/place/${addressData[0]}+${addressData[1]},+Oulu+Finland`;
     } else {
-      meetup.locationLink = `https://www.google.com/maps/place/${addressData[0]},+Oulu+Finland`;
+      formattedMeetup.locationLink = `https://www.google.com/maps/place/${addressData[0]},+Oulu+Finland`;
     }
   }
+
+  return formattedMeetup;
 };
 
 export const getRandomLogonumber = () => {
@@ -43,26 +37,19 @@ export const getRandomLogonumber = () => {
   return devLogoNum;
 };
 
-export const parseDate = (meetup: Meetup) => {
-  //date from dd.MM.YYYY to YYYY-MM-DD
-  const date = meetup.data.date.split('.').reverse().join('-');
-  return Date.parse(`${date} ${meetup.data.time}`);
-};
-
-export const getNextMeetup = (meetups: Meetup[]) => {
+export const getNextMeetup = (meetups: FrontMeetups) => {
   if (!meetups || meetups.length === 0) return null;
 
   const currentDate = new Date();
-  const futureMeetups = meetups.filter((meetup: Meetup) => {
-    return parseDate(meetup) > currentDate.getTime();
+  const futureMeetups = meetups.filter((meetup) => {
+    return +meetup.date > +currentDate;
   });
 
   if (futureMeetups.length === 0) return null;
 
-  futureMeetups.sort((a: Meetup, b: Meetup) => {
-    return parseDate(a) - parseDate(b);
-  });
-  return futureMeetups[0];
+  const sorted = sortMeetupsNewestFirst(futureMeetups);
+
+  return sorted[0];
 };
 
 export const createShortDescription = (descriptionToCut: string) => {
@@ -77,3 +64,7 @@ export const createShortDescription = (descriptionToCut: string) => {
   }
   return shortDesc;
 };
+
+export function sortMeetupsNewestFirst(meetups: FrontMeetups) {
+  return [...meetups].sort((a, b) => +b.date - +a.date);
+}

@@ -1,18 +1,22 @@
 ---
-const meetupProps = Astro.props;
+import { FrontMeetup } from '../get-meetups';
+
+type Props = { meetup: FrontMeetup };
 const {
-  location,
-  locationLink,
-  date,
-  time,
-  organizer,
-  organizerLink,
-  signupLink,
-  image,
-} = meetupProps.meetup.data;
+  meetup: {
+    render,
+    location,
+    locationLink,
+    formattedDate,
+    organizer,
+    organizerLink,
+    signupLink,
+    image,
+  },
+} = Astro.props;
+
 const heroImage = image ? image : 'images/heroimages/1-meetup-image.jpg';
-const { Content } = await meetupProps.meetup.render();
-const formattedDate = `${date} ${time}`;
+const { Content } = await render();
 ---
 
 <div class="mx-auto flex max-w-7xl flex-col sm:px-6 lg:px-8">

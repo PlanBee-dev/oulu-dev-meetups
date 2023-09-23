@@ -1,19 +1,18 @@
 ---
 import PageLayout from './PageLayout.astro';
 import MeetupPageCard from '../components/MeetupPageCard.astro';
-import { createShortDescription } from '../utils';
+import { FrontMeetup } from '../get-meetups';
 
+type Props = { meetup: FrontMeetup };
 const { meetup } = Astro.props;
-const title = meetup.data.title;
-const description = createShortDescription(meetup.body);
-const image = meetup.data.image;
+const { title, shortDescription, image } = meetup;
 ---
 
 <PageLayout
   title={title}
-  description={description}
+  description={shortDescription}
   image={image}
-  headerText={meetup.data.title}
+  headerText={title}
 >
   <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
     <MeetupPageCard meetup={meetup} />

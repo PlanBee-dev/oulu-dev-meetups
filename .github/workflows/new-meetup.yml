@@ -24,6 +24,9 @@ jobs:
 
       - uses: ./.github/actions/setup-and-cache
 
+      - name: Set time zone
+        run: sudo timedatectl set-timezone Europe/Helsinki
+
       - name: Create new meetup
         id: new_meetup
         run: |

@@ -2,14 +2,14 @@ import { createIssue, parseCreateIssueReqBody } from './workerCreateIssue';
 import { Env } from './workerEnv';
 
 export async function handleRequest(req: Request, env: Env): Promise<Response> {
-  const meetupFormValues = await parseCreateIssueReqBody(req);
+  const meetupParseResult = await parseCreateIssueReqBody(req);
 
-  if ('errorResponse' in meetupFormValues) {
-    return meetupFormValues.errorResponse;
+  if ('errorResponse' in meetupParseResult) {
+    return meetupParseResult.errorResponse;
   }
 
   const createIssueRes = await createIssue({
-    meetupFormValues: meetupFormValues.parsedMeetup,
+    meetup: meetupParseResult.parsedMeetup,
     env,
   });
 

@@ -2,29 +2,11 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import Intro from '../components/Intro.astro';
 import MeetupCard from '../components/MeetupCard.astro';
-import { getCollection } from 'astro:content';
-import { getMeetupsCollectionName } from '../content/config';
-import { createShortDescription, getNextMeetup } from '../utils';
+import { getNextMeetup } from '../utils';
+import { getMeetups } from '../get-meetups';
 
-const collectionName = getMeetupsCollectionName();
-const meetups: any = await getCollection(collectionName);
-
+const meetups = await getMeetups();
 const nextMeetup = getNextMeetup(meetups);
-
-const meetupDetails = nextMeetup
-  ? {
-      name: nextMeetup.data.title,
-      location: nextMeetup.data.location,
-      locationLink: nextMeetup.data.locationLink,
-      date: nextMeetup.data.date,
-      time: nextMeetup.data.time,
-      organizer: nextMeetup.data.organizer,
-      organizerLink: nextMeetup.data.organizerLink,
-      signupLink: nextMeetup.data.signupLink,
-      slug: nextMeetup.slug,
-      description: createShortDescription(nextMeetup.body),
-    }
-  : null;
 ---
 
 <PageLayout>
@@ -50,6 +32,6 @@ const meetupDetails = nextMeetup
     <div class="m-4 text-center text-2xl">
       <h2>What is coming next?</h2>
     </div>
-    {meetupDetails && <MeetupCard {...meetupDetails} />}
+    {nextMeetup && <MeetupCard meetup={nextMeetup} />}
   </div>
 </PageLayout>

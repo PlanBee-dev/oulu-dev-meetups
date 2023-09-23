@@ -1,11 +1,15 @@
 ---
+import { FrontMeetup } from '../get-meetups';
 import { getRandomLogonumber } from '../utils';
-const { name, date, time, location, organizer, slug } = Astro.props;
+
+type Props = { meetup: FrontMeetup };
+const {
+  meetup: { title, formattedDate, location, organizer, slug },
+} = Astro.props;
 // TODO: green light for near future, yellow for far future
 // red for cancelled, gray for past
 
 const devLogoNum = getRandomLogonumber();
-const formattedDate = `${date} ${time}`;
 ---
 
 <li class="relative py-10 hover:bg-gray-50">
@@ -23,7 +27,7 @@ const formattedDate = `${date} ${time}`;
           <div class="min-w-0 flex-auto">
             <p class="text-sm font-semibold leading-6 text-gray-900">
               <span class="absolute inset-x-0 -top-px bottom-0"></span>
-              {name}
+              {title}
             </p>
             <p class="mt-1 flex text-xs leading-5 text-gray-500">
               {organizer}

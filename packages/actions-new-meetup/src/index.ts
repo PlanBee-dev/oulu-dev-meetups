@@ -37,27 +37,34 @@ async function main() {
   ]);
 
   try {
-    const meetupFormValues = await parseMeetupIssueBody(env.ISSUE_BODY);
+    const meetupIssueBodyParseResult = await parseMeetupIssueBody(
+      env.ISSUE_BODY,
+    );
 
-    if (!meetupFormValues.success) {
+    if (!meetupIssueBodyParseResult.success) {
       throw new CustomError('Invalid issue body ', [
-        { status: 'error', issues: meetupFormValues.error.issues },
+        { status: 'error', issues: meetupIssueBodyParseResult.error.issues },
         { status: 'idle' },
         { status: 'idle' },
       ]);
     }
 
-    const meetupResult = await meetupFormValuesToMeetup(meetupFormValues.data);
+    const meetupParseResult = await meetupFormValuesToMeetup(
+      meetupIssueBodyParseResult.data,
+    );
 
-    if (!meetupResult.success) {
+    if (!meetupParseResult.success) {
       throw new CustomError('Invalid issue body ', [
-        { status: 'error', issues: meetupResult.error.issues },
+        {
+          status: 'error',
+          issues: meetupParseResult.error.issues,
+        },
         { status: 'idle' },
         { status: 'idle' },
       ]);
     }
 
-    const meetup = meetupResult.data;
+    const meetup = meetupParseResult.data;
 
     const sanitizedMeetupTitle = sanitizeString(meetup.title);
 
@@ -105,10 +112,9 @@ async function main() {
     core.setOutput('branch_name', newBranchName);
     core.setOutput('pull_request_title', pullRequestTitle);
     core.setOutput('pull_request_body', pullRequestBody);
+    core.setOutput('comment_id', upsertComment.comment_id);
 
     core.info('Done');
-
-    core.setOutput('comment_id', upsertComment.comment_id);
   } catch (err) {
     if (err instanceof CustomError) {
       console.error('Error creating meetup - ', err);

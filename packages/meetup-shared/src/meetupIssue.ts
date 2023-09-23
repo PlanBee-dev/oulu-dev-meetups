@@ -1,7 +1,11 @@
+import { format } from 'date-fns';
 import { safeParseAsync } from 'valibot';
-import { type MeetupFormValues, meetupFormValuesSchema } from './meetupForm';
+import { meetupFormValuesSchema } from './meetupForm';
+import { type Meetup } from './meetupType';
 
-export function getMeetupIssueBody(meetup: MeetupFormValues) {
+export function getMeetupIssueBody(meetup: Meetup) {
+  const { date, time } = extractDateAndTime(meetup.date);
+
   return `
 ### Meetup title
 
@@ -9,11 +13,11 @@ ${meetup.title}
 
 ### Date
 
-${meetup.date}
+${date}
 
 ### Time
 
-${meetup.time}
+${time}
 
 ### Street address
 
@@ -54,6 +58,13 @@ export function parseMeetupIssueBody(body: string) {
   };
 
   return safeParseAsync(meetupFormValuesSchema, unverifiedMeetupFormValues);
+}
+
+function extractDateAndTime(date: Date) {
+  return {
+    date: format(date, 'yyyy-MM-dd'),
+    time: format(date, 'HH:mm'),
+  };
 }
 
 function getValueFromBody(body: string, title: string) {

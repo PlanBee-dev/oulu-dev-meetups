@@ -8,7 +8,7 @@ locationLink: ${meetup.locationLink}
 organizer: ${meetup.organizer}
 organizerLink: ${meetup.organizerLink}
 signupLink: ${meetup.signupLink}
-date: ${meetup.date.toUTCString()}
+date: ${meetup.date.toISOString()}
 ---
 
 ${meetup.description}`;

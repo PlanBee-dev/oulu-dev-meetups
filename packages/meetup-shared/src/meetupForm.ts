@@ -1,7 +1,6 @@
-import format from 'date-fns/format';
-import isValid from 'date-fns/isValid';
-import parse from 'date-fns/parse';
+import { isValid, parse } from 'date-fns';
 import {
+  Output,
   ValiError,
   minLength,
   object,
@@ -9,9 +8,23 @@ import {
   string,
   transform,
   url,
-  type Output,
 } from 'valibot';
-import { meetupSchema, type Meetup } from './meetupType';
+import { meetupSchema } from './meetupType';
+
+export const meetupFormFields = [
+  'title',
+  'description',
+  'date',
+  'time',
+  'location',
+  'locationLink',
+  'organizer',
+  'organizerLink',
+  'signupLink',
+] as const;
+
+export type MeetupFormFields = typeof meetupFormFields;
+export type MeetupFormField = MeetupFormFields[number];
 
 export const meetupFormValuesSchema = object({
   title: string([minLength(1)]),
@@ -23,7 +36,7 @@ export const meetupFormValuesSchema = object({
   organizer: string([minLength(1)]),
   organizerLink: string([url()]),
   signupLink: string([url()]),
-});
+} satisfies Record<MeetupFormField, unknown>);
 
 export type MeetupFormValues = Output<typeof meetupFormValuesSchema>;
 
@@ -34,12 +47,9 @@ export async function meetupFormValuesToMeetup(
 
   return safeParseAsync(meetupSchema, {
     ...rest,
-    date: parseMeetupDateAndTime(date, time),
+    date: new Date(`${date}T${time}:00`).toISOString(),
   });
 }
-
-type MeetupFormDate = string & { __type: 'MeetupFormDate' };
-type MeetupFormTime = string & { __type: 'MeetupFormTime' };
 
 export function meetupFormDateSchema(input: string) {
   const parsedDate = parse(input, 'yyyy-MM-dd', new Date());
@@ -56,7 +66,7 @@ export function meetupFormDateSchema(input: string) {
     ]);
   }
 
-  return input as MeetupFormDate;
+  return input;
 }
 
 export function meetupFormTimeSchema(input: string) {
@@ -74,19 +84,19 @@ export function meetupFormTimeSchema(input: string) {
     ]);
   }
 
-  return input as MeetupFormTime;
+  return input;
 }
 
-export function parseMeetupDateAndTime(
-  date: MeetupFormDate,
-  time: MeetupFormTime,
-) {
-  return parse(`${date} ${time}`, 'yyyy-MM-dd HH:mm', new Date());
-}
+export function assertMeetupFormFields(
+  meetupFormValues: Record<string, unknown>,
+): asserts meetupFormValues is Record<MeetupFormField, string> {
+  if (!meetupFormValues || typeof meetupFormValues !== 'object') {
+    throw new Error('Missing values');
+  }
 
-export function extractMeetupDateAndTime(meetup: Meetup) {
-  const date = format(meetup.date, 'yyyy-MM-dd') as MeetupFormDate;
-  const time = format(meetup.date, 'HH:mm') as MeetupFormTime;
-
-  return { date, time };
+  meetupFormFields.forEach((key) => {
+    if (!(key in meetupFormValues)) {
+      throw new Error(`Meetup form values is missing '${key}'`);
+    }
+  });
 }
