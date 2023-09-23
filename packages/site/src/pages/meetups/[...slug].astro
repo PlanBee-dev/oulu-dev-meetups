@@ -3,7 +3,9 @@ import { FrontMeetup, getMeetups } from '../../get-meetups';
 import Meetup from '../../layouts/Meetup.astro';
 
 export async function getStaticPaths() {
-  return (await getMeetups()).map((meetup) => ({
+  const meetups = await getMeetups();
+
+  return meetups.map((meetup) => ({
     params: { slug: meetup.slug },
     props: meetup,
   }));
