@@ -38,9 +38,9 @@ export const getNextMeetup = (meetups: FrontMeetups) => {
 
   if (futureMeetups.length === 0) return null;
 
-  sortMeetupsNewestFirst(futureMeetups);
+  const sorted = sortMeetupsNewestFirst(futureMeetups);
 
-  return futureMeetups[0];
+  return sorted[0];
 };
 
 export const createShortDescription = (descriptionToCut: string) => {
@@ -57,5 +57,5 @@ export const createShortDescription = (descriptionToCut: string) => {
 };
 
 export function sortMeetupsNewestFirst(meetups: FrontMeetups) {
-  return meetups.sort((a, b) => +b.date - +a.date);
+  return [...meetups].sort((a, b) => +b.date - +a.date);
 }

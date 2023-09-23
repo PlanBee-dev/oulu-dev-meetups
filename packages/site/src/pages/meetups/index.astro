@@ -5,7 +5,7 @@ import { sortMeetupsNewestFirst } from '../../utils';
 import { getMeetups } from '../../get-meetups';
 
 const meetups = await getMeetups();
-sortMeetupsNewestFirst(meetups);
+const sortedMeetups = sortMeetupsNewestFirst(meetups);
 ---
 
 <PageLayout>
@@ -15,7 +15,7 @@ sortMeetupsNewestFirst(meetups);
     >
       <section>
         <ul role="list" class="divide-y divide-gray-100">
-          {meetups.map((meetup) => <MeetupListItem meetup={meetup} />)}
+          {sortedMeetups.map((meetup) => <MeetupListItem meetup={meetup} />)}
         </ul>
       </section>
     </div>
