@@ -1,22 +1,18 @@
-import {
-  MeetupFormValues,
-  getMeetupIssueBody,
-  meetupFormValuesSchema,
-} from 'meetup-shared';
+import { getMeetupIssueBody, meetupSchema, Meetup } from 'meetup-shared';
 import { App } from 'octokit';
 import { safeParseAsync } from 'valibot';
 import { Env } from './workerEnv';
 
 export async function parseCreateIssueReqBody(
   req: Request,
-): Promise<{ errorResponse: Response } | { parsedMeetup: MeetupFormValues }> {
+): Promise<{ errorResponse: Response } | { parsedMeetup: Meetup }> {
   try {
     const json = await req.json();
 
-    const meetupFormValues = await safeParseAsync(meetupFormValuesSchema, json);
+    const meetupParseResult = await safeParseAsync(meetupSchema, json);
 
-    if (!meetupFormValues.success) {
-      const issues = meetupFormValues.error.issues;
+    if (!meetupParseResult.success) {
+      const issues = meetupParseResult.error.issues;
 
       console.error('Invalid JSON - validation error - ', issues);
 
@@ -36,7 +32,7 @@ export async function parseCreateIssueReqBody(
       };
     }
 
-    return { parsedMeetup: meetupFormValues.data };
+    return { parsedMeetup: meetupParseResult.data };
   } catch (e) {
     console.error('Invalid JSON - catched an error - ', e);
 
@@ -58,7 +54,7 @@ export async function parseCreateIssueReqBody(
 }
 
 export async function createIssue(props: {
-  meetupFormValues: MeetupFormValues;
+  meetup: Meetup;
   env: Env;
 }): Promise<
   | { errorResponse: Response }
@@ -78,8 +74,8 @@ export async function createIssue(props: {
       owner: props.env.GITHUB_REPO_OWNER,
       repo: props.env.GITHUB_REPO_NAME,
       labels: ['meetup'],
-      title: props.meetupFormValues.title,
-      body: getMeetupIssueBody(props.meetupFormValues),
+      title: props.meetup.title,
+      body: getMeetupIssueBody(props.meetup),
     });
 
     if (createIssueRes.status !== 201) {

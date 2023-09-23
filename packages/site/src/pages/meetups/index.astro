@@ -1,15 +1,11 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
-import { getCollection } from 'astro:content';
 import MeetupListItem from '../../components/MeetupListItem.astro';
-import { getMeetupsCollectionName } from '../../content/config';
-import { parseDate } from '../../utils';
+import { sortMeetupsNewestFirst } from '../../utils';
+import { getMeetups } from '../../get-meetups';
 
-const collectionName = getMeetupsCollectionName();
-const meetups: any = await getCollection(collectionName);
-meetups.sort((a: any, b: any) => {
-  return parseDate(b) - parseDate(a);
-});
+const meetups = await getMeetups();
+sortMeetupsNewestFirst(meetups);
 ---
 
 <PageLayout>
@@ -19,18 +15,7 @@ meetups.sort((a: any, b: any) => {
     >
       <section>
         <ul role="list" class="divide-y divide-gray-100">
-          {
-            meetups.map((meetup: any) => (
-              <MeetupListItem
-                name={meetup.data.title}
-                location={meetup.data.location}
-                date={meetup.data.date}
-                time={meetup.data.time}
-                organizer={meetup.data.organizer}
-                slug={meetup.slug}
-              />
-            ))
-          }
+          {meetups.map((meetup) => <MeetupListItem meetup={meetup} />)}
         </ul>
       </section>
     </div>

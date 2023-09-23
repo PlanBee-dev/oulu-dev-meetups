@@ -25,13 +25,14 @@ test('Calls github api to create an issue (happy path)', async () => {
         organizerLink: 'https://example.com',
         location: 'Test location',
         locationLink: 'https://example.com',
-        date: '2021-01-01',
-        time: '12:00',
+        date: '2021-01-01T12:00:00.000Z',
         signupLink: 'https://example.com',
       }),
     }),
     testEnvVars,
   );
+
+  expect(response.status).toBe(201);
 
   expect(onIssueCreated).toHaveBeenCalled();
   expect(onIssueCreated).toHaveBeenCalledWith({
@@ -40,7 +41,6 @@ test('Calls github api to create an issue (happy path)', async () => {
     body: expect.any(String) as string,
   });
 
-  expect(response.status).toBe(201);
   expect(await response.json()).toEqual({
     issueNumber: 1347,
     issueUrl: 'https://github.com/octocat/Hello-World/issues/1347',
@@ -66,8 +66,7 @@ test('Returns 500 when call to github api fails', async () => {
         organizerLink: 'https://example.com',
         location: 'Test location',
         locationLink: 'https://example.com',
-        date: '2021-01-01',
-        time: '12:00',
+        date: '2021-01-01T12:00:00.000Z',
         signupLink: 'https://example.com',
       }),
     }),
@@ -80,12 +79,12 @@ test('Returns 500 when call to github api fails', async () => {
 
   vi.useRealTimers();
 
+  expect(response.status).toBe(500);
+
   expect(onIssueCreated).toHaveBeenCalled();
   expect(onIssueCreated).toHaveBeenCalledWith({
     owner: 'test-repo-owner',
     repo: 'test-repo',
     body: expect.any(String) as string,
   });
-
-  expect(response.status).toBe(500);
 });

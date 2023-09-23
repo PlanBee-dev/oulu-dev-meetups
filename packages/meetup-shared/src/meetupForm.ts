@@ -1,7 +1,6 @@
-import format from 'date-fns/format';
-import isValid from 'date-fns/isValid';
-import parse from 'date-fns/parse';
+import { isValid, parse } from 'date-fns';
 import {
+  Output,
   ValiError,
   minLength,
   object,
@@ -9,9 +8,8 @@ import {
   string,
   transform,
   url,
-  type Output,
 } from 'valibot';
-import { meetupSchema, type Meetup } from './meetupType';
+import { meetupSchema } from './meetupType';
 
 export const meetupFormValuesSchema = object({
   title: string([minLength(1)]),
@@ -34,12 +32,9 @@ export async function meetupFormValuesToMeetup(
 
   return safeParseAsync(meetupSchema, {
     ...rest,
-    date: parseMeetupDateAndTime(date, time),
+    date: new Date(`${date}T${time}:00`).toISOString(),
   });
 }
-
-type MeetupFormDate = string & { __type: 'MeetupFormDate' };
-type MeetupFormTime = string & { __type: 'MeetupFormTime' };
 
 export function meetupFormDateSchema(input: string) {
   const parsedDate = parse(input, 'yyyy-MM-dd', new Date());
@@ -56,7 +51,7 @@ export function meetupFormDateSchema(input: string) {
     ]);
   }
 
-  return input as MeetupFormDate;
+  return input;
 }
 
 export function meetupFormTimeSchema(input: string) {
@@ -74,19 +69,5 @@ export function meetupFormTimeSchema(input: string) {
     ]);
   }
 
-  return input as MeetupFormTime;
-}
-
-export function parseMeetupDateAndTime(
-  date: MeetupFormDate,
-  time: MeetupFormTime,
-) {
-  return parse(`${date} ${time}`, 'yyyy-MM-dd HH:mm', new Date());
-}
-
-export function extractMeetupDateAndTime(meetup: Meetup) {
-  const date = format(meetup.date, 'yyyy-MM-dd') as MeetupFormDate;
-  const time = format(meetup.date, 'HH:mm') as MeetupFormTime;
-
-  return { date, time };
+  return input;
 }

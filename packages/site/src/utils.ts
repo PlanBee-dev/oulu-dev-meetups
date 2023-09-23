@@ -1,22 +1,7 @@
-// place any helper functions here
-export type Meetup = {
-  data: {
-    title: string;
-    description: string;
-    date: string;
-    time?: string;
-    location: string;
-    locationLink: string | null;
-    organizer: string;
-    organizerLink: string | null;
-    signupLink: string;
-    image?: string | null;
-  };
-  slug: string;
-  body: string;
-};
+import { MeetupFormValues } from 'meetup-shared';
+import { FrontMeetups } from './get-meetups';
 
-export const checkMeetupData = (meetup: Meetup['data']) => {
+export const checkMeetupData = (meetup: MeetupFormValues) => {
   if (!meetup) return;
   if (meetup.organizerLink && !meetup.organizerLink.startsWith('http')) {
     meetup.organizerLink = `https://${meetup.organizerLink}`;
@@ -43,25 +28,18 @@ export const getRandomLogonumber = () => {
   return devLogoNum;
 };
 
-export const parseDate = (meetup: Meetup) => {
-  //date from dd.MM.YYYY to YYYY-MM-DD
-  const date = meetup.data.date.split('.').reverse().join('-');
-  return Date.parse(`${date} ${meetup.data.time}`);
-};
-
-export const getNextMeetup = (meetups: Meetup[]) => {
+export const getNextMeetup = (meetups: FrontMeetups) => {
   if (!meetups || meetups.length === 0) return null;
 
   const currentDate = new Date();
-  const futureMeetups = meetups.filter((meetup: Meetup) => {
-    return parseDate(meetup) > currentDate.getTime();
+  const futureMeetups = meetups.filter((meetup) => {
+    return +meetup.date > +currentDate;
   });
 
   if (futureMeetups.length === 0) return null;
 
-  futureMeetups.sort((a: Meetup, b: Meetup) => {
-    return parseDate(a) - parseDate(b);
-  });
+  sortMeetupsNewestFirst(futureMeetups);
+
   return futureMeetups[0];
 };
 
@@ -77,3 +55,7 @@ export const createShortDescription = (descriptionToCut: string) => {
   }
   return shortDesc;
 };
+
+export function sortMeetupsNewestFirst(meetups: FrontMeetups) {
+  return meetups.sort((a, b) => +b.date - +a.date);
+}

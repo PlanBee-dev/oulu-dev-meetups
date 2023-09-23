@@ -1,9 +1,16 @@
-import { type Output, date, object, string, url } from 'valibot';
+import {
+  type Output,
+  object,
+  string,
+  url,
+  transform,
+  isoTimestamp,
+} from 'valibot';
 
 export const meetupSchema = object({
   title: string(),
   description: string(),
-  date: date(),
+  date: transform(string([isoTimestamp()]), (v) => new Date(v)),
   location: string(),
   locationLink: string([url()]),
   organizer: string(),
@@ -12,3 +19,4 @@ export const meetupSchema = object({
 });
 
 export type Meetup = Output<typeof meetupSchema>;
+export type MeetupWithStringDate = Omit<Meetup, 'date'> & { date: string };

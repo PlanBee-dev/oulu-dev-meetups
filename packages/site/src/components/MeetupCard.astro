@@ -1,17 +1,20 @@
 ---
+import { FrontMeetup } from '../get-meetups';
+
+type Props = { meetup: FrontMeetup };
 const {
-  name,
-  description,
-  location,
-  locationLink,
-  date,
-  time,
-  organizer,
-  organizerLink,
-  signupLink,
-  slug,
+  meetup: {
+    formattedDate,
+    location,
+    organizer,
+    shortDescription,
+    signupLink,
+    slug,
+    title,
+    locationLink,
+    organizerLink,
+  },
 } = Astro.props;
-const formattedDate = `${date} ${time}`;
 ---
 
 <div class="m-auto max-w-2xl overflow-hidden bg-white shadow sm:rounded-lg">
@@ -32,7 +35,7 @@ const formattedDate = `${date} ${time}`;
           <div class="ml-4">
             <a href={`${import.meta.env.BASE_URL}meetups/${slug}`}>
               <h3 class="text-base font-semibold leading-6 text-gray-900">
-                {name}
+                {title}
               </h3>
             </a>
             <p class="text-sm text-gray-500">
@@ -101,7 +104,7 @@ const formattedDate = `${date} ${time}`;
         <dt class="text-sm font-medium text-gray-900">Description</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
           <a href={`${import.meta.env.BASE_URL}meetups/${slug}`}>
-            {description}
+            {shortDescription}
           </a>
         </dd>
       </div>

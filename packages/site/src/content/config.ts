@@ -1,35 +1,24 @@
 import { defineCollection, z } from 'astro:content';
 
+const meetupMarkdownFileMetadataSchema = z.object({
+  title: z.string(),
+  date: z.string().transform((date) => new Date(date)),
+  location: z.string(),
+  locationLink: z.string().optional(),
+  organizer: z.string(),
+  organizerLink: z.string().optional(),
+  signupLink: z.string(),
+  image: z.string().optional(),
+});
+
 const meetups = defineCollection({
   type: 'content',
-  schema: z.object({
-    title: z.string(),
-    // Transform string to Date object
-    date: z.string(),
-    time: z.string(),
-    location: z.string(),
-    locationLink: z.string().optional(),
-    organizer: z.string(),
-    organizerLink: z.string().optional(),
-    signupLink: z.string(),
-    image: z.string().optional(),
-  }),
+  schema: meetupMarkdownFileMetadataSchema,
 });
 
 const testmeetups = defineCollection({
   type: 'content',
-  schema: z.object({
-    title: z.string(),
-    // Transform string to Date object
-    date: z.string(),
-    time: z.string(),
-    location: z.string(),
-    locationLink: z.string().optional(),
-    organizer: z.string(),
-    organizerLink: z.string().optional(),
-    signupLink: z.string(),
-    image: z.string().optional(),
-  }),
+  schema: meetupMarkdownFileMetadataSchema,
 });
 export const MEETUPS = 'meetups';
 export const TEST_MEETUPS = 'testmeetups';

@@ -1,18 +1,15 @@
 ---
-import { getCollection, CollectionEntry } from 'astro:content';
+import { FrontMeetup, getMeetups } from '../../get-meetups';
 import Meetup from '../../layouts/Meetup.astro';
-import { CollectionName, getMeetupsCollectionName } from '../../content/config';
 
 export async function getStaticPaths() {
-  const collectionName: any = getMeetupsCollectionName();
-  const meetups = await getCollection(collectionName);
-  return meetups.map((meetup) => ({
+  return (await getMeetups()).map((meetup) => ({
     params: { slug: meetup.slug },
     props: meetup,
   }));
 }
-type Props = CollectionEntry<CollectionName>;
 
+type Props = FrontMeetup;
 const meetup = Astro.props;
 ---
 

@@ -48,13 +48,6 @@ test('Manages invalid json', async () => {
           validation: 'string',
           origin: 'value',
           message: 'Invalid type',
-          path: [{ schema: 'object', input: { name: 'world' }, key: 'time' }],
-        },
-        {
-          reason: 'type',
-          validation: 'string',
-          origin: 'value',
-          message: 'Invalid type',
           path: [
             { schema: 'object', input: { name: 'world' }, key: 'location' },
           ],

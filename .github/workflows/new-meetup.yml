@@ -24,6 +24,10 @@ jobs:
 
       - uses: ./.github/actions/setup-and-cache
 
+      - uses: szenius/set-timezone@ce9c440bc3af4f51b28d7ef7e5c47ee8f26c8dcb # tag v1.2
+        with:
+          timezoneLinux: "Europe/Helsinki"
+
       - name: Create new meetup
         id: new_meetup
         run: |

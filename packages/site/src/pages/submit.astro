@@ -293,7 +293,11 @@ Stable diffusion for the win. For images and animations. But what is facebook do
   </div>
 </PageLayout>
 <script>
-  import { checkMeetupData, Meetup } from '../utils';
+  import {
+    type MeetupFormValues,
+    type MeetupWithStringDate,
+  } from 'meetup-shared';
+  import { checkMeetupData } from '../utils';
 
   const form = document.getElementById('submit-form') as HTMLFormElement;
   const formFieldset = document.getElementById(
@@ -312,9 +316,15 @@ Stable diffusion for the win. For images and animations. But what is facebook do
       return;
     }
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries()) as Meetup['data'];
-    checkMeetupData(data);
+    const formData = Object.fromEntries(
+      new FormData(form).entries(),
+    ) as MeetupFormValues;
+    checkMeetupData(formData);
+
+    const data: MeetupWithStringDate = {
+      ...formData,
+      date: new Date(`${formData.date}T${formData.time}:00`).toISOString(),
+    };
 
     // fieldset must be disabled after getting formdata
     // otherwise formdata will be empty
@@ -340,6 +350,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
     }
 
     if (res.status === 'fulfilled' && res.value.ok === false) {
+      console.error(await res.value.json());
       setError(
         `Submission failed, status ${res.value.status}, ${res.value.statusText}. Please try again later`,
       );
@@ -349,9 +360,9 @@ Stable diffusion for the win. For images and animations. But what is facebook do
     const json = await res.value.json();
     console.log(json);
 
-    window.location.href = `/success?githubLink=${encodeURIComponent(
-      json.issueUrl,
-    )}`;
+    window.location.assign(
+      `/success?githubLink=${encodeURIComponent(json.issueUrl)}`,
+    );
   }
 
   form.addEventListener('submit', onSubmit, false);
