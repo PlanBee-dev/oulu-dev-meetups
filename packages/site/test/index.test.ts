@@ -13,7 +13,7 @@ test('meta is correct', async () => {
   const page = await browser.newPage();
   page.on('console', (msg) => console.log(msg.text()));
 
-  await page.goto('http://localhost:3000/');
+  await page.goto('http://localhost:4321/');
 
   const title = await page.title();
   expect(title).toBe('Oulu developer meetups');
@@ -23,7 +23,7 @@ test('main heading is set', async () => {
   const page = await browser.newPage();
   page.on('console', (msg) => console.log(msg.text()));
 
-  await page.goto('http://localhost:3000/');
+  await page.goto('http://localhost:4321/');
 
   expect(
     await page

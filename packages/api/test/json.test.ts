@@ -8,7 +8,7 @@ test('Manages invalid json', async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Origin: 'http://localhost:3000',
+        Origin: 'http://localhost:4321',
       },
       body: JSON.stringify({ name: 'world' }),
     }),
@@ -103,7 +103,7 @@ test('Manages malformed JSON', async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Origin: 'http://localhost:3000',
+        Origin: 'http://localhost:4321',
       },
       body: '{',
     }),

@@ -12,10 +12,10 @@ test('Calls github api to create an issue (happy path)', async () => {
   shouldCreateIssueFail.mockReturnValue(false);
 
   const response = await handler.fetch(
-    new Request('http://localhost:3000', {
+    new Request('http://localhost:4321', {
       method: 'POST',
       headers: {
-        Origin: 'http://localhost:3000',
+        Origin: 'http://localhost:4321',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -53,10 +53,10 @@ test('Returns 500 when call to github api fails', async () => {
   vi.useFakeTimers();
 
   const promise = handler.fetch(
-    new Request('http://localhost:3000', {
+    new Request('http://localhost:4321', {
       method: 'POST',
       headers: {
-        Origin: 'http://localhost:3000',
+        Origin: 'http://localhost:4321',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
