@@ -4,13 +4,6 @@ import HeaderLink from './HeaderLink.astro';
 let { headerText } = Astro.props;
 ---
 
-<script>
-  const button = document.querySelector('#mobile-menu-button');
-  button!.addEventListener('click', () => {
-    const menu = document.querySelector('#mobile-menu');
-    menu!.classList.toggle('hidden');
-  });
-</script>
 <header>
   <nav class="border-b border-gray-200 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -48,6 +41,7 @@ let { headerText } = Astro.props;
             aria-controls="mobile-menu"
             aria-expanded="false"
             id="mobile-menu-button"
+            onclick="document.querySelector('#mobile-menu').classList.toggle('hidden')"
           >
             <span class="sr-only">Open main menu</span>
             <!-- Menu open: "hidden", Menu closed: "block" -->
