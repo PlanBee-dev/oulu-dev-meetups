@@ -1,153 +1,14 @@
-<!DOCTYPE html>
-<html class="h-full">
-  <head>
-    <!-- Global Metadata --><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta name="generator" content="Astro v2.9.0">
-
-<!-- Canonical URL -->
-<link rel="canonical" href="https://ouludevmeetup.com/submit/">
-
-<!-- Primary Meta Tags -->
-<title>Oulu developer meetups</title>
-<meta name="title" content="Oulu developer meetups">
-<meta name="description" content="Submit your own meetup here">
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ouludevmeetup.com/submit/">
-<meta property="og:title" content="Oulu developer meetups">
-<meta property="og:description" content="Submit your own meetup here">
-<meta property="og:image" content="https://www.ouludevmeetup.com/images/oulu-devmeetups-hero.jpg">
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://ouludevmeetup.com/submit/">
-<meta property="twitter:title" content="Oulu developer meetups">
-<meta property="twitter:description" content="Submit your own meetup here">
-<meta property="twitter:image" content="https://www.ouludevmeetup.com/images/oulu-devmeetups-hero.jpg">
-  <link rel="stylesheet" href="/_astro/index.93c8d7ae.css" /><script type="module" src="/_astro/hoisted.9dd404ee.js"></script></head>
-  <body class="h-full">
-    <div class="flex h-full flex-col">
-      
-<header>
-  <nav class="border-b border-gray-200 bg-white">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 justify-between">
-        <div class="flex">
-          <div class="flex flex-shrink-0 items-center rounded-lg">
-            <a href="/">
-              <img class="block h-8 w-auto rounded-full object-cover" src="/images/linna-logo.jpg" alt="Oulu Dev Meetups logo">
-            </a>
-          </div>
-          <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-            <a href="/" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">
-  Home
-</a>
-            <a href="/meetups" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">
-  Meetups
-</a>
-            <a href="/submit" class="border-indigo-500 text-gray-900 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">
-  Submit your own
-</a>
-          </div>
-        </div>
-        <div class="-mr-2 flex items-center sm:hidden">
-          <!-- Mobile menu button -->
-          <button type="button" class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
-            <span class="sr-only">Open main menu</span>
-            <!-- Menu open: "hidden", Menu closed: "block" -->
-            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5">
-              </path>
-            </svg>
-            <!-- Menu open: "block", Menu closed: "hidden" -->
-            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12">
-              </path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- Mobile menu, show/hide based on menu state. -->
-
-    <div class="sm:hidden">
-      <div class="hidden" id="mobile-menu">
-        <div class="space-y-1 pb-3 pt-2">
-          <a href="/" class="border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 block border-l-4 py-2 pl-3 pr-4 text-base font-medium">
-  Home
-</a>
-          <a href="/meetups" class="border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 block border-l-4 py-2 pl-3 pr-4 text-base font-medium">
-  Meetups
-</a>
-          <a href="/submit" class="border-indigo-500 bg-indigo-50 text-indigo-700 block border-l-4 py-2 pl-3 pr-4 text-base font-medium">
-  Submit your own
-</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <div class="mx-auto my-4 max-w-7xl px-4 text-center">
-    <h1 class="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-      Submitting your own meetup
-    </h1>
-  </div>
-</header>
-      <div class="flex basis-full flex-col py-4 pb-0">
-        <main>
-          
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-3xl rounded-xl border border-gray-400 bg-gray-50 p-8 sm:px-24">
-      <form id="submit-form">
-        <fieldset id="submit-form-fieldset" class="group disabled:cursor-not-allowed disabled:opacity-50">
-          <div class="space-y-12">
-            <div>
-              <h2 class="text-base font-semibold leading-7 text-gray-900">
-                Submit your meetup like a pleb
-              </h2>
-              <p class="mt-1 text-sm leading-6 text-gray-600">
-                Fill in the data and let github actions work it's magic
-              </p>
-
-              <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div class="sm:col-span-3">
-                  <label for="title" class="block text-sm font-medium leading-6 text-gray-900">
-                    Meetup title
-                  </label>
-                  <div class="mt-2">
-                    <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                      <input type="text" name="title" id="title" data-testid="title" autocomplete="title" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Let's all learn AI programming">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="sm:col-span-3">
-                  <label for="signupLink" class="block text-sm font-medium leading-6 text-gray-900">
-                    Signup link for meetup
-                  </label>
-                  <div class="mt-2">
-                    <input type="text" name="signupLink" id="signupLink" data-testid="signupLink" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-
-                <div class="col-span-full">
-                  <label for="description" class="block text-sm font-medium leading-6 text-gray-900">
-                    <span>Description</span>
-                    <span>(</span>
-                    <span>syntax is</span>
-                    <span>
-                      <a class="text-cyan-700 hover:text-cyan-500" href="https://www.markdownguide.org/basic-syntax/">
-                        markdown
-                      </a>
-                    </span>
-                    <span>)</span>
-                  </label>
-                  <div class="mt-2">
-                    <!-- prettier-ignore -->
-                    <textarea class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" id="description" name="description" data-testid="description" rows="16" required placeholder="## Great AI meetup
+<!DOCTYPE html><html class="h-full"><head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v3.1.3"><!-- Canonical URL --><link rel="canonical" href="https://ouludevmeetup.com/submit/"><!-- Primary Meta Tags --><title>Oulu developer meetups</title><meta name="title" content="Oulu developer meetups"><meta name="description" content="Submit your own meetup here"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://ouludevmeetup.com/submit/"><meta property="og:title" content="Oulu developer meetups"><meta property="og:description" content="Submit your own meetup here"><meta property="og:image" content="https://www.ouludevmeetup.com/images/oulu-devmeetups-hero.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://ouludevmeetup.com/submit/"><meta property="twitter:title" content="Oulu developer meetups"><meta property="twitter:description" content="Submit your own meetup here"><meta property="twitter:image" content="https://www.ouludevmeetup.com/images/oulu-devmeetups-hero.jpg"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><link rel="stylesheet" href="/_astro/index.93c8d7ae.css" /><script type="module" src="/_astro/hoisted.6df05dfe.js"></script></head><body class="h-full"><div class="flex h-full flex-col"><header><nav class="border-b border-gray-200 bg-white"><div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div class="flex h-16 justify-between"><div class="flex"><div class="flex flex-shrink-0 items-center rounded-lg"><a href="/"><img class="block h-8 w-auto rounded-full object-cover" src="/images/linna-logo.jpg" alt="Oulu Dev Meetups logo"></a></div><div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8"><a href="/" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">Home</a><a href="/meetups" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">Meetups</a><a href="/submit" class="border-indigo-500 text-gray-900 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">Submit your own</a></div></div><div class="-mr-2 flex items-center sm:hidden"><!-- Mobile menu button --><button type="button" class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button"><span class="sr-only">Open main menu</span><!-- Menu open: "hidden", Menu closed: "block" --><svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path></svg><!-- Menu open: "block", Menu closed: "hidden" --><svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg></button></div></div></div><!-- Mobile menu, show/hide based on menu state. --><div class="sm:hidden"><div class="hidden" id="mobile-menu"><div class="space-y-1 pb-3 pt-2"><a href="/" class="border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 block border-l-4 py-2 pl-3 pr-4 text-base font-medium">Home</a><a href="/meetups" class="border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 block border-l-4 py-2 pl-3 pr-4 text-base font-medium">Meetups</a><a href="/submit" class="border-indigo-500 bg-indigo-50 text-indigo-700 block border-l-4 py-2 pl-3 pr-4 text-base font-medium">Submit your own</a></div></div></div></nav><div class="mx-auto my-4 max-w-7xl px-4 text-center"><h1 class="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">Submitting your own meetup</h1></div></header><div class="flex basis-full flex-col py-4 pb-0"><main><div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div class="mx-auto max-w-3xl rounded-xl border border-gray-400 bg-gray-50 p-8 sm:px-24"><form id="submit-form"><fieldset id="submit-form-fieldset" class="group disabled:cursor-not-allowed disabled:opacity-50"><div class="space-y-12"><div><h2 class="text-base font-semibold leading-7 text-gray-900">
+Submit your meetup like a pleb
+</h2><p class="mt-1 text-sm leading-6 text-gray-600">
+Fill in the data and let github actions work it's magic
+</p><div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"><div class="sm:col-span-3"><label for="title" class="block text-sm font-medium leading-6 text-gray-900">
+Meetup title
+</label><div class="mt-2"><div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"><input type="text" name="title" id="title" data-testid="title" autocomplete="title" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Let's all learn AI programming"></div></div></div><div class="sm:col-span-3"><label for="signupLink" class="block text-sm font-medium leading-6 text-gray-900">
+Signup link for meetup
+</label><div class="mt-2"><input type="text" name="signupLink" id="signupLink" data-testid="signupLink" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></div></div><div class="col-span-full"><label for="description" class="block text-sm font-medium leading-6 text-gray-900"><span>Description</span><span>(</span><span>syntax is</span><span><a class="text-cyan-700 hover:text-cyan-500" href="https://www.markdownguide.org/basic-syntax/">
+markdown
+</a></span><span>)</span></label><div class="mt-2"><!-- prettier-ignore --><textarea class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" id="description" name="description" data-testid="description" rows="16" required placeholder="## Great AI meetup
 Join us for an evening of AI talks and discussions, while our seasoned and awesome developers share their experiences and insights about latest AI tools. 
 
 ## Coding helpers                            
@@ -158,145 +19,24 @@ Join us for an evening of AI talks and discussions, while our seasoned and aweso
 There are so much more options nowadays than just github's copilot. Like Amazon's code whisperer on sourcegraph's Cody AI. Or you can just ask chatGPT(-4). 
 
 ## Do art! With open source
-Stable diffusion for the win. For images and animations. But what is facebook doing releasing their own models?"></textarea>
-                  </div>
-                  <p class="mt-3 text-sm leading-6 text-gray-600">
-                    Tell us more about the meetup. What will attendees learn?
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="border-b border-gray-900/10 pb-12">
-              <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div class="sm:col-span-3">
-                  <label for="organizer" class="block text-sm font-medium leading-6 text-gray-900">
-                    Organizer
-                  </label>
-                  <div class="mt-2">
-                    <input id="organizer" data-testid="organizer" name="organizer" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-                <div class="sm:col-span-3">
-                  <label for="organizerLink" class="block text-sm font-medium leading-6 text-gray-900">
-                    Organizer link
-                  </label>
-                  <div class="mt-2">
-                    <input type="text" name="organizerLink" id="organizerLink" data-testid="organizerLink" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-
-                <div class="sm:col-span-3">
-                  <label for="date" class="block text-sm font-medium leading-6 text-gray-900">
-                    Date
-                  </label>
-                  <div class="mt-2">
-                    <input type="date" name="date" id="date" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-
-                <div class="sm:col-span-3">
-                  <label for="time" class="block text-sm font-medium leading-6 text-gray-900">
-                    Time
-                  </label>
-                  <div class="mt-2">
-                    <input type="time" name="time" id="time" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-                <div class="sm:col-span-3 sm:col-start-1">
-                  <label for="location" class="block text-sm font-medium leading-6 text-gray-900">
-                    Street address
-                  </label>
-                  <div class="mt-2">
-                    <input type="text" name="location" id="location" data-testid="location" placeholder="Elektroniikkatie 2" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-
-                <div class="sm:col-span-3">
-                  <label for="locationLink" class="block text-sm font-medium leading-6 text-gray-900">
-                    (Google) Maps link for address
-                  </label>
-                  <div class="mt-2">
-                    <input type="text" name="locationLink" id="locationLink" data-testid="locationLink" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-6 flex items-center justify-end gap-x-6">
-            <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
-              Cancel
-            </button>
-            <button type="submit" data-testid="submit" class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27" class="absolute h-4 group-enabled:opacity-0 animate-spin" style="animation-timing-function:steps(12, end)">
-  <path style="opacity:1" d="M18.696 10.5a1.002 1.002 0 01.365-1.367l4.759-2.751a1.007 1.007 0 011.37.368.995.995 0 01-.364 1.364l-4.764 2.751a1 1 0 01-1.366-.365z" fill="currentColor">
-  </path>
-  <path style="opacity:0.9166666666666666" fill="currentColor" d="M16.133 6.938l2.75-4.765a1 1 0 011.732 1l-2.748 4.762a1 1 0 11-1.734-.997z">
-  </path>
-  <path style="opacity:0.8333333333333334" fill="currentColor" d="M13.499 7.5a1 1 0 01-1-1.001V1a1.001 1.001 0 012.003 0v5.499A1.002 1.002 0 0113.499 7.5z">
-  </path>
-  <path style="opacity:0.75" fill="currentColor" d="M8.303 10.5a1 1 0 01-1.365.365L2.175 8.114a.997.997 0 01-.367-1.364c.277-.479.89-.642 1.367-.368l4.762 2.751a1 1 0 01.366 1.367z">
-  </path>
-  <path style="opacity:0.6666666666666666" fill="currentColor" d="M9.133 7.937l-2.75-4.763a.999.999 0 111.732-1l2.75 4.765a1 1 0 01-1.732.998z">
-  </path>
-  <path style="opacity:0.5833333333333334" fill="currentColor" d="M6.499 14.5H1a1 1 0 110-2.001h5.499a1.001 1.001 0 010 2.001z">
-  </path>
-  <path style="opacity:0.5" fill="currentColor" d="M8.303 16.502a1 1 0 01-.365 1.366l-4.762 2.749a1.006 1.006 0 01-1.368-.366 1.003 1.003 0 01.367-1.368l4.762-2.748a.996.996 0 011.366.367z">
-  </path>
-  <path style="opacity:0.4166666666666667" fill="currentColor" d="M10.866 20.062l-2.75 4.767c-.277.475-.89.639-1.367.362a.999.999 0 01-.365-1.365l2.75-4.764a1 1 0 011.732 1z">
-  </path>
-  <path style="opacity:0.3333333333333333" fill="currentColor" d="M13.499 19.502c.554 0 1.003.448 1.003 1.002v5.498a1.001 1.001 0 01-2.003 0v-5.498a1 1 0 011-1.002z">
-  </path>
-  <path style="opacity:0.25" fill="currentColor" d="M17.867 19.062l2.748 4.764a1 1 0 01-1.732 1.003l-2.75-4.767a1 1 0 011.734-1z">
-  </path>
-  <path style="opacity:0.16666666666666666" fill="currentColor" d="M18.696 16.502a.995.995 0 011.365-.367l4.765 2.748a1.002 1.002 0 01-1.006 1.734l-4.759-2.749a1.002 1.002 0 01-.365-1.366z">
-  </path>
-  <path style="opacity:0.08333333333333333" fill="currentColor" d="M25.998 12.499h-5.501a1.001 1.001 0 000 2.001h5.501a1 1 0 100-2.001z">
-  </path>
-</svg>
-              <span class="group-disabled:opacity-0">Submit</span>
-            </button>
-          </div>
-        </fieldset>
-      </form>
-      <!--error message -->
-      <div id="submit-error-element" data-testid="submit-error-element" class="mt-8 hidden rounded-md bg-red-50 p-4">
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" onclick="document.getElementById('submit-error-element').classList.add('hidden');">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd">
-              </path>
-            </svg>
-          </div>
-          <div class="ml-3">
-            <h3 class="text-sm font-medium text-red-800">
-              Something went wrong.
-            </h3>
-            <div class="mt-2 text-sm text-red-700">
-              <ul role="list" class="list-disc space-y-1 pl-5">
-                <li id="submit-error-message"></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-        </main>
-        <footer class="py-7 flex items-center justify-center mt-auto">
-  &copy; 2023 Plan Bee devs. All rights reserved.
-
-  <a href="https://github.com/PlanBee-dev/oulu-dev-meetups" aria-label="Github" class="ml-5 inline-block cursor-pointer">
-    <svg aria-hidden="true" class="h-6" xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 20">
-      <g>
-        <path d="M16.24 22a1 1 0 0 1-1-1v-2.6a2.15 2.15 0 0 0-.54-1.66 1 1 0 0 1 .61-1.67C17.75 14.78 20 14 20 9.77a4 4 0 0 0-.67-2.22 2.75 2.75 0 0 1-.41-2.06 3.71 3.71 0 0 0 0-1.41 7.65 7.65 0 0 0-2.09 1.09 1 1 0 0 1-.84.15 10.15 10.15 0 0 0-5.52 0 1 1 0 0 1-.84-.15 7.4 7.4 0 0 0-2.11-1.09 3.52 3.52 0 0 0 0 1.41 2.84 2.84 0 0 1-.43 2.08 4.07 4.07 0 0 0-.67 2.23c0 3.89 1.88 4.93 4.7 5.29a1 1 0 0 1 .82.66 1 1 0 0 1-.21 1 2.06 2.06 0 0 0-.55 1.56V21a1 1 0 0 1-2 0v-.57a6 6 0 0 1-5.27-2.09 3.9 3.9 0 0 0-1.16-.88 1 1 0 1 1 .5-1.94 4.93 4.93 0 0 1 2 1.36c1 1 2 1.88 3.9 1.52a3.89 3.89 0 0 1 .23-1.58c-2.06-.52-5-2-5-7a6 6 0 0 1 1-3.33.85.85 0 0 0 .13-.62 5.69 5.69 0 0 1 .33-3.21 1 1 0 0 1 .63-.57c.34-.1 1.56-.3 3.87 1.2a12.16 12.16 0 0 1 5.69 0c2.31-1.5 3.53-1.31 3.86-1.2a1 1 0 0 1 .63.57 5.71 5.71 0 0 1 .33 3.22.75.75 0 0 0 .11.57 6 6 0 0 1 1 3.34c0 5.07-2.92 6.54-5 7a4.28 4.28 0 0 1 .22 1.67V21a1 1 0 0 1-.94 1z">
-        </path>
-      </g>
-    </svg>
-  </a>
-</footer>
-      </div>
-    </div>
-  </body></html>
+Stable diffusion for the win. For images and animations. But what is facebook doing releasing their own models?"></textarea></div><p class="mt-3 text-sm leading-6 text-gray-600">
+Tell us more about the meetup. What will attendees learn?
+</p></div></div></div><div class="border-b border-gray-900/10 pb-12"><div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"><div class="sm:col-span-3"><label for="organizer" class="block text-sm font-medium leading-6 text-gray-900">
+Organizer
+</label><div class="mt-2"><input id="organizer" data-testid="organizer" name="organizer" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></div></div><div class="sm:col-span-3"><label for="organizerLink" class="block text-sm font-medium leading-6 text-gray-900">
+Organizer link
+</label><div class="mt-2"><input type="text" name="organizerLink" id="organizerLink" data-testid="organizerLink" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></div></div><div class="sm:col-span-3"><label for="date" class="block text-sm font-medium leading-6 text-gray-900">
+Date
+</label><div class="mt-2"><input type="date" name="date" id="date" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></div></div><div class="sm:col-span-3"><label for="time" class="block text-sm font-medium leading-6 text-gray-900">
+Time
+</label><div class="mt-2"><input type="time" name="time" id="time" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></div></div><div class="sm:col-span-3 sm:col-start-1"><label for="location" class="block text-sm font-medium leading-6 text-gray-900">
+Street address
+</label><div class="mt-2"><input type="text" name="location" id="location" data-testid="location" placeholder="Elektroniikkatie 2" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></div></div><div class="sm:col-span-3"><label for="locationLink" class="block text-sm font-medium leading-6 text-gray-900">
+(Google) Maps link for address
+</label><div class="mt-2"><input type="text" name="locationLink" id="locationLink" data-testid="locationLink" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></div></div></div></div></div><div class="mt-6 flex items-center justify-end gap-x-6"><button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+Cancel
+</button><button type="submit" data-testid="submit" class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27" class="absolute h-4 group-enabled:opacity-0 animate-spin" style="animation-timing-function:steps(12, end)"><path style="opacity:1" d="M18.696 10.5a1.002 1.002 0 01.365-1.367l4.759-2.751a1.007 1.007 0 011.37.368.995.995 0 01-.364 1.364l-4.764 2.751a1 1 0 01-1.366-.365z" fill="currentColor"></path><path style="opacity:0.9166666666666666" fill="currentColor" d="M16.133 6.938l2.75-4.765a1 1 0 011.732 1l-2.748 4.762a1 1 0 11-1.734-.997z"></path><path style="opacity:0.8333333333333334" fill="currentColor" d="M13.499 7.5a1 1 0 01-1-1.001V1a1.001 1.001 0 012.003 0v5.499A1.002 1.002 0 0113.499 7.5z"></path><path style="opacity:0.75" fill="currentColor" d="M8.303 10.5a1 1 0 01-1.365.365L2.175 8.114a.997.997 0 01-.367-1.364c.277-.479.89-.642 1.367-.368l4.762 2.751a1 1 0 01.366 1.367z"></path><path style="opacity:0.6666666666666666" fill="currentColor" d="M9.133 7.937l-2.75-4.763a.999.999 0 111.732-1l2.75 4.765a1 1 0 01-1.732.998z"></path><path style="opacity:0.5833333333333334" fill="currentColor" d="M6.499 14.5H1a1 1 0 110-2.001h5.499a1.001 1.001 0 010 2.001z"></path><path style="opacity:0.5" fill="currentColor" d="M8.303 16.502a1 1 0 01-.365 1.366l-4.762 2.749a1.006 1.006 0 01-1.368-.366 1.003 1.003 0 01.367-1.368l4.762-2.748a.996.996 0 011.366.367z"></path><path style="opacity:0.4166666666666667" fill="currentColor" d="M10.866 20.062l-2.75 4.767c-.277.475-.89.639-1.367.362a.999.999 0 01-.365-1.365l2.75-4.764a1 1 0 011.732 1z"></path><path style="opacity:0.3333333333333333" fill="currentColor" d="M13.499 19.502c.554 0 1.003.448 1.003 1.002v5.498a1.001 1.001 0 01-2.003 0v-5.498a1 1 0 011-1.002z"></path><path style="opacity:0.25" fill="currentColor" d="M17.867 19.062l2.748 4.764a1 1 0 01-1.732 1.003l-2.75-4.767a1 1 0 011.734-1z"></path><path style="opacity:0.16666666666666666" fill="currentColor" d="M18.696 16.502a.995.995 0 011.365-.367l4.765 2.748a1.002 1.002 0 01-1.006 1.734l-4.759-2.749a1.002 1.002 0 01-.365-1.366z"></path><path style="opacity:0.08333333333333333" fill="currentColor" d="M25.998 12.499h-5.501a1.001 1.001 0 000 2.001h5.501a1 1 0 100-2.001z"></path></svg><span class="group-disabled:opacity-0">Submit</span></button></div></fieldset></form><!--error message --><div id="submit-error-element" data-testid="submit-error-element" class="mt-8 hidden rounded-md bg-red-50 p-4"><div class="flex"><div class="flex-shrink-0"><svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" onclick="document.getElementById('submit-error-element').classList.add('hidden');"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"></path></svg></div><div class="ml-3"><h3 class="text-sm font-medium text-red-800">
+Something went wrong.
+</h3><div class="mt-2 text-sm text-red-700"><ul role="list" class="list-disc space-y-1 pl-5"><li id="submit-error-message"></li></ul></div></div></div></div></div></div></main><footer class="py-7 flex items-center justify-center mt-auto">
+&copy; 2023 Plan Bee devs. All rights reserved.
+<a href="https://github.com/PlanBee-dev/oulu-dev-meetups" aria-label="Github" class="ml-5 inline-block cursor-pointer"><svg aria-hidden="true" class="h-6" xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 20"><g><path d="M16.24 22a1 1 0 0 1-1-1v-2.6a2.15 2.15 0 0 0-.54-1.66 1 1 0 0 1 .61-1.67C17.75 14.78 20 14 20 9.77a4 4 0 0 0-.67-2.22 2.75 2.75 0 0 1-.41-2.06 3.71 3.71 0 0 0 0-1.41 7.65 7.65 0 0 0-2.09 1.09 1 1 0 0 1-.84.15 10.15 10.15 0 0 0-5.52 0 1 1 0 0 1-.84-.15 7.4 7.4 0 0 0-2.11-1.09 3.52 3.52 0 0 0 0 1.41 2.84 2.84 0 0 1-.43 2.08 4.07 4.07 0 0 0-.67 2.23c0 3.89 1.88 4.93 4.7 5.29a1 1 0 0 1 .82.66 1 1 0 0 1-.21 1 2.06 2.06 0 0 0-.55 1.56V21a1 1 0 0 1-2 0v-.57a6 6 0 0 1-5.27-2.09 3.9 3.9 0 0 0-1.16-.88 1 1 0 1 1 .5-1.94 4.93 4.93 0 0 1 2 1.36c1 1 2 1.88 3.9 1.52a3.89 3.89 0 0 1 .23-1.58c-2.06-.52-5-2-5-7a6 6 0 0 1 1-3.33.85.85 0 0 0 .13-.62 5.69 5.69 0 0 1 .33-3.21 1 1 0 0 1 .63-.57c.34-.1 1.56-.3 3.87 1.2a12.16 12.16 0 0 1 5.69 0c2.31-1.5 3.53-1.31 3.86-1.2a1 1 0 0 1 .63.57 5.71 5.71 0 0 1 .33 3.22.75.75 0 0 0 .11.57 6 6 0 0 1 1 3.34c0 5.07-2.92 6.54-5 7a4.28 4.28 0 0 1 .22 1.67V21a1 1 0 0 1-.94 1z"></path></g></svg></a></footer></div></div></body></html>
