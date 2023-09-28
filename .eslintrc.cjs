@@ -24,6 +24,10 @@ module.exports = {
   ].filter(Boolean),
   rules: {
     'unicorn/prefer-node-protocol': 'error',
+    '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {fixStyle: 'inline-type-imports', disallowTypeAnnotations: false},
+    ],
   },
   overrides: [
     {

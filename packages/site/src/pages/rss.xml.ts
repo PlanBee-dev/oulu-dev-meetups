@@ -1,4 +1,4 @@
-import rss, { RSSOptions } from '@astrojs/rss';
+import rss, { type RSSOptions } from '@astrojs/rss';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getMeetups } from '../get-meetups';
 
