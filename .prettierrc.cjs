@@ -6,6 +6,7 @@ module.exports = {
   ],
   singleQuote: true,
   htmlWhitespaceSensitivity: 'ignore',
+  endOfLine: "auto",
   overrides: [
     {
       files: '*.astro',
