@@ -1,7 +1,7 @@
 ---
 import PageLayout from './PageLayout.astro';
 import MeetupPageCard from '../components/MeetupPageCard.astro';
-import { FrontMeetup } from '../get-meetups';
+import { type FrontMeetup } from '../get-meetups';
 
 type Props = { meetup: FrontMeetup };
 const { meetup } = Astro.props;

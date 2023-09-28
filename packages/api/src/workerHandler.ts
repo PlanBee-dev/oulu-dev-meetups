@@ -1,5 +1,5 @@
 import { createIssue, parseCreateIssueReqBody } from './workerCreateIssue';
-import { Env } from './workerEnv';
+import { type Env } from './workerEnv';
 
 export async function handleRequest(req: Request, env: Env): Promise<Response> {
   const meetupParseResult = await parseCreateIssueReqBody(req);

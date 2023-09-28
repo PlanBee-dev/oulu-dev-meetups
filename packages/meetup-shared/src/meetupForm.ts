@@ -1,6 +1,6 @@
 import { isValid, parse } from 'date-fns';
 import {
-  Output,
+  type Output,
   ValiError,
   minLength,
   object,

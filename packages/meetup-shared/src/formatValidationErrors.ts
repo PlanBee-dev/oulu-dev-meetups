@@ -1,4 +1,4 @@
-import { Issues } from 'valibot';
+import { type Issues } from 'valibot';
 
 export function formatValidationErrors(issues: Issues) {
   return issues.map((issue) => ({

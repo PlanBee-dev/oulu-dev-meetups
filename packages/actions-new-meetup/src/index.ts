@@ -2,7 +2,7 @@ import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import format from 'date-fns/format';
 import {
-  Steps,
+  type Steps,
   getMeetupIssueCommentStatus,
   getMeetupMarkdownFileContent,
   getMeetupPullRequestContent,

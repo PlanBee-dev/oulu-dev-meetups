@@ -1,7 +1,7 @@
-import { getMeetupIssueBody, meetupSchema, Meetup } from 'meetup-shared';
+import { getMeetupIssueBody, meetupSchema, type Meetup } from 'meetup-shared';
 import { App } from 'octokit';
 import { safeParseAsync } from 'valibot';
-import { Env } from './workerEnv';
+import { type Env } from './workerEnv';
 
 export async function parseCreateIssueReqBody(
   req: Request,

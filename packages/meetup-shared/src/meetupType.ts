@@ -6,7 +6,7 @@ import {
   transform,
   isoTimestamp,
 } from 'valibot';
-import { MeetupFormField } from './meetupForm';
+import { type MeetupFormField } from './meetupForm';
 
 type MeetupField = Exclude<MeetupFormField, 'time' | 'date'> & { date: Date };
 

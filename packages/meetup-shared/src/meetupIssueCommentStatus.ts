@@ -1,4 +1,4 @@
-import { Issues } from 'valibot';
+import { type Issues } from 'valibot';
 
 export type Step =
   | { status: 'idle' | 'loading' | 'success' }
