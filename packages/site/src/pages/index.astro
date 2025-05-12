@@ -17,40 +17,29 @@ const meetups = await getMeetups();
     ]).then(([{ getNextMeetup }, { renderMeetupCard }]) => {
       // Get meetups data passed from the server
       const meetupsData = document.getElementById('meetups-data');
-      console.log('Meetups data element:', meetupsData);
       
       let meetups = [];
       if (meetupsData) {
         try {
           meetups = JSON.parse(meetupsData.textContent || '');
-          console.log('Parsed meetups data:', meetups);
         } catch (e) {
-          console.error('Error parsing meetups data:', e);
+          // Silent error handling
         }
-      } else {
-        console.error('Meetups data element not found');
       }
 
       // Dynamically determine the next meetup using current date/time
-      console.log('Current date for comparison:', new Date());
       const nextMeetup = getNextMeetup(meetups);
-      console.log('Next meetup:', nextMeetup);
       
       // Render the next meetup card if one exists
       const nextMeetupContainer = document.getElementById('next-meetup-container');
-      console.log('Next meetup container element:', nextMeetupContainer);
       
       if (nextMeetup && nextMeetupContainer) {
-        console.log('Rendering next meetup card');
         renderMeetupCard(nextMeetup, nextMeetupContainer);
-      } else {
-        console.log('Not rendering meetup card - nextMeetup or container missing');
-        if (nextMeetupContainer) {
-          nextMeetupContainer.innerHTML = '<div class="text-center p-4">No upcoming meetups scheduled.</div>';
-        }
+      } else if (nextMeetupContainer) {
+        nextMeetupContainer.innerHTML = '<div class="text-center p-4">No upcoming meetups scheduled.</div>';
       }
-    }).catch(error => {
-      console.error('Error loading dynamic components:', error);
+    }).catch(() => {
+      // Silent error handling
     });
   }
 
@@ -59,7 +48,6 @@ const meetups = await getMeetups();
 
   // Also run when navigating back to this page via client-side routing
   document.addEventListener('astro:page-load', () => {
-    console.log('Page loaded via client-side navigation, re-rendering next meetup');
     renderNextMeetup();
   });
 </script>

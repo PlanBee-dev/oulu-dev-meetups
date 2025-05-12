@@ -39,20 +39,10 @@ export const getRandomLogonumber = () => {
 
 export const getNextMeetup = (meetups: FrontMeetups) => {
   if (!meetups || meetups.length === 0) {
-    console.log('No meetups data available');
     return null;
   }
 
-  console.log('Total meetups to check:', meetups.length);
-  
   const currentDate = new Date();
-  console.log('Current date for comparison:', currentDate, 'timestamp:', +currentDate);
-  
-  // Log all meetup dates for debugging
-  meetups.forEach((meetup, index) => {
-    const meetupDate = new Date(meetup.date);
-    console.log(`Meetup ${index}:`, meetup.title, 'date:', meetupDate, 'timestamp:', +meetupDate, 'is future:', +meetupDate >= +currentDate);
-  });
   
   const futureMeetups = meetups.filter((meetup) => {
     // Make sure we're comparing dates properly
@@ -60,12 +50,9 @@ export const getNextMeetup = (meetups: FrontMeetups) => {
     return +meetupDate >= +currentDate;
   });
 
-  console.log('Future meetups found:', futureMeetups.length);
-  
   if (futureMeetups.length === 0) return null;
 
   const sorted = sortMeetupsNewestFirst(futureMeetups);
-  console.log('Sorted future meetups:', sorted.map(m => m.title));
 
   return sorted[0];
 };
