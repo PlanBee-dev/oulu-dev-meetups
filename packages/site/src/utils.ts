@@ -48,8 +48,9 @@ export const getNextMeetup = (meetups: FrontMeetups) => {
   // Filter to only include future meetups
   const futureMeetups = meetups.filter((meetup) => {
     // Ensure we're working with Date objects
-    const meetupDate = meetup.date instanceof Date ? meetup.date : new Date(meetup.date);
-    
+    const meetupDate =
+      meetup.date instanceof Date ? meetup.date : new Date(meetup.date);
+
     // Compare timestamps (includes both date and time)
     return +meetupDate >= +currentDate;
   });
