@@ -43,7 +43,7 @@ export const getNextMeetup = (meetups: FrontMeetups) => {
   }
 
   const currentDate = new Date();
-  
+
   const futureMeetups = meetups.filter((meetup) => {
     // Make sure we're comparing dates properly
     const meetupDate = new Date(meetup.date);

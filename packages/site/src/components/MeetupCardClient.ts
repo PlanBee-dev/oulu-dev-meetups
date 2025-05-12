@@ -12,12 +12,15 @@ import type { FrontMeetup } from '../get-meetups';
  */
 export function renderMeetupCard(meetup: FrontMeetup, container: HTMLElement) {
   if (!meetup || !container) return;
-  
+
   // Instead of directly passing the FrontMeetup to formatMeetupData,
   // we'll extract the relevant fields to match what formatMeetupData expects
   const meetupForFormatting = {
     title: meetup.title,
-    date: meetup.date instanceof Date ? meetup.date.toISOString() : String(meetup.date),
+    date:
+      meetup.date instanceof Date
+        ? meetup.date.toISOString()
+        : String(meetup.date),
     location: meetup.location || '',
     locationLink: meetup.locationLink || '',
     organizer: meetup.organizer || '',
@@ -25,21 +28,31 @@ export function renderMeetupCard(meetup: FrontMeetup, container: HTMLElement) {
     signupLink: meetup.signupLink || '',
     // These fields might not be used by formatMeetupData but are included for type compatibility
     description: meetup.body || '',
-    time: '00:00' // Default time if not available
+    time: '00:00', // Default time if not available
   };
-  
+
   const formattedMeetup = formatMeetupData(meetupForFormatting);
-  const shortDescription = createShortDescription(meetup.body || meetup.shortDescription || '');
-  
+  const shortDescription = createShortDescription(
+    meetup.body || meetup.shortDescription || '',
+  );
+
   // Format date
   const meetupDate = new Date(formattedMeetup.date);
-  const dateOptions: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
   const formattedDate = meetupDate.toLocaleDateString(undefined, dateOptions);
-  
+
   // Format time
-  const timeOptions: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit' };
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+  };
   const formattedTime = meetupDate.toLocaleTimeString(undefined, timeOptions);
-  
+
   // Create card HTML
   const cardHTML = `
     <div class="m-auto max-w-2xl overflow-hidden bg-white shadow sm:rounded-lg">
@@ -51,12 +64,20 @@ export function renderMeetupCard(meetup: FrontMeetup, container: HTMLElement) {
               <div class="flex-shrink-0">
                 <img
                   class="h-12 w-12 rounded-full"
-                  src="${window.location.pathname.includes('/oulu-dev-meetups') ? '/oulu-dev-meetups' : ''}/images/logos/1-meetup-logo.jpg"
+                  src="${
+                    window.location.pathname.includes('/oulu-dev-meetups')
+                      ? '/oulu-dev-meetups'
+                      : ''
+                  }/images/logos/1-meetup-logo.jpg"
                   alt="developer logo"
                 />
               </div>
               <div class="ml-4">
-                <a href="${window.location.pathname.includes('/oulu-dev-meetups') ? '/oulu-dev-meetups' : ''}/meetups/${meetup.slug || ''}">
+                <a href="${
+                  window.location.pathname.includes('/oulu-dev-meetups')
+                    ? '/oulu-dev-meetups'
+                    : ''
+                }/meetups/${meetup.slug || ''}">
                   <h3 class="text-base font-semibold leading-6 text-gray-900">
                     ${formattedMeetup.title}
                   </h3>
@@ -67,7 +88,9 @@ export function renderMeetupCard(meetup: FrontMeetup, container: HTMLElement) {
               </div>
             </div>
           </div>
-          ${formattedMeetup.signupLink ? `
+          ${
+            formattedMeetup.signupLink
+              ? `
           <div class="ml-4 mt-4 flex flex-shrink-0">
             <a href="${formattedMeetup.signupLink}" target="_blank">
               <button
@@ -93,7 +116,9 @@ export function renderMeetupCard(meetup: FrontMeetup, container: HTMLElement) {
               </button>
             </a>
           </div>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
       </div>
       <!--card body -->
@@ -107,40 +132,58 @@ export function renderMeetupCard(meetup: FrontMeetup, container: HTMLElement) {
               ${formattedDate} at ${formattedTime}
             </dd>
           </div>
-          ${formattedMeetup.location ? `
+          ${
+            formattedMeetup.location
+              ? `
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-900">Where</dt>
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              ${formattedMeetup.locationLink ? 
-                `<a href="${formattedMeetup.locationLink}" target="_blank">${formattedMeetup.location}</a>` : 
-                formattedMeetup.location
+              ${
+                formattedMeetup.locationLink
+                  ? `<a href="${formattedMeetup.locationLink}" target="_blank">${formattedMeetup.location}</a>`
+                  : formattedMeetup.location
               }
             </dd>
           </div>
-          ` : ''}
-          ${formattedMeetup.organizer ? `
+          `
+              : ''
+          }
+          ${
+            formattedMeetup.organizer
+              ? `
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-900">Organizer</dt>
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              ${formattedMeetup.organizerLink ? 
-                `<a href="${formattedMeetup.organizerLink}" target="_blank">${formattedMeetup.organizer}</a>` : 
-                formattedMeetup.organizer
+              ${
+                formattedMeetup.organizerLink
+                  ? `<a href="${formattedMeetup.organizerLink}" target="_blank">${formattedMeetup.organizer}</a>`
+                  : formattedMeetup.organizer
               }
             </dd>
           </div>
-          ` : ''}
-          ${formattedMeetup.signupLink ? `
+          `
+              : ''
+          }
+          ${
+            formattedMeetup.signupLink
+              ? `
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-900">Sign up link</dt>
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
               <a href="${formattedMeetup.signupLink}" target="_blank">${formattedMeetup.signupLink}</a>
             </dd>
           </div>
-          ` : ''}
+          `
+              : ''
+          }
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-900">Description</dt>
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              <a href="${window.location.pathname.includes('/oulu-dev-meetups') ? '/oulu-dev-meetups' : ''}/meetups/${meetup.slug || ''}">
+              <a href="${
+                window.location.pathname.includes('/oulu-dev-meetups')
+                  ? '/oulu-dev-meetups'
+                  : ''
+              }/meetups/${meetup.slug || ''}">
                 ${shortDescription}
               </a>
             </dd>
@@ -149,7 +192,7 @@ export function renderMeetupCard(meetup: FrontMeetup, container: HTMLElement) {
       </div>
     </div>
   `;
-  
+
   // Set the HTML content
   container.innerHTML = cardHTML;
 }
