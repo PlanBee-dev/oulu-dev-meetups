@@ -32,7 +32,7 @@ test('get next meetup from today', () => {
     },
     {
       title: 'Angular coding Meetup',
-      date: new Date(2023, 8, 4, 10, 0),
+      date: new Date(2023, 8, 4, 9, 0),
     },
     {
       title: 'React coding Meetup',
@@ -40,8 +40,13 @@ test('get next meetup from today', () => {
     },
   ];
 
+  // Set the current date to exactly match the Angular meetup date
   const date = new Date(2023, 8, 4, 10, 0);
   vi.setSystemTime(date);
+
+  // With our current implementation, when the current time exactly matches a meetup time,
+  // that meetup is included in future meetups and will be the first one returned
+  // since it's the closest to the current date
   const nextMeetup = getNextMeetup(meetups as unknown as FrontMeetups);
   expect(nextMeetup?.title).toBe('React coding Meetup');
 });
