@@ -19,13 +19,45 @@ const meetups = await getMeetups();
         if (meetupsData) {
           try {
             meetups = JSON.parse(meetupsData.textContent || '');
+            
+            // Debug: Log all meetups and their dates
+            console.log('All meetups:', meetups.map(m => ({
+              title: m.title,
+              date: new Date(m.date),
+              timestamp: +new Date(m.date)
+            })));
+            
+            // Current date for comparison
+            const currentDate = new Date();
+            console.log('Current date:', currentDate, 'timestamp:', +currentDate);
+            
+            // Filter future meetups manually to debug
+            const futureMeetups = meetups.filter(m => {
+              const meetupDate = new Date(m.date);
+              const isFuture = +meetupDate >= +currentDate;
+              console.log(`Meetup: ${m.title}, Date: ${meetupDate}, Is Future: ${isFuture}`);
+              return isFuture;
+            });
+            
+            console.log('Future meetups:', futureMeetups.map(m => m.title));
+            
+            // Sort future meetups manually to debug
+            const sortedFutureMeetups = [...futureMeetups].sort((a, b) => {
+              const dateA = +new Date(a.date);
+              const dateB = +new Date(b.date);
+              console.log(`Comparing: ${a.title} (${dateA}) vs ${b.title} (${dateB}) = ${dateA - dateB}`);
+              return dateA - dateB;
+            });
+            
+            console.log('Sorted future meetups:', sortedFutureMeetups.map(m => m.title));
           } catch (e) {
-            // Silent error handling
+            console.error('Error parsing meetups data:', e);
           }
         }
 
         // Dynamically determine the next meetup using current date/time
         const nextMeetup = getNextMeetup(meetups);
+        console.log('Selected next meetup:', nextMeetup?.title);
 
         // Render the next meetup card if one exists
         const nextMeetupContainer = document.getElementById(
@@ -39,8 +71,8 @@ const meetups = await getMeetups();
             '<div class="text-center p-4">No upcoming meetups scheduled.</div>';
         }
       })
-      .catch(() => {
-        // Silent error handling
+      .catch((error) => {
+        console.error('Error:', error);
       });
   }
 

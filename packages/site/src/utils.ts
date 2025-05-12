@@ -42,17 +42,27 @@ export const getNextMeetup = (meetups: FrontMeetups) => {
     return null;
   }
 
+  // Get the current date and time
   const currentDate = new Date();
 
+  // Filter to only include future meetups
   const futureMeetups = meetups.filter((meetup) => {
-    // Make sure we're comparing dates properly
-    const meetupDate = new Date(meetup.date);
+    // Ensure we're working with Date objects
+    const meetupDate = meetup.date instanceof Date ? meetup.date : new Date(meetup.date);
+    
+    // Compare timestamps (includes both date and time)
     return +meetupDate >= +currentDate;
   });
 
   if (futureMeetups.length === 0) return null;
 
-  const sorted = sortMeetupsNewestFirst(futureMeetups);
+  // Sort future meetups by date (ascending) to get the closest upcoming meetup first
+  // Create a new array to avoid mutating the original
+  const sorted = [...futureMeetups].sort((a, b) => {
+    const dateA = a.date instanceof Date ? a.date : new Date(a.date);
+    const dateB = b.date instanceof Date ? b.date : new Date(b.date);
+    return +dateA - +dateB;
+  });
 
   return sorted[0];
 };
@@ -70,20 +80,7 @@ export const createShortDescription = (descriptionToCut: string) => {
   return shortDesc;
 };
 
-// Sort meetups based on the context
+// Sort meetups with newest first (descending by date)
 export function sortMeetupsNewestFirst(meetups: FrontMeetups) {
-  // For the getNextMeetup function, we want future meetups sorted with closest date first
-  // For other contexts (like tests), we maintain the original behavior
-  const currentDate = new Date();
-  const hasPastMeetups = meetups.some(meetup => +new Date(meetup.date) < +currentDate);
-  const hasFutureMeetups = meetups.some(meetup => +new Date(meetup.date) >= +currentDate);
-  
-  // If we have both past and future meetups, or only future meetups,
-  // we're likely in the getNextMeetup function context
-  if ((hasPastMeetups && hasFutureMeetups) || (hasFutureMeetups && !hasPastMeetups)) {
-    return [...meetups].sort((a, b) => +a.date - +b.date);
-  }
-  
-  // Otherwise (test context or only past meetups), use the original sorting (newest first)
   return [...meetups].sort((a, b) => +b.date - +a.date);
 }
