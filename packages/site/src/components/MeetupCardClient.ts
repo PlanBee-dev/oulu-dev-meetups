@@ -13,8 +13,23 @@ import type { FrontMeetup } from '../get-meetups';
 export function renderMeetupCard(meetup: FrontMeetup, container: HTMLElement) {
   if (!meetup || !container) return;
   
-  const formattedMeetup = formatMeetupData(meetup);
-  const shortDescription = createShortDescription(formattedMeetup.description || '');
+  // Instead of directly passing the FrontMeetup to formatMeetupData,
+  // we'll extract the relevant fields to match what formatMeetupData expects
+  const meetupForFormatting = {
+    title: meetup.title,
+    date: meetup.date instanceof Date ? meetup.date.toISOString() : String(meetup.date),
+    location: meetup.location || '',
+    locationLink: meetup.locationLink || '',
+    organizer: meetup.organizer || '',
+    organizerLink: meetup.organizerLink || '',
+    signupLink: meetup.signupLink || '',
+    // These fields might not be used by formatMeetupData but are included for type compatibility
+    description: meetup.body || '',
+    time: '00:00' // Default time if not available
+  };
+  
+  const formattedMeetup = formatMeetupData(meetupForFormatting);
+  const shortDescription = createShortDescription(meetup.body || meetup.shortDescription || '');
   
   // Format date
   const meetupDate = new Date(formattedMeetup.date);
