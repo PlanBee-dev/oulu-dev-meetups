@@ -5,7 +5,19 @@ import { sortMeetupsNewestFirst } from '../../utils';
 import { getMeetups } from '../../get-meetups';
 
 const meetups = await getMeetups();
-const sortedMeetups = sortMeetupsNewestFirst(meetups);
+
+// Get current date for comparison
+const currentDate = new Date();
+
+// Separate future and past meetups
+const futureMeetups = meetups.filter(meetup => +meetup.date > +currentDate);
+const pastMeetups = meetups.filter(meetup => +meetup.date <= +currentDate);
+
+// Sort future meetups by date (ascending) to show closest first
+const sortedFutureMeetups = [...futureMeetups].sort((a, b) => +a.date - +b.date);
+
+// Sort past meetups with newest first
+const sortedPastMeetups = [...pastMeetups].sort((a, b) => +b.date - +a.date);
 ---
 
 <PageLayout>
@@ -14,9 +26,23 @@ const sortedMeetups = sortMeetupsNewestFirst(meetups);
       class="mx-auto max-w-4xl rounded-xl border border-gray-400 bg-gray-50 p-8 sm:px-24"
     >
       <section>
-        <ul role="list" class="divide-y divide-gray-100">
-          {sortedMeetups.map((meetup) => <MeetupListItem meetup={meetup} />)}
-        </ul>
+        {sortedFutureMeetups.length > 0 && (
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Upcoming Meetups</h2>
+            <ul role="list" class="divide-y divide-gray-100 mb-8">
+              {sortedFutureMeetups.map((meetup) => <MeetupListItem meetup={meetup} />)}
+            </ul>
+          </div>
+        )}
+
+        {sortedPastMeetups.length > 0 && (
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Past Meetups</h2>
+            <ul role="list" class="divide-y divide-gray-100">
+              {sortedPastMeetups.map((meetup) => <MeetupListItem meetup={meetup} />)}
+            </ul>
+          </div>
+        )}
       </section>
     </div>
   </div>
