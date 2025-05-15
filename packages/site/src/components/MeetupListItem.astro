@@ -4,12 +4,16 @@ import { getRandomLogonumber } from '../utils';
 
 type Props = { meetup: FrontMeetup };
 const {
-  meetup: { title, formattedDate, location, organizer, slug },
+  meetup: { title, formattedDate, location, organizer, slug, date },
 } = Astro.props;
 // TODO: green light for near future, yellow for far future
 // red for cancelled, gray for past
 
 const devLogoNum = getRandomLogonumber();
+
+// Check if meetup is in the past
+const currentDate = new Date();
+const isPastMeetup = date < currentDate;
 ---
 
 <li class="relative py-10 hover:bg-gray-50">
@@ -43,9 +47,15 @@ const devLogoNum = getRandomLogonumber();
             </p>
             <div class="mt-1 flex items-center gap-x-1.5">
               <p class="text-xs leading-5 text-gray-500">{location}</p>
-              <div class="flex-none rounded-full bg-emerald-500/20 p-1">
-                <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
-              </div>
+              {isPastMeetup ? (
+                <div class="flex-none rounded-full bg-gray-400/20 p-1">
+                  <div class="h-1.5 w-1.5 rounded-full bg-gray-400"></div>
+                </div>
+              ) : (
+                <div class="flex-none rounded-full bg-emerald-500/20 p-1">
+                  <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                </div>
+              )}
             </div>
           </div>
           <svg
