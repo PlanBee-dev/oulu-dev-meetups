@@ -47,15 +47,17 @@ const isPastMeetup = date < currentDate;
             </p>
             <div class="mt-1 flex items-center gap-x-1.5">
               <p class="text-xs leading-5 text-gray-500">{location}</p>
-              {isPastMeetup ? (
-                <div class="flex-none rounded-full bg-gray-400/20 p-1">
-                  <div class="h-1.5 w-1.5 rounded-full bg-gray-400"></div>
-                </div>
-              ) : (
-                <div class="flex-none rounded-full bg-emerald-500/20 p-1">
-                  <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
-                </div>
-              )}
+              {
+                isPastMeetup ? (
+                  <div class="flex-none rounded-full bg-gray-400/20 p-1">
+                    <div class="h-1.5 w-1.5 rounded-full bg-gray-400" />
+                  </div>
+                ) : (
+                  <div class="flex-none rounded-full bg-emerald-500/20 p-1">
+                    <div class="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  </div>
+                )
+              }
             </div>
           </div>
           <svg
