@@ -50,10 +50,14 @@ export function parseMeetupIssueBody(body: string) {
     date: getValueFromBody(body, 'Date'),
     time: getValueFromBody(body, 'Time'),
     location: getValueFromBody(body, 'Street address'),
-    locationLink: getValueFromBody(body, 'Maps link for address'),
+    locationLink: addHttpsIfMissing(
+      getValueFromBody(body, 'Maps link for address'),
+    ),
     organizer: getValueFromBody(body, 'Organizer'),
-    organizerLink: getValueFromBody(body, 'Organizer link'),
-    signupLink: getValueFromBody(body, 'Signup link for meetup'),
+    organizerLink: addHttpsIfMissing(getValueFromBody(body, 'Organizer link')),
+    signupLink: addHttpsIfMissing(
+      getValueFromBody(body, 'Signup link for meetup'),
+    ),
     description: getRestAfterTitle(body, 'Description'),
   };
 
@@ -87,4 +91,11 @@ function getRestAfterTitle(body: string, title: string) {
   }
 
   return null;
+}
+
+function addHttpsIfMissing(url: string | null) {
+  if (url && !url.startsWith('http')) {
+    return `https://${url}`;
+  }
+  return url;
 }
