@@ -83,7 +83,7 @@ async function main() {
         join(
           '../../',
           env.MEETUP_FOLDER,
-          `${sanitizedMeetupTitle}-${sanitizedDate}.md`,
+          `${sanitizedMeetupTitle}-${env.ISSUE_NUMBER}-${sanitizedDate}.md`,
         ),
         newMeetupFile,
       )
@@ -101,7 +101,7 @@ async function main() {
       { status: 'loading' },
     ]);
 
-    const newBranchName = `new-meetup-${sanitizedMeetupTitle}-${sanitizedDate}`;
+    const newBranchName = `new-meetup-${env.ISSUE_NUMBER}`;
 
     const pullRequestTitle = `New meetup: ${meetup.title}`;
     const pullRequestBody = getMeetupPullRequestContent(
