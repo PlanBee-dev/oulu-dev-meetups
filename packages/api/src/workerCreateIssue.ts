@@ -76,7 +76,7 @@ export async function createIssue(props: {
       owner: props.env.GITHUB_REPO_OWNER,
       repo: props.env.GITHUB_REPO_NAME,
       labels: ['meetup'],
-      title: props.meetup.title,
+      title: 'New meetup: ' + props.meetup.title,
       body: getMeetupIssueBody(props.meetup),
     });
 
