@@ -1,5 +1,5 @@
+import { meetupFormValuesSchema } from 'meetup-shared';
 import { safeParseAsync } from 'valibot';
-import { meetupFormValuesSchema } from './meetupForm';
 
 export function parseMeetupIssueBody(body: string) {
   const unverifiedMeetupFormValues = {

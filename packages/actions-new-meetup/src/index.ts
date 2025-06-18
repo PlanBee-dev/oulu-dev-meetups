@@ -7,11 +7,11 @@ import {
   getMeetupMarkdownFileContent,
   getMeetupPullRequestContent,
   meetupFormValuesToMeetup,
-  parseMeetupIssueBody,
 } from 'meetup-shared';
 import fs from 'node:fs/promises';
 import { join } from 'node:path';
 import { object, string, transform } from 'valibot';
+import { parseMeetupIssueBody } from './parseMeetupIssueBody';
 
 const envSchema = object({
   MEETUP_FOLDER: string(),
