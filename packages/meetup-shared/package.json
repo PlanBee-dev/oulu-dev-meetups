@@ -9,7 +9,8 @@
     "dev": "tsc --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "date-fns": "^2.30.0",
+    "@date-fns/tz": "^1.2.0",
+    "date-fns": "^4.1.0",
     "valibot": "^0.11.1"
   }
 }
