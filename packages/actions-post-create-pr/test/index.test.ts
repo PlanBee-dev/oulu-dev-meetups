@@ -28,7 +28,7 @@ test('sends pull request', async () => {
 
   await import('../src/index');
 
-  expect(onCommentUpdated).toHaveBeenCalledTimes(1);
+  await vi.waitFor(() => expect(onCommentUpdated).toHaveBeenCalledTimes(1));
   expect(onCommentUpdated).toHaveBeenCalledWith({
     owner,
     repo,
