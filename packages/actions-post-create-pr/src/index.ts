@@ -1,10 +1,10 @@
 import { context, getOctokit } from '@actions/github';
 import { getMeetupIssueCommentStatus } from 'meetup-shared';
-import { nullish, object, parse, string, transform } from 'valibot';
+import { nullish, object, parse, string, transform, pipe } from 'valibot';
 
 const envSchema = object({
-  PULL_REQUEST_NUMBER: transform(string(), Number),
-  COMMENT_ID: nullish(transform(string(), Number)),
+  PULL_REQUEST_NUMBER: pipe(string(), transform(Number)),
+  COMMENT_ID: nullish(pipe(string(), transform(Number))),
   GITHUB_TOKEN: string(),
 });
 

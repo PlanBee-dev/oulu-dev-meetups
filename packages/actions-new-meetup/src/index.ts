@@ -7,21 +7,22 @@ import {
   getMeetupMarkdownFileContent,
   getMeetupPullRequestContent,
   meetupFormValuesToMeetup,
+  valibotToHumanUnderstandable,
 } from 'meetup-shared';
 import fs from 'node:fs/promises';
 import { join } from 'node:path';
-import { object, string, transform } from 'valibot';
+import { object, string, transform, pipe, parse } from 'valibot';
 import { parseMeetupIssueBody } from './parseMeetupIssueBody';
 
 const envSchema = object({
   MEETUP_FOLDER: string(),
   ISSUE_BODY: string(),
-  ISSUE_NUMBER: transform(string(), Number),
+  ISSUE_NUMBER: pipe(string(), transform(Number)),
   GITHUB_TOKEN: string(),
 });
 
 async function main() {
-  const env = envSchema.parse(process.env);
+  const env = parse(envSchema, process.env);
 
   const upsertComment = getUpsertComment({
     octokit: getOctokit(env.GITHUB_TOKEN),
@@ -43,28 +44,33 @@ async function main() {
 
     if (!meetupIssueBodyParseResult.success) {
       throw new CustomError('Invalid issue body ', [
-        { status: 'error', issues: meetupIssueBodyParseResult.error.issues },
-        { status: 'idle' },
-        { status: 'idle' },
-      ]);
-    }
-
-    const meetupParseResult = await meetupFormValuesToMeetup(
-      meetupIssueBodyParseResult.data,
-    );
-
-    if (!meetupParseResult.success) {
-      throw new CustomError('Invalid issue body ', [
         {
           status: 'error',
-          issues: meetupParseResult.error.issues,
+          issues: valibotToHumanUnderstandable(
+            meetupIssueBodyParseResult.issues,
+          ),
         },
         { status: 'idle' },
         { status: 'idle' },
       ]);
     }
 
-    const meetup = meetupParseResult.data;
+    const meetupParseResult = await meetupFormValuesToMeetup(
+      meetupIssueBodyParseResult.output,
+    );
+
+    if (!meetupParseResult.success) {
+      throw new CustomError('Invalid issue body ', [
+        {
+          status: 'error',
+          issues: valibotToHumanUnderstandable(meetupParseResult.issues),
+        },
+        { status: 'idle' },
+        { status: 'idle' },
+      ]);
+    }
+
+    const meetup = meetupParseResult.output;
 
     const sanitizedMeetupTitle = sanitizeString(meetup.title);
 
