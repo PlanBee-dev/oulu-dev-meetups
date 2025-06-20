@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import {
   type Steps,
   getMeetupIssueCommentStatus,
