@@ -1,9 +1,11 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import Intro from '../components/Intro.astro';
-import { getMeetups } from '../get-meetups';
+import { mapMeetups } from '../utils';
+import { getCollection } from 'astro:content';
+import { meetupCollection } from '../content/config';
 
-const meetups = await getMeetups();
+const meetups = await mapMeetups(await getCollection(meetupCollection));
 ---
 
 <script>
