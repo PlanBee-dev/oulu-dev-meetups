@@ -2,9 +2,8 @@ import { expect, test, vi } from 'vitest';
 import { onCommentUpdated } from './GithubAPI.mock';
 
 vi.mock('@actions/github', async () => {
-  const actual = await vi.importActual<typeof import('@actions/github')>(
-    '@actions/github',
-  );
+  const actual =
+    await vi.importActual<typeof import('@actions/github')>('@actions/github');
 
   return {
     ...actual,
@@ -28,7 +27,7 @@ test('sends pull request', async () => {
 
   await import('../src/index');
 
-  expect(onCommentUpdated).toHaveBeenCalledTimes(1);
+  await vi.waitFor(() => expect(onCommentUpdated).toHaveBeenCalledTimes(1));
   expect(onCommentUpdated).toHaveBeenCalledWith({
     owner,
     repo,

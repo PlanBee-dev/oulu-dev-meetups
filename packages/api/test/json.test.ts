@@ -21,75 +21,141 @@ test('Manages invalid json', async () => {
       message: 'Invalid JSON - validation error',
       details: [
         {
-          reason: 'type',
-          validation: 'string',
-          origin: 'value',
-          message: 'Invalid type',
-          path: [{ schema: 'object', input: { name: 'world' }, key: 'title' }],
-        },
-        {
-          reason: 'type',
-          validation: 'string',
-          origin: 'value',
-          message: 'Invalid type',
-          path: [
-            { schema: 'object', input: { name: 'world' }, key: 'description' },
-          ],
-        },
-        {
-          reason: 'type',
-          validation: 'string',
-          origin: 'value',
-          message: 'Invalid type',
-          path: [{ schema: 'object', input: { name: 'world' }, key: 'date' }],
-        },
-        {
-          reason: 'type',
-          validation: 'string',
-          origin: 'value',
-          message: 'Invalid type',
-          path: [
-            { schema: 'object', input: { name: 'world' }, key: 'location' },
-          ],
-        },
-        {
-          reason: 'type',
-          validation: 'string',
-          origin: 'value',
-          message: 'Invalid type',
-          path: [
-            { schema: 'object', input: { name: 'world' }, key: 'locationLink' },
-          ],
-        },
-        {
-          reason: 'type',
-          validation: 'string',
-          origin: 'value',
-          message: 'Invalid type',
-          path: [
-            { schema: 'object', input: { name: 'world' }, key: 'organizer' },
-          ],
-        },
-        {
-          reason: 'type',
-          validation: 'string',
-          origin: 'value',
-          message: 'Invalid type',
+          kind: 'schema',
+          type: 'object',
+          expected: '"title"',
+          received: 'undefined',
+          message: 'Invalid key: Expected "title" but received undefined',
           path: [
             {
-              schema: 'object',
-              input: { name: 'world' },
+              type: 'object',
+              origin: 'key',
+              input: {
+                name: 'world',
+              },
+              key: 'title',
+            },
+          ],
+        },
+        {
+          kind: 'schema',
+          type: 'object',
+          expected: '"description"',
+          received: 'undefined',
+          message: 'Invalid key: Expected "description" but received undefined',
+          path: [
+            {
+              type: 'object',
+              origin: 'key',
+              input: {
+                name: 'world',
+              },
+              key: 'description',
+            },
+          ],
+        },
+        {
+          kind: 'schema',
+          type: 'object',
+          expected: '"date"',
+          received: 'undefined',
+          message: 'Invalid key: Expected "date" but received undefined',
+          path: [
+            {
+              type: 'object',
+              origin: 'key',
+              input: {
+                name: 'world',
+              },
+              key: 'date',
+            },
+          ],
+        },
+        {
+          kind: 'schema',
+          type: 'object',
+          expected: '"location"',
+          received: 'undefined',
+          message: 'Invalid key: Expected "location" but received undefined',
+          path: [
+            {
+              type: 'object',
+              origin: 'key',
+              input: {
+                name: 'world',
+              },
+              key: 'location',
+            },
+          ],
+        },
+        {
+          kind: 'schema',
+          type: 'object',
+          expected: '"locationLink"',
+          received: 'undefined',
+          message:
+            'Invalid key: Expected "locationLink" but received undefined',
+          path: [
+            {
+              type: 'object',
+              origin: 'key',
+              input: {
+                name: 'world',
+              },
+              key: 'locationLink',
+            },
+          ],
+        },
+        {
+          kind: 'schema',
+          type: 'object',
+          expected: '"organizer"',
+          received: 'undefined',
+          message: 'Invalid key: Expected "organizer" but received undefined',
+          path: [
+            {
+              type: 'object',
+              origin: 'key',
+              input: {
+                name: 'world',
+              },
+              key: 'organizer',
+            },
+          ],
+        },
+        {
+          kind: 'schema',
+          type: 'object',
+          expected: '"organizerLink"',
+          received: 'undefined',
+          message:
+            'Invalid key: Expected "organizerLink" but received undefined',
+          path: [
+            {
+              type: 'object',
+              origin: 'key',
+              input: {
+                name: 'world',
+              },
               key: 'organizerLink',
             },
           ],
         },
         {
-          reason: 'type',
-          validation: 'string',
-          origin: 'value',
-          message: 'Invalid type',
+          kind: 'schema',
+          type: 'object',
+          expected: '"signupLink"',
+          received: 'undefined',
+          message: 'Invalid key: Expected "signupLink" but received undefined',
           path: [
-            { schema: 'object', input: { name: 'world' }, key: 'signupLink' },
+            {
+              type: 'object',
+              origin: 'key',
+              input: {
+                name: 'world',
+              },
+              key: 'signupLink',
+            },
           ],
         },
       ],

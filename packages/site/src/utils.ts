@@ -1,5 +1,6 @@
 import { type MeetupFormValues } from 'meetup-shared';
-import { type FrontMeetups } from './get-meetups';
+import type { CollectionEntry } from 'astro:content';
+import { format } from 'date-fns';
 
 export const formatMeetupData = (meetup: MeetupFormValues) => {
   const formattedMeetup = structuredClone(meetup);
@@ -85,3 +86,28 @@ export const createShortDescription = (descriptionToCut: string) => {
 export function sortMeetupsNewestFirst(meetups: FrontMeetups) {
   return [...meetups].sort((a, b) => +b.date - +a.date);
 }
+
+export function mapMeetups(meetups: CollectionEntry<'meetups'>[]) {
+  return meetups.map((meetup) => {
+    const {
+      data: { date, ...restData },
+      slug,
+      body,
+    } = meetup;
+
+    const dateObj = new Date(date);
+
+    return {
+      render: () => meetup.render(),
+      slug,
+      body,
+      shortDescription: createShortDescription(body),
+      formattedDate: format(dateObj, 'dd.MM.yyyy HH:mm'),
+      date: dateObj,
+      ...restData,
+    };
+  });
+}
+
+export type FrontMeetups = ReturnType<typeof mapMeetups>;
+export type FrontMeetup = FrontMeetups[number];

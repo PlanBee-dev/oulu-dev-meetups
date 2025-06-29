@@ -1,3 +1,10 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": ["../../tsconfig.json", "astro/tsconfigs/base"],
+  "compilerOptions": {
+    // Added so that editors other than VS Code get a good experience
+    // https://docs.astro.build/en/guides/typescript/#typescript-editor-plugin
+    "plugins": [{ "name": "@astrojs/ts-plugin" }]
+  },
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
 }
