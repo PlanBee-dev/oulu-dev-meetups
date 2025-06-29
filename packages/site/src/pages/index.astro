@@ -19,7 +19,7 @@ const meetups = await getMeetups();
         if (meetupsData) {
           try {
             meetups = JSON.parse(meetupsData.textContent || '');
-          } catch (e) {
+          } catch {
             // Silent error handling
           }
         }

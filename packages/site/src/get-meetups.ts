@@ -11,13 +11,12 @@ export async function getMeetups() {
       data: { date, ...restData },
       slug,
       body,
-      render,
     } = meetup;
 
     const dateObj = new Date(date);
 
     return {
-      render,
+      render: meetup.render,
       slug: slug as string,
       body,
       shortDescription: createShortDescription(body),
