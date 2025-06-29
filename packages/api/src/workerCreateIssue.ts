@@ -78,6 +78,7 @@ export async function createIssue(props: {
       labels: ['meetup'],
       title: 'New meetup: ' + props.meetup.title,
       body: getMeetupIssueBody(props.meetup),
+      request: { fetch },
     });
 
     if (createIssueRes.status !== 201) {

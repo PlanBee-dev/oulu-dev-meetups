@@ -21,6 +21,8 @@ export default setupServer(
       });
 
       if (shouldCreateIssueFail()) {
+        console.log('HERE');
+
         return HttpResponse.json(
           { message: 'Internal Server Error' },
           { status: 500 },
