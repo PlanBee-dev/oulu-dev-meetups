@@ -287,7 +287,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
         class="mt-8 hidden rounded-md bg-red-50 p-4"
       >
         <div class="flex">
-          <div class="flex-shrink-0">
+          <div class="shrink-0">
             <svg
               class="h-5 w-5 text-red-400"
               viewBox="0 0 20 20"
@@ -367,8 +367,7 @@ Stable diffusion for the win. For images and animations. But what is facebook do
             <p class="mt-2 text-sm leading-6 text-gray-600">
               Create a new markdown file in the <code>
                 packages/site/src/content/meetups
-              </code> directory with your meetup details following the required
-              format.
+              </code> directory with your meetup details following the required format.
             </p>
           </div>
 
@@ -435,12 +434,10 @@ Stable diffusion for the win. For images and animations. But what is facebook do
                 included
               </li>
               <li>
-                <strong>Date Format:</strong> Ensure date follows YYYY-MM-DD
-                format
+                <strong>Date Format:</strong> Ensure date follows YYYY-MM-DD format
               </li>
               <li>
-                <strong>Links:</strong> Verify all links are working and secure
-                (HTTPS)
+                <strong>Links:</strong> Verify all links are working and secure (HTTPS)
               </li>
               <li>
                 <strong>Content:</strong> Confirm markdown formatting is correct
@@ -551,7 +548,6 @@ Stable diffusion for the win. For images and animations. But what is facebook do
     }
 
     const json = await res.value.json();
-    console.log(json);
 
     window.location.assign(
       `/success?githubLink=${encodeURIComponent(json.issueUrl)}`,

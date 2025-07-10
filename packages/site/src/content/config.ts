@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro:schema';
 
 const meetupMarkdownFileMetadataSchema = z.object({
   title: z.string(),
@@ -16,19 +17,9 @@ const meetups = defineCollection({
   schema: meetupMarkdownFileMetadataSchema,
 });
 
-const testmeetups = defineCollection({
-  type: 'content',
-  schema: meetupMarkdownFileMetadataSchema,
-});
-export const MEETUPS = 'meetups';
-export const TEST_MEETUPS = 'testmeetups';
+export const collections = { meetups, testmeetups: meetups };
 
-export const collections = { meetups, testmeetups };
+export type CollectionName = keyof typeof collections;
 
-export type CollectionName = 'meetups' | 'testmeetups';
-
-export const getMeetupsCollectionName = () => {
-  if (process.env.NODE_ENV === 'production') {
-    return MEETUPS;
-  } else return TEST_MEETUPS;
-};
+export const meetupCollection: CollectionName =
+  process.env.NODE_ENV === 'production' ? 'meetups' : 'testmeetups';

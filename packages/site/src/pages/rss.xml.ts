@@ -1,9 +1,11 @@
 import rss, { type RSSOptions } from '@astrojs/rss';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { getMeetups } from '../get-meetups';
+import { mapMeetups } from '../utils';
+import { getCollection } from 'astro:content';
+import { meetupCollection } from '../content/config';
 
 export async function get(context: RSSOptions) {
-  const meetups = await getMeetups();
+  const meetups = mapMeetups(await getCollection(meetupCollection));
   const rssItems = meetups.map((meetup) => ({
     title: meetup.title,
     link: `${import.meta.env.BASE_URL}meetups/${meetup.slug}`,

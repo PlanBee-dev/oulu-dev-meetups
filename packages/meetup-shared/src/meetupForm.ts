@@ -1,13 +1,13 @@
-import { isValid, parse } from 'date-fns';
 import {
-  type Output,
-  ValiError,
+  type InferOutput,
   minLength,
   object,
   safeParseAsync,
   string,
-  transform,
   url,
+  pipe,
+  isoDate,
+  isoTime,
 } from 'valibot';
 import { meetupSchema } from './meetupType';
 
@@ -27,18 +27,18 @@ export type MeetupFormFields = typeof meetupFormFields;
 export type MeetupFormField = MeetupFormFields[number];
 
 export const meetupFormValuesSchema = object({
-  title: string([minLength(1)]),
-  description: string([minLength(1)]),
-  date: transform(string([minLength(1)]), meetupFormDateSchema),
-  time: transform(string([minLength(1)]), meetupFormTimeSchema),
-  location: string([minLength(1)]),
-  locationLink: string([url()]),
-  organizer: string([minLength(1)]),
-  organizerLink: string([url()]),
-  signupLink: string([url()]),
+  title: pipe(string(), minLength(1)),
+  description: pipe(string(), minLength(1)),
+  date: pipe(string(), isoDate()),
+  time: pipe(string(), isoTime()),
+  location: pipe(string(), minLength(1)),
+  locationLink: pipe(string(), url()),
+  organizer: pipe(string(), minLength(1)),
+  organizerLink: pipe(string(), url()),
+  signupLink: pipe(string(), url()),
 } satisfies Record<MeetupFormField, unknown>);
 
-export type MeetupFormValues = Output<typeof meetupFormValuesSchema>;
+export type MeetupFormValues = InferOutput<typeof meetupFormValuesSchema>;
 
 export async function meetupFormValuesToMeetup(
   meetupFormValues: MeetupFormValues,
@@ -49,42 +49,6 @@ export async function meetupFormValuesToMeetup(
     ...rest,
     date: new Date(`${date}T${time}:00`).toISOString(),
   });
-}
-
-export function meetupFormDateSchema(input: string) {
-  const parsedDate = parse(input, 'yyyy-MM-dd', new Date());
-
-  if (!isValid(parsedDate)) {
-    throw new ValiError([
-      {
-        input,
-        message: 'Invalid date (format yyyy-MM-dd)',
-        origin: 'value',
-        reason: 'string',
-        validation: 'date',
-      },
-    ]);
-  }
-
-  return input;
-}
-
-export function meetupFormTimeSchema(input: string) {
-  const parsedDate = parse(input, 'HH:mm', new Date());
-
-  if (!isValid(parsedDate)) {
-    throw new ValiError([
-      {
-        input,
-        message: 'Invalid time (format HH:mm)',
-        origin: 'value',
-        reason: 'string',
-        validation: 'time',
-      },
-    ]);
-  }
-
-  return input;
 }
 
 export function assertMeetupFormFields(

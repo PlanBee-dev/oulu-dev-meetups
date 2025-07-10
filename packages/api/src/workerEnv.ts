@@ -1,11 +1,13 @@
+import { valibotToHumanUnderstandable } from 'meetup-shared';
 import {
   object,
   safeParseAsync,
   string,
   transform,
   url,
-  type Input,
-  type Output,
+  type InferInput,
+  type InferOutput,
+  pipe,
 } from 'valibot';
 
 export const envSchema = object({
@@ -13,12 +15,12 @@ export const envSchema = object({
   GITHUB_REPO_OWNER: string(),
   GITHUB_APP_ID: string(),
   GITHUB_APP_PRIVATE_KEY: string(),
-  GITHUB_APP_INSTALLATION_ID: transform(string(), Number),
-  ALLOWED_ORIGIN: string([url()]),
+  GITHUB_APP_INSTALLATION_ID: pipe(string(), transform(Number)),
+  ALLOWED_ORIGIN: pipe(string(), url()),
 });
 
-export type Env = Output<typeof envSchema>;
-export type EnvInput = Input<typeof envSchema>;
+export type Env = InferOutput<typeof envSchema>;
+export type EnvInput = InferInput<typeof envSchema>;
 
 export async function parseEnv(
   unsafeEnv: unknown,
@@ -29,11 +31,7 @@ export async function parseEnv(
     console.error(
       'Invalid environment variables',
       JSON.stringify(
-        envSchemaResult.error.issues.map((i) => ({
-          variable: i.path?.flatMap((p) => p.key as string).join('.'),
-          error: i.message,
-          expectedType: i.validation,
-        })),
+        valibotToHumanUnderstandable(envSchemaResult.issues),
         null,
         2,
       ),
@@ -42,5 +40,5 @@ export async function parseEnv(
     return { errorResponse: new Response(undefined, { status: 500 }) };
   }
 
-  return { env: envSchemaResult.data };
+  return { env: envSchemaResult.output };
 }

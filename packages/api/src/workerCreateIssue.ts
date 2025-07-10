@@ -14,7 +14,7 @@ export async function parseCreateIssueReqBody(
     const meetupParseResult = await safeParseAsync(meetupSchema, json);
 
     if (!meetupParseResult.success) {
-      const issues = meetupParseResult.error.issues;
+      const issues = meetupParseResult.issues;
 
       console.error('Invalid JSON - validation error - ', issues);
 
@@ -34,7 +34,7 @@ export async function parseCreateIssueReqBody(
       };
     }
 
-    return { parsedMeetup: meetupParseResult.data };
+    return { parsedMeetup: meetupParseResult.output };
   } catch (e) {
     console.error('Invalid JSON - catched an error - ', e);
 
@@ -78,6 +78,7 @@ export async function createIssue(props: {
       labels: ['meetup'],
       title: 'New meetup: ' + props.meetup.title,
       body: getMeetupIssueBody(props.meetup),
+      request: { fetch },
     });
 
     if (createIssueRes.status !== 201) {
