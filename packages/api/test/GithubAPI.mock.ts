@@ -4,7 +4,6 @@ import { vi } from 'vitest';
 
 export const API_URL = 'https://api.github.com';
 export const onIssueCreated = vi.fn();
-export const shouldCreateIssueFail = vi.fn().mockReturnValue(false);
 
 export default setupServer(
   // Ref. https://docs.github.com/en/rest/issues/issues?apiVersion=2022-11-28#create-an-issue
@@ -19,13 +18,6 @@ export default setupServer(
         repo,
         body,
       });
-
-      if (shouldCreateIssueFail()) {
-        return HttpResponse.json(
-          { message: 'Internal Server Error' },
-          { status: 500 },
-        );
-      }
 
       return HttpResponse.json(
         {
