@@ -9,16 +9,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@date-fns/tz": "^1.2.0",
+    "@date-fns/tz": "^1.4.1",
     "date-fns": "4.1.0",
     "meetup-shared": "workspace:*",
-    "octokit": "^3.1.0",
-    "valibot": "^0.11.1"
+    "octokit": "^5.0.5",
+    "valibot": "^1.2.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230419.0",
-    "msw": "^1.2.3",
-    "typescript": "^5.0.4",
-    "wrangler": "^3.0.0"
+    "@cloudflare/workers-types": "^4.20251216.0",
+    "msw": "^2.12.4",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.55.0"
   }
 }

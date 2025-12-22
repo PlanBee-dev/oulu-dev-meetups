@@ -1,17 +1,32 @@
 import { context, getOctokit } from '@actions/github';
 import { getMeetupIssueCommentStatus } from 'meetup-shared';
-import { nullish, object, parse, string, transform } from 'valibot';
+import {
+  nullish,
+  object,
+  parse,
+  string,
+  transform,
+  pipe,
+  picklist,
+} from 'valibot';
 
 const envSchema = object({
-  PULL_REQUEST_NUMBER: transform(string(), Number),
-  COMMENT_ID: nullish(transform(string(), Number)),
+  PULL_REQUEST_NUMBER: pipe(string(), transform(Number)),
+  COMMENT_ID: nullish(pipe(string(), transform(Number))),
   GITHUB_TOKEN: string(),
+  NODE_ENV: picklist(['dev', 'test', 'production']),
 });
 
 async function main() {
   const env = parse(envSchema, process.env);
 
-  const octokit = getOctokit(env.GITHUB_TOKEN);
+  const octokit = getOctokit(
+    env.GITHUB_TOKEN,
+    // Use global fetch while testing
+    env.NODE_ENV === 'test'
+      ? { request: { fetch: globalThis.fetch } }
+      : undefined,
+  );
 
   const body =
     getMeetupIssueCommentStatus([

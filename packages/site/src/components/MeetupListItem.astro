@@ -1,6 +1,5 @@
 ---
-import { type FrontMeetup } from '../get-meetups';
-import { getRandomLogonumber } from '../utils';
+import { getRandomLogonumber, type FrontMeetup } from '../utils';
 
 type Props = { meetup: FrontMeetup };
 const {
@@ -29,7 +28,7 @@ const isPastMeetup = date < currentDate;
             alt="generic developer logo"
           />
           <div class="min-w-0 flex-auto">
-            <p class="text-sm font-semibold leading-6 text-gray-900">
+            <p class="text-sm leading-6 font-semibold text-gray-900">
               <span class="absolute inset-x-0 -top-px bottom-0"></span>
               {title}
             </p>

@@ -4,7 +4,7 @@
   "type": "module",
   "version": "0.0.1",
   "description": "TODO",
-  "packageManager": "pnpm@8.6.2",
+  "packageManager": "pnpm@10.25.0",
   "scripts": {
     "test": "vitest",
     "build": "pnpm -r run build",
@@ -14,18 +14,21 @@
     "start": "pnpm -r --parallel run start"
   },
   "devDependencies": {
-    "@types/node": "^20.4.4",
-    "@typescript-eslint/eslint-plugin": "^6.2.0",
-    "@typescript-eslint/parser": "^6.1.0",
-    "eslint": "^8.45.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-astro": "^0.27.2",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-unicorn": "^48.0.1",
-    "prettier": "^3.0.0",
-    "prettier-plugin-astro": "^0.11.0",
-    "prettier-plugin-tailwindcss": "^0.5.3",
-    "typescript": "^5.1.6",
-    "vitest": "^0.34.5"
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/parser": "^8.50.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.5.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-unicorn": "^62.0.0",
+    "globals": "^16.5.0",
+    "prettier": "^3.7.4",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.0",
+    "vitest": "^4.0.16"
   }
 }

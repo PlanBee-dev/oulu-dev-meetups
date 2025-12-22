@@ -1,66 +1,46 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
-body {
-	font-family: Verdana, sans-serif;
-	margin: auto;
-	padding: 20px;
-	text-align: left;
-	background-color: #fff;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	line-height: 1.5;
-	color: #444;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-strong,
-b {
-	color: #222;
-}
-a {
-	color: #3273dc;
-}
-nav a {
-	margin-right: 10px;
-}
-textarea {
-	width: 100%;
-	font-size: 16px;
-}
-input {
-	font-size: 16px;
-}
-content {
-	line-height: 1.6;
-}
-table {
-	width: 100%;
-}
-img {
-	max-width: 100%;
-	height: auto;
-}
-code {
-	padding: 2px 5px;
-	background-color: #f2f2f2;
-}
-pre {
-	padding: 1rem;
-}
-pre > code {
-	all: unset;
-}
-blockquote {
-	border: 1px solid #999;
-	color: #222;
-	padding: 2px 0px 2px 20px;
-	margin: 0px;
-	font-style: italic;
+@import 'tailwindcss';
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* TEXT */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.5rem;
+
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5rem;
+
+  --text-base: 1rem;
+  --text-base--line-height: 1.75rem;
+
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 2rem;
+
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.25rem;
+
+  --text-4xl: 2rem;
+  --text-4xl--line-height: 2.5rem;
+
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 3.5rem;
+
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1;
+
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 1;
+
+  --text-8xl: 6rem;
+  --text-8xl--line-height: 1;
+
+  --text-9xl: 8rem;
+  --text-9xl--line-height: 1;
+  /* TEXT */
 }

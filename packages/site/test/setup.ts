@@ -32,6 +32,6 @@ export async function teardown() {
   clearTimeout(timer);
 }
 
-function log(...messages: Parameters<typeof console.log>) {
+function log(...messages: unknown[]) {
   console.log('[global-setup]', ...messages);
 }

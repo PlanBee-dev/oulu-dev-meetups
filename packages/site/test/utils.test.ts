@@ -1,12 +1,12 @@
 import { type MeetupFormValues } from 'meetup-shared';
 import {
+  type FrontMeetups,
   formatMeetupData,
   createShortDescription,
   getNextMeetup,
   getRandomLogonumber,
 } from '../src/utils';
 import { expect, test, beforeEach, afterEach, vi } from 'vitest';
-import { type FrontMeetups } from '../src/get-meetups';
 
 beforeEach(() => {
   vi.useFakeTimers();
